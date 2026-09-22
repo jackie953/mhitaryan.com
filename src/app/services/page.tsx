@@ -4,14 +4,12 @@ import {
   Heading,
   Text,
   Schema,
-  Button,
-  Row,
-  Icon,
   RevealFx,
 } from "@once-ui-system/core";
 import { baseURL } from "@/resources";
 import TableOfContents from "@/components/about/TableOfContents";
 import styles from "@/components/about/about.module.scss";
+import { ScheduleEmailButton } from "@/components/ScheduleEmailButton";
 
 export async function generateMetadata() {
   return {
@@ -192,22 +190,7 @@ export default function Services() {
                     background: 'radial-gradient(ellipse at 50% 0%, var(--accent-background-strong, rgba(120,80,200,0.35)) 0%, transparent 70%)',
                     opacity: 0.6, borderRadius: 'inherit',
                   }} />
-                  <Button
-                    id="schedule-call"
-                    data-border="rounded"
-                    href="mailto:contact@mhitaryan.com"
-                    variant="secondary"
-                    size="l"
-                    style={{ paddingInline: '2rem', paddingBlock: '0.875rem', fontSize: '1.05rem', border: '1px solid var(--neutral-alpha-medium)' }}
-                    weight="default"
-                    arrowIcon
-                    className="text-neutral-900 dark:!text-white"
-                  >
-                    <Row vertical="center" gap="8">
-                      <Icon name="email" onBackground="brand-weak" />
-                      <span>Get in touch</span>
-                    </Row>
-                  </Button>
+                  <ScheduleEmailButton />
                 </Column>
               </RevealFx>
             )}

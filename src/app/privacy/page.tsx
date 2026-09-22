@@ -1,4 +1,5 @@
 import { Heading, Text, Column } from "@once-ui-system/core";
+import { ContactEmailLink } from "@/components/ContactEmailLink";
 
 export default function PrivacyPage() {
   return (
@@ -89,12 +90,7 @@ export default function PrivacyPage() {
           Under GDPR, you have the right to access, correct, or delete your personal data, withdraw
           consent at any time, and complain to the Swedish Authority for Privacy Protection (IMY) if
           you believe your data has been mishandled. Contact me at{" "}
-          <a
-            href="mailto:contact@mhitaryan.com"
-            className="text-blue-600 hover:underline dark:text-blue-500"
-          >
-            contact@mhitaryan.com
-          </a>{" "}
+          <ContactEmailLink className="text-blue-600 hover:underline dark:text-blue-500" />{" "}
           for any privacy-related requests.
         </Text>
       </Column>

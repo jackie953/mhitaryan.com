@@ -2,6 +2,7 @@
 import { IconMail, IconCalendar } from '@tabler/icons-react';
 import { usePathname } from 'next/navigation';
 import InteractiveCTA from './interactive-cta';
+import { openContactEmail } from '@/utils/contact-email';
 
 export default function CTAWrapper() {
   const pathname = usePathname();
@@ -17,7 +18,7 @@ export default function CTAWrapper() {
       openHeight="130px"
       navigationLinks={[
         {
-          href: 'mailto:contact@mhitaryan.com',
+          onClick: openContactEmail,
           text: 'Email',
           icon: <IconMail size={14} />,
           className:

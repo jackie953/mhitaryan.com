@@ -2,6 +2,7 @@
 
 import { Button, Heading, Text, Column } from "@once-ui-system/core";
 import type { opacity, SpacingToken } from "@once-ui-system/core";
+import { openContactEmail } from "@/utils/contact-email";
 
 interface BookingCTAConfig {
   display: boolean;
@@ -92,9 +93,11 @@ interface BookingCTAOverrides {
   description?: string;
   buttonText?: string;
   buttonHref?: string;
+  /** Renders the button as an obfuscated "email me" action instead of a link */
+  mailButton?: boolean;
 }
 
-export const BookingCTA: React.FC<React.ComponentProps<typeof Column> & BookingCTAOverrides> = ({ title, description, buttonText, buttonHref, ...flex }) => {
+export const BookingCTA: React.FC<React.ComponentProps<typeof Column> & BookingCTAOverrides> = ({ title, description, buttonText, buttonHref, mailButton, ...flex }) => {
   if (!bookingConfig.display) return null;
   const displayTitle = title ?? bookingConfig.title;
   const displayDescription = description ?? bookingConfig.description;
@@ -130,16 +133,22 @@ export const BookingCTA: React.FC<React.ComponentProps<typeof Column> & BookingC
         </Text>
       </Column>
       
-      <a
-        href={displayButtonHref}
-        target={displayButtonHref.startsWith('mailto') ? '_self' : '_blank'}
-        rel="noopener noreferrer"
-        style={{ textDecoration: 'none', width: '100%', maxWidth: '384px' }}
-      >
-        <Button size="m" fillWidth>
+      {mailButton ? (
+        <Button size="m" fillWidth style={{ width: '100%', maxWidth: '384px' }} onClick={openContactEmail}>
           {displayButtonText}
         </Button>
-      </a>
+      ) : (
+        <a
+          href={displayButtonHref}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ textDecoration: 'none', width: '100%', maxWidth: '384px' }}
+        >
+          <Button size="m" fillWidth>
+            {displayButtonText}
+          </Button>
+        </a>
+      )}
     </Column>
   );
 };

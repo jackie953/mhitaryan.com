@@ -58,7 +58,12 @@ export type Social = Array<{
    *
    * The link is not validated by code, make sure it's correct
    */
-  link: string;
+  link?: string;
+  /**
+   * A special runtime action to run instead of navigating to `link`,
+   * e.g. to obfuscate an email address from the page source.
+   */
+  action?: "email";
 }>;
 
 /**

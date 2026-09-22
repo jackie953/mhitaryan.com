@@ -1,6 +1,9 @@
+"use client";
+
 import { Row, IconButton, Text } from "@once-ui-system/core";
 import { person, social } from "@/resources";
 import styles from "./Footer.module.scss";
+import { openContactEmail } from "@/utils/contact-email";
 
 export const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -26,8 +29,20 @@ export const Footer = () => {
           <Text>Mhitaryan Consulting</Text>
         </Text>
         <Row gap="16">
-          {social.map(
-            (item) =>
+          {social.map((item) => {
+            if (item.action === "email") {
+              return (
+                <IconButton
+                  key={item.name}
+                  onClick={openContactEmail}
+                  icon={item.icon}
+                  tooltip={item.name}
+                  size="s"
+                  variant="ghost"
+                />
+              );
+            }
+            return (
               item.link && (
                 <IconButton
                   key={item.name}
@@ -37,8 +52,9 @@ export const Footer = () => {
                   size="s"
                   variant="ghost"
                 />
-              ),
-          )}
+              )
+            );
+          })}
         </Row>
       </Row>
       <Row height="80" hide s={{ hide: false }} />

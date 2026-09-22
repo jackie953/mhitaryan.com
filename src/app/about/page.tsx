@@ -226,7 +226,7 @@ export default function About() {
               title="Let's talk."
               description="If you think there might be something here, I'm easy to reach."
               buttonText="Send an email"
-              buttonHref="mailto:contact@mhitaryan.com"
+              mailButton
             />
           </RevealFx>
         </Column>

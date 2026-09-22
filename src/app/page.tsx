@@ -142,7 +142,7 @@ export default function Home() {
           title="Work with us."
           description="A short conversation to explore whether there's a fit."
           buttonText="Get in touch"
-          buttonHref="mailto:contact@mhitaryan.com"
+          mailButton
         />
       </Column>
       <CookieBanner />

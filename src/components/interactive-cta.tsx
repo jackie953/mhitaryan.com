@@ -8,7 +8,8 @@ import NavigationButton from '../components/navigation-button';
 import { cn } from '@/utils/tailwind.utils';
 
 export interface NavigationLink {
-  href: string;
+  href?: string;
+  onClick?: () => void;
   text: string;
   icon?: React.ReactNode;
   target?: '_self' | '_blank' | '_parent' | '_top';
@@ -142,8 +143,9 @@ const InteractiveCTA = ({
               >
                 {navigationLinks.map((link, index) => (
                   <NavigationButton
-                    key={`${link.href}-${index}`}
+                    key={`${link.text}-${index}`}
                     href={link.href}
+                    onClick={link.onClick}
                     text={link.text}
                     className={link.className}
                     icon={link.icon}

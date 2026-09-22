@@ -27,7 +27,7 @@ const social: Social = [
   {
     name: "Email",
     icon: "email",
-    link: "mailto:contact@mhitaryan.com",
+    action: "email",
   },
 ];
 

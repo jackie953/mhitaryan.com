@@ -2,7 +2,6 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { IconBrandX, IconMail } from '@tabler/icons-react';
 import { MessageCircle, X } from 'lucide-react';
 import NavigationButton from '../components/navigation-button';
 import { cn } from '@/utils/tailwind.utils';
@@ -31,26 +30,11 @@ export interface InteractiveCTAProps {
   closeHeight?: string;
 }
 
-const DEFAULT_NAVIGATION_LINKS: NavigationLink[] = [
-  {
-    href: 'https://twitter.com/samitkapoorr',
-    text: 'DM me on X',
-    className: 'px-2 py-1 text-white hover:text-blue-500',
-    icon: <IconBrandX size={14} />
-  },
-  {
-    href: 'mailto:samitkapoor77@gmail.com',
-    text: 'Send me an email',
-    className: 'px-2 py-1 text-white hover:text-red-500',
-    icon: <IconMail size={14} />
-  }
-];
-
 const InteractiveCTA = ({
   heading = 'Want something custom made?',
   subheading = "Let's talk",
   avatar,
-  navigationLinks = DEFAULT_NAVIGATION_LINKS,
+  navigationLinks = [],
   initialOpen = true,
   className,
   openIcon,

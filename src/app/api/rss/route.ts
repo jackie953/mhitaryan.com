@@ -20,8 +20,8 @@ export async function GET() {
     <language>en</language>
     <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
     <atom:link href="${baseURL}/api/rss" rel="self" type="application/rss+xml" />
-    <managingEditor>${person.email || "noreply@example.com"} (${person.name})</managingEditor>
-    <webMaster>${person.email || "noreply@example.com"} (${person.name})</webMaster>
+    <managingEditor>noreply@example.com (${person.name})</managingEditor>
+    <webMaster>noreply@example.com (${person.name})</webMaster>
     <image>
       <url>${baseURL}${person.avatar || "/images/avatar.jpg"}</url>
       <title>${blog.title}</title>
@@ -38,7 +38,7 @@ export async function GET() {
       <description><![CDATA[${post.metadata.summary}]]></description>
       ${post.metadata.image ? `<enclosure url="${baseURL}${post.metadata.image}" type="image/jpeg" />` : ""}
       ${post.metadata.tag ? `<category>${post.metadata.tag}</category>` : ""}
-      <author>${person.email || "noreply@example.com"} (${person.name})</author>
+      <author>noreply@example.com (${person.name})</author>
     </item>`,
       )
       .join("")}

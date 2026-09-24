@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 
-import { Flex, Line, Row, ToggleButton, useTheme } from "@once-ui-system/core";
+import { Line, Row, ToggleButton, useTheme } from "@once-ui-system/core";
 import { ThemeToggle } from "./ThemeToggle";
 import { HyperText } from "@/registry/magicui/hyper-text";
 import styles from "./Header.module.scss";
@@ -181,90 +181,82 @@ export const Header = () => {
         vertical="center"
         data-border="rounded"
       >
-        {/* LEFT: Site name — always visible */}
-        <Row paddingLeft="12" fillWidth vertical="center" style={navFadeStyle}>
-          <Link
-            href="/"
-            style={{
-              textDecoration: "none",
-              transform: "translateY(-4px)",
-              display: "inline-block",
-            }}
-          >
-            <HyperText
-              as="span"
-              duration={700}
-              className="p-0 overflow-visible"
+        {/* Inner container — aligned to the same max-width as the main content
+            so the logo and menu line up with the page grid's edges */}
+        <Row maxWidth="xl" fillWidth horizontal="between" vertical="center">
+          {/* LEFT: Site name — always visible */}
+          <Row paddingLeft="12" vertical="center" style={navFadeStyle}>
+            <Link
+              href="/"
               style={{
-                color: "var(--header-color)",
-                fontSize: "clamp(1rem, 2.8vw, 1.375rem)",
-                fontWeight: 600,
-                letterSpacing: "0.02em",
-                fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-                whiteSpace: "nowrap",
+                textDecoration: "none",
+                transform: "translateY(-4px)",
+                display: "inline-block",
               }}
             >
-              MHITARYAN CONSULTING
-            </HyperText>
-          </Link>
-        </Row>
+              <HyperText
+                as="span"
+                duration={700}
+                className="p-0 overflow-visible"
+                style={{
+                  color: "var(--header-color)",
+                  fontSize: "clamp(1rem, 2.8vw, 1.375rem)",
+                  fontWeight: 600,
+                  letterSpacing: "0.02em",
+                  fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+                  whiteSpace: "nowrap",
+                }}
+              >
+                MHITARYAN CONSULTING
+              </HyperText>
+            </Link>
+          </Row>
 
-        {/* CENTER: Pill nav — desktop only */}
-        <Row fillWidth horizontal="center" className={styles.desktopOnly} style={navFadeStyle}>
-          <Row
-            background="page"
-            border="neutral-alpha-weak"
-            radius="m-4"
-            shadow="l"
-            padding="4"
-            horizontal="center"
-            zIndex={1}
-          >
-            <Row gap="4" vertical="center" textVariant="body-default-s" suppressHydrationWarning>
+          {/* RIGHT: Pill nav — desktop only, right edge aligned to the container */}
+          <Row paddingRight="12" className={styles.desktopOnly} style={navFadeStyle}>
+            <Row
+              background="page"
+              border="neutral-alpha-weak"
+              radius="l"
+              shadow="l"
+              paddingX="12"
+              paddingY="2"
+              horizontal="center"
+              vertical="center"
+              zIndex={1}
+            >
+              <Row gap="8" vertical="center" textVariant="body-default-s" suppressHydrationWarning>
               {routes["/"] && (
-                <ToggleButton prefixIcon="home" href="/" selected={pathname === "/"} />
+                <ToggleButton size="s" prefixIcon="home" href="/" selected={pathname === "/"} />
               )}
-              <Line background="neutral-alpha-medium" vert maxHeight="24" />
+              <Line background="neutral-alpha-medium" vert maxHeight="16" />
               {routes["/about"] && (
-                <ToggleButton href="/about" label={about.label} selected={pathname === "/about"} />
+                <ToggleButton size="s" href="/about" label={about.label} selected={pathname === "/about"} />
               )}
               {routes["/work"] && (
-                <ToggleButton href="/work" label={work.label} selected={pathname.startsWith("/work")} />
+                <ToggleButton size="s" href="/work" label={work.label} selected={pathname.startsWith("/work")} />
               )}
               {routes["/services"] && (
-                <ToggleButton href={services.path} label={services.label} selected={pathname.startsWith("/services")} />
+                <ToggleButton size="s" href={services.path} label={services.label} selected={pathname.startsWith("/services")} />
               )}
               {routes["/contact"] && (
-                <ToggleButton href={contact.path} label={contact.label} selected={pathname.startsWith("/contact")} />
+                <ToggleButton size="s" href={contact.path} label={contact.label} selected={pathname.startsWith("/contact")} />
               )}
               {routes["/blog"] && (
-                <ToggleButton href="/blog" label={blog.label} selected={pathname.startsWith("/blog")} />
+                <ToggleButton size="s" href="/blog" label={blog.label} selected={pathname.startsWith("/blog")} />
               )}
               {display.themeSwitcher && (
                 <>
-                  <Line background="neutral-alpha-medium" vert maxHeight="24" />
-                  <ThemeToggle />
+                  <Line background="neutral-alpha-medium" vert maxHeight="16" />
+                  <ThemeToggle size="s" />
                 </>
               )}
+              </Row>
             </Row>
           </Row>
-        </Row>
 
-        {/* RIGHT: Timezone — desktop only */}
-        <Flex fillWidth horizontal="end" vertical="center" className={styles.desktopOnly} style={navFadeStyle}>
-          <Flex
-            paddingRight="12"
-            horizontal="end"
-            vertical="center"
-            textVariant="body-default-s"
-            style={{ transform: "translateY(-4px)" }}
-          >
-            Europe/Stockholm
-          </Flex>
-        </Flex>
-
-        {/* MOBILE: Hamburger + dropdown */}
-        <div ref={menuRef} className={styles.mobileNav}>
+          {/* MOBILE: Hamburger + dropdown */}
+          <div ref={menuRef} className={styles.mobileNav}>
           <button
             onClick={() => setMenuOpen((prev) => !prev)}
             aria-label="Toggle menu"
@@ -309,7 +301,8 @@ export const Header = () => {
               {display.themeSwitcher && <MobileThemeRow />}
             </div>
           )}
-        </div>
+          </div>
+        </Row>
       </Row>
     </>
   );

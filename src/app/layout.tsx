@@ -18,7 +18,8 @@ import {
 import { Footer, Header, RouteGuard, Providers } from "@/components";
 import { baseURL, effects, fonts, style, dataStyle, home } from "@/resources";
 
-import CTAWrapper from "@/components/CTAWrapper";
+// CTA chat-bubble widget — hidden for now, kept for future re-enable.
+// import CTAWrapper from "@/components/CTAWrapper";
 
 export function generateMetadata() {
   return Meta.generate({
@@ -93,7 +94,7 @@ export default function RootLayout({
                 </Flex>
               </Flex>
               <Footer />
-              <CTAWrapper />
+              {/* <CTAWrapper /> */}
             </Column>
           </Flex>
         </Providers>

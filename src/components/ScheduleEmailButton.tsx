@@ -17,7 +17,7 @@ export function ScheduleEmailButton() {
       className="text-neutral-900 dark:!text-white"
     >
       <Row vertical="center" gap="8">
-        <Icon name="email" onBackground="brand-weak" />
+        <Icon name="email" style={{ color: "var(--scheme-violet-300)" }} />
         <span>Get in touch</span>
       </Row>
     </Button>

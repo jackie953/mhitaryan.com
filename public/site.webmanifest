@@ -1,6 +1,6 @@
 {
   "name": "Mhitaryan Consulting",
-  "short_name": "MC",
+  "short_name": "Mhitaryan Consulting",
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",
@@ -15,7 +15,7 @@
       "purpose": "maskable"
     }
   ],
-  "theme_color": "#ffffff",
+  "theme_color": "#48216f",
   "background_color": "#ffffff",
   "display": "standalone"
 }

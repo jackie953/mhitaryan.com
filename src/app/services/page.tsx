@@ -9,15 +9,21 @@ import {
   Icon,
   RevealFx,
 } from "@once-ui-system/core";
+import { Meta } from "@once-ui-system/core";
 import { baseURL } from "@/resources";
 import TableOfContents from "@/components/about/TableOfContents";
 import styles from "@/components/about/about.module.scss";
 
 export async function generateMetadata() {
-  return {
-    title: "Services | Jacqueline Mhitaryan",
-    description: "Strategic Research & Intelligence, Strategic Communications, and Strategic Advisory services.",
-  };
+  const title = "Services | Jacqueline Mhitaryan";
+  return Meta.generate({
+    title,
+    description:
+      "Strategic Research & Intelligence, Strategic Communications, and Strategic Advisory services.",
+    baseURL: baseURL,
+    image: `/api/og/generate?title=${encodeURIComponent(title)}`,
+    path: "/services",
+  });
 }
 
 export default function Services() {

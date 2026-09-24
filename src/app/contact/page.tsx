@@ -1,4 +1,17 @@
 import React from 'react';
+import { Meta } from "@once-ui-system/core";
+import { baseURL } from "@/resources";
+
+export async function generateMetadata() {
+  const title = "Contact | Jacqueline Mhitaryan";
+  return Meta.generate({
+    title,
+    description: "Get in touch to discuss how we can work together.",
+    baseURL: baseURL,
+    image: `/api/og/generate?title=${encodeURIComponent(title)}`,
+    path: "/contact",
+  });
+}
 
 export default function Contact() {
   return (

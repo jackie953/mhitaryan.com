@@ -14,7 +14,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next"
 import { home } from "./index";
 
 // IMPORTANT: Replace with your own domain address - it's used for SEO in meta tags and schema
-const baseURL: string = "https://demo.magic-portfolio.com";
+const baseURL: string = "https://mhitaryan.com";
 
 const routes: RoutesConfig = {
   "/": true,
@@ -39,22 +39,22 @@ const protectedRoutes: ProtectedRoutesConfig = {
 };
 
 // Import and set font for each variant
-import { Geist } from "next/font/google";
+import { Inter_Tight } from "next/font/google";
 import { Geist_Mono } from "next/font/google";
 
-const heading = Geist({
+const heading = Inter_Tight({
   variable: "--font-heading",
   subsets: ["latin"],
   display: "swap",
 });
 
-const body = Geist({
+const body = Inter_Tight({
   variable: "--font-body",
   subsets: ["latin"],
   display: "swap",
 });
 
-const label = Geist({
+const label = Inter_Tight({
   variable: "--font-label",
   subsets: ["latin"],
   display: "swap",

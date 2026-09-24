@@ -1,4 +1,16 @@
-import { Heading, Text, Column } from "@once-ui-system/core";
+import { Heading, Text, Column, Meta } from "@once-ui-system/core";
+import { baseURL } from "@/resources";
+
+export async function generateMetadata() {
+  const title = "Privacy & Cookie Policy | Jacqueline Mhitaryan";
+  return Meta.generate({
+    title,
+    description: "Privacy and cookie policy for Jacqueline Mhitaryan / Mhitaryan Consulting.",
+    baseURL: baseURL,
+    image: `/api/og/generate?title=${encodeURIComponent(title)}`,
+    path: "/privacy",
+  });
+}
 
 export default function PrivacyPage() {
   return (

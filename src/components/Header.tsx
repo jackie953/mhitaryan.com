@@ -7,6 +7,7 @@ import { Menu, X } from "lucide-react";
 
 import { Flex, Line, Row, ToggleButton, useTheme } from "@once-ui-system/core";
 import { ThemeToggle } from "./ThemeToggle";
+import { HyperText } from "@/registry/magicui/hyper-text";
 import styles from "./Header.module.scss";
 
 import {
@@ -186,16 +187,25 @@ export const Header = () => {
             href="/"
             style={{
               textDecoration: "none",
-              color: "var(--header-color)",
-              fontSize: "clamp(1rem, 2.8vw, 1.375rem)",
-              fontWeight: 600,
-              letterSpacing: "0.02em",
-              fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-              whiteSpace: "nowrap",
               transform: "translateY(-4px)",
+              display: "inline-block",
             }}
           >
-            Mhitaryan Consulting
+            <HyperText
+              as="span"
+              duration={700}
+              className="p-0 overflow-visible"
+              style={{
+                color: "var(--header-color)",
+                fontSize: "clamp(1rem, 2.8vw, 1.375rem)",
+                fontWeight: 600,
+                letterSpacing: "0.02em",
+                fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+                whiteSpace: "nowrap",
+              }}
+            >
+              MHITARYAN CONSULTING
+            </HyperText>
           </Link>
         </Row>
 

@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { Button, Heading, Text, Column, Mask } from "@once-ui-system/core";
 import type { opacity, SpacingToken } from "@once-ui-system/core";
 
@@ -92,14 +93,29 @@ interface BookingCTAOverrides {
   description?: string;
   buttonText?: string;
   buttonHref?: string;
+  /**
+   * Base64-encoded href (use for a mailto: address). Decoded client-side
+   * after mount, so the plain address never appears in the page's HTML or
+   * the React Server Component payload — a prop value like `buttonHref`
+   * gets serialized into that payload verbatim regardless of when the
+   * component chooses to render it, so gating render time alone isn't
+   * enough to keep an address out of the served bytes.
+   */
+  buttonHrefEncoded?: string;
 }
 
-export const BookingCTA: React.FC<React.ComponentProps<typeof Column> & BookingCTAOverrides> = ({ title, description, buttonText, buttonHref, ...flex }) => {
+export const BookingCTA: React.FC<React.ComponentProps<typeof Column> & BookingCTAOverrides> = ({ title, description, buttonText, buttonHref, buttonHrefEncoded, ...flex }) => {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
   if (!bookingConfig.display) return null;
   const displayTitle = title ?? bookingConfig.title;
-  const displayDescription = description ?? bookingConfig.description;
+  const displayDescription = description === "" ? "" : description ?? bookingConfig.description;
   const displayButtonText = buttonText ?? "Book Now";
-  const displayButtonHref = buttonHref ?? bookingConfig.calendlyUrl;
+  const displayButtonHref = buttonHrefEncoded
+    ? (mounted ? atob(buttonHrefEncoded) : undefined)
+    : (buttonHref ?? bookingConfig.calendlyUrl);
+  const isMailto = Boolean(buttonHrefEncoded) || (buttonHref ?? bookingConfig.calendlyUrl).startsWith("mailto:");
 
   return (
     <Column
@@ -130,21 +146,24 @@ export const BookingCTA: React.FC<React.ComponentProps<typeof Column> & BookingC
       </Mask>
 
       <Column maxWidth="xs" horizontal="center">
-        <Heading marginBottom="s" variant="display-strong-xs">
+        <Heading marginBottom={displayDescription ? "s" : "l"} variant="display-strong-xs">
           {displayTitle}
         </Heading>
-        <Text wrap="balance" marginBottom="l" variant="body-default-l" onBackground="neutral-weak">
-          {displayDescription}
-        </Text>
+        {displayDescription && (
+          <Text wrap="balance" marginBottom="l" variant="body-default-l" onBackground="neutral-weak">
+            {displayDescription}
+          </Text>
+        )}
       </Column>
-      
+
       <a
         href={displayButtonHref}
-        target={displayButtonHref.startsWith('mailto') ? '_self' : '_blank'}
+        target={isMailto ? '_self' : '_blank'}
         rel="noopener noreferrer"
-        style={{ textDecoration: 'none', width: '100%', maxWidth: '384px' }}
+        aria-disabled={displayButtonHref === undefined}
+        style={{ textDecoration: 'none' }}
       >
-        <Button size="m" fillWidth>
+        <Button size="m" style={{ paddingInline: '2rem' }}>
           {displayButtonText}
         </Button>
       </a>

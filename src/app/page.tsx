@@ -7,13 +7,13 @@ import {
   Schema,
   Meta,
   RevealFx,
+  Grid,
 } from "@once-ui-system/core";
 import { home, about, person, baseURL } from "@/resources";
 import { BookingCTA } from "@/components/BookingCTA";
-import { ProjectVideoGrid } from "@/components/cases/ProjectVideoGrid";
+import { ServiceCard } from "@/components/ServiceCard";
 import { CookieBanner } from "@/components/CookieBanner";
 import { ScrollReveal } from "@/components/ScrollReveal";
-import { getPosts } from "@/utils/utils";
 
 export async function generateMetadata() {
   return Meta.generate({
@@ -26,16 +26,6 @@ export async function generateMetadata() {
 }
 
 export default function Home() {
-  const sortedCases = getPosts(["src", "app", "cases", "projects"]).sort(
-    (a, b) => new Date(b.metadata.publishedAt).getTime() - new Date(a.metadata.publishedAt).getTime()
-  );
-  const videoCases = sortedCases.slice(0, 2).map((post) => ({
-    slug: post.slug,
-    title: post.metadata.title,
-    summary: post.metadata.summary,
-    video: post.metadata.images?.[0] ?? "",
-  }));
-
   return (
     <>
       <Column fillWidth gap="80">
@@ -52,7 +42,7 @@ export default function Home() {
             image: `${baseURL}${person.avatar}`,
           }}
         />
-        <Column fillWidth gap="32">
+        <Column fillWidth gap="32" paddingTop="128" s={{ paddingTop: "0" }}>
           {home.featured.display && (
             <RevealFx speed="fast" delay={0.5} fillWidth>
               <Badge
@@ -69,8 +59,12 @@ export default function Home() {
             </RevealFx>
           )}
           <RevealFx speed="fast" translateY="4" delay={0.5} fillWidth>
-            <Column maxWidth="s" fillWidth>
-              <Heading wrap="balance" variant="display-strong-l">
+            <Column maxWidth="l" fillWidth>
+              <Heading
+                wrap="balance"
+                variant="display-strong-l"
+                style={{ fontSize: "clamp(2.5rem, 6vw, 6rem)", lineHeight: 1.05 }}
+              >
                 {home.headline}
               </Heading>
             </Column>
@@ -84,14 +78,27 @@ export default function Home() {
           </RevealFx>
         </Column>
         <ScrollReveal>
-          <ProjectVideoGrid projects={videoCases} />
+          <Grid columns="2" s={{ columns: 1 }} fillWidth gap="40">
+            <ServiceCard
+              href="/services#research-intelligence"
+              video="/images/projects/project-01/video-1.mp4"
+              label="Research & Intelligence"
+              heading="Understand the landscape."
+            />
+            <ServiceCard
+              href="/services#strategic-communications"
+              video="/images/projects/project-01/video-2.mp4"
+              label="Strategic Communications"
+              heading="Shape the narrative."
+            />
+          </Grid>
         </ScrollReveal>
         <ScrollReveal>
           <BookingCTA
-            title="Work with us."
-            description="A short conversation to explore whether there's a fit."
+            title="Before your next move, talk to us."
+            description=""
             buttonText="Get in touch"
-            buttonHref="mailto:contact@mhitaryan.com"
+            buttonHrefEncoded="bWFpbHRvOmNvbnRhY3RAbWhpdGFyeWFuLmNvbQ=="
           />
         </ScrollReveal>
       </Column>

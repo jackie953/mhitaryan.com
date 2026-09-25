@@ -59,7 +59,7 @@ const home: Home = {
   },
   subline: (
     <>
-Strategic research and communications at the intersection of power, politics, and people.
+      Clarity for complex environments.
     </>
   ),
 };

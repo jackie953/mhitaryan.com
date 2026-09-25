@@ -190,7 +190,6 @@ export const Header = () => {
               href="/"
               style={{
                 textDecoration: "none",
-                transform: "translateY(-4px)",
                 display: "inline-block",
               }}
             >
@@ -222,36 +221,36 @@ export const Header = () => {
               border="neutral-alpha-weak"
               radius="l"
               shadow="l"
-              paddingX="12"
-              paddingY="2"
+              paddingX="20"
+              paddingY="8"
               horizontal="center"
               vertical="center"
               zIndex={1}
             >
-              <Row gap="8" vertical="center" textVariant="body-default-s" suppressHydrationWarning>
+              <Row gap="12" vertical="center" style={{ fontSize: "17px" }} suppressHydrationWarning>
               {routes["/"] && (
-                <ToggleButton size="s" prefixIcon="home" href="/" selected={pathname === "/"} />
+                <ToggleButton size="m" prefixIcon="home" href="/" selected={pathname === "/"} />
               )}
-              <Line background="neutral-alpha-medium" vert maxHeight="16" />
+              <Line background="neutral-alpha-medium" vert maxHeight="20" />
               {routes["/about"] && (
-                <ToggleButton size="s" href="/about" label={about.label} selected={pathname === "/about"} />
+                <ToggleButton size="m" href="/about" label={about.label} selected={pathname === "/about"} />
               )}
               {routes["/services"] && (
-                <ToggleButton size="s" href={services.path} label={services.label} selected={pathname.startsWith("/services")} />
+                <ToggleButton size="m" href={services.path} label={services.label} selected={pathname.startsWith("/services")} />
               )}
               {routes["/cases"] && (
-                <ToggleButton size="s" href={cases.path} label={cases.label} selected={pathname.startsWith("/cases")} />
+                <ToggleButton size="m" href={cases.path} label={cases.label} selected={pathname.startsWith("/cases")} />
               )}
               {routes["/contact"] && (
-                <ToggleButton size="s" href={contact.path} label={contact.label} selected={pathname.startsWith("/contact")} />
+                <ToggleButton size="m" href={contact.path} label={contact.label} selected={pathname.startsWith("/contact")} />
               )}
               {routes["/blog"] && (
-                <ToggleButton size="s" href="/blog" label={blog.label} selected={pathname.startsWith("/blog")} />
+                <ToggleButton size="m" href="/blog" label={blog.label} selected={pathname.startsWith("/blog")} />
               )}
               {display.themeSwitcher && (
                 <>
-                  <Line background="neutral-alpha-medium" vert maxHeight="16" />
-                  <ThemeToggle size="s" />
+                  <Line background="neutral-alpha-medium" vert maxHeight="20" />
+                  <ThemeToggle size="m" />
                 </>
               )}
               </Row>

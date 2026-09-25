@@ -1,5 +1,5 @@
 import { getPosts } from "@/utils/utils";
-import { Column } from "@once-ui-system/core";
+import { Column, Line } from "@once-ui-system/core";
 import { CaseCard } from "@/components";
 
 interface CasesProps {
@@ -25,17 +25,19 @@ export function Cases({ range, exclude }: CasesProps) {
 
   return (
     <Column fillWidth gap="l">
-      {displayedCases.map((post) => (
-        <CaseCard
-          key={post.slug}
-          href={`/cases/${post.slug}`}
-          images={post.metadata.images}
-          title={post.metadata.title}
-          client={post.metadata.client}
-          details={post.metadata.details || post.metadata.summary}
-          tags={post.metadata.tags}
-          link={post.metadata.link || ""}
-        />
+      {displayedCases.map((post, index) => (
+        <Column key={post.slug} fillWidth gap="l">
+          {index > 0 && <Line background="neutral-alpha-weak" />}
+          <CaseCard
+            href={`/cases/${post.slug}`}
+            images={post.metadata.images}
+            title={post.metadata.title}
+            client={post.metadata.client}
+            details={post.metadata.details || post.metadata.summary}
+            tags={post.metadata.tags}
+            link={post.metadata.link || ""}
+          />
+        </Column>
       ))}
     </Column>
   );

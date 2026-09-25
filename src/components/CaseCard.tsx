@@ -1,9 +1,11 @@
 "use client";
 
+import Link from "next/link";
 import {
   Column,
   Flex,
   Heading,
+  Row,
   SmartLink,
   Tag,
   Text,
@@ -21,6 +23,7 @@ interface CaseCardProps {
 }
 
 export const CaseCard: React.FC<CaseCardProps> = ({
+  href,
   images = [],
   title,
   client,
@@ -28,64 +31,23 @@ export const CaseCard: React.FC<CaseCardProps> = ({
   tags = [],
   link,
 }) => {
-  const firstImage = images[0];
-  const isVideo = firstImage?.endsWith(".mp4");
+  const thumbnail = images[0];
+  const isVideo = thumbnail?.endsWith(".mp4");
 
   return (
-    <Column fillWidth gap="20">
-      {firstImage && (
-        <div style={{
-          borderRadius: 'var(--radius-l)',
-          overflow: 'hidden',
-          width: '100%',
-          aspectRatio: '16/9',
-          background: 'transparent',
-        }}>
-          {isVideo ? (
-            <video
-              src={firstImage}
-              autoPlay
-              loop
-              muted
-              playsInline
-              preload="auto"
-              style={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-                display: 'block',
-                border: 'none',
-                outline: 'none',
-              }}
-            />
-          ) : (
-            <img
-              src={firstImage}
-              alt={title}
-              loading="eager"
-              fetchPriority="high"
-              style={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-                display: 'block',
-                border: 'none',
-                outline: 'none',
-              }}
-            />
-          )}
-        </div>
-      )}
-      <Column fillWidth gap="8" style={{ maxWidth: "60ch" }}>
+    <Row fillWidth gap="24" vertical="center">
+      <Column fillWidth gap="8">
         {client && (
           <Text variant="label-default-s" onBackground="brand-weak">
             {client}
           </Text>
         )}
         {title && (
-          <Heading as="h2" wrap="balance" variant="heading-strong-xl">
-            {title}
-          </Heading>
+          <Link href={href} className="no-underline">
+            <Heading as="h2" wrap="balance" variant="heading-strong-l">
+              {title}
+            </Heading>
+          </Link>
         )}
         {details?.trim() && (
           <Text wrap="balance" variant="body-default-m" onBackground="neutral-weak">
@@ -102,7 +64,7 @@ export const CaseCard: React.FC<CaseCardProps> = ({
           </Flex>
         )}
         {link && (
-          <Flex paddingTop="8">
+          <Flex paddingTop="4">
             <SmartLink
               suffixIcon="arrowUpRightFromSquare"
               style={{ margin: "0", width: "fit-content" }}
@@ -113,6 +75,38 @@ export const CaseCard: React.FC<CaseCardProps> = ({
           </Flex>
         )}
       </Column>
-    </Column>
+      {thumbnail && (
+        <Link
+          href={href}
+          style={{
+            flexShrink: 0,
+            width: "96px",
+            height: "72px",
+            borderRadius: "var(--radius-m)",
+            overflow: "hidden",
+            display: "block",
+          }}
+        >
+          {isVideo ? (
+            <video
+              src={thumbnail}
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="auto"
+              style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+            />
+          ) : (
+            <img
+              src={thumbnail}
+              alt={title}
+              loading="lazy"
+              style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+            />
+          )}
+        </Link>
+      )}
+    </Row>
   );
 };

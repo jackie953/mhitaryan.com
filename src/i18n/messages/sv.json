@@ -1,0 +1,51 @@
+{
+  "nav": {
+    "about": "Om",
+    "services": "Tjänster",
+    "cases": "Fallstudier",
+    "email": "Maila Mhitaryan",
+    "emailTooltip": "Kontakta oss",
+    "language": "English"
+  },
+  "footer": {
+    "copyright": "© 2026 Mhitaryan",
+    "descriptor": "Strategisk research & kommunikation",
+    "privacy": "Integritetspolicy",
+    "emailLabel": "E-post",
+    "linkedinLabel": "LinkedIn"
+  },
+  "privacy": {
+    "title": "Integritets- och cookiepolicy",
+    "whoResponsible": "1. Vilka vi är",
+    "whoResponsibleText": "Mhitaryan är baserat i Sverige och verkar inom EU och internationellt. Vi respekterar din integritet och åtar oss att skydda dina personuppgifter i enlighet med dataskyddsförordningen (GDPR).",
+    "whatWeCollect": "2. Vilka uppgifter vi samlar in",
+    "whatWeCollectIntro": "Vi kan samla in och behandla:",
+    "whatWeCollectItem1": "Kontaktuppgifter (namn, e-post, meddelande) när du kontaktar oss via e-post.",
+    "whatWeCollectItem2": "Tekniska uppgifter såsom IP-adress, webbläsartyp och enhet, för webbplatsens prestanda och säkerhet.",
+    "whatWeCollectItem3": "Cookies för grundläggande analys och för att förbättra din upplevelse på webbplatsen.",
+    "whatWeCollectNote": "Vi samlar inte in känsliga uppgifter eller säljer personuppgifter till tredje part.",
+    "howWeUse": "3. Hur vi använder dina uppgifter",
+    "howWeUseItem1": "För att besvara meddelanden och förfrågningar.",
+    "howWeUseItem2": "För att förbättra webbplatsens funktionalitet och prestanda.",
+    "howWeUseItem3": "För att förstå besökares interaktioner via anonymiserad statistik.",
+    "howWeUseNote": "Dina uppgifter lagras endast så länge det är nödvändigt för dessa syften.",
+    "legalBasis": "4. Rättslig grund",
+    "legalBasisIntro": "Vi behandlar uppgifter baserat på:",
+    "legalBasisItem1": "Samtycke (t.ex. att acceptera cookies eller skicka ett formulär).",
+    "legalBasisItem2": "Berättigat intresse (t.ex. att upprätthålla webbplatsens säkerhet och prestanda).",
+    "sharing": "5. Delning av uppgifter",
+    "sharingText": "Vi delar endast begränsade uppgifter med betrodda tjänsteleverantörer, såsom webbhotell och analysverktyg. Alla leverantörer uppfyller EU:s dataskyddsstandarder.",
+    "cookies": "6. Cookies",
+    "cookiesIntro": "Cookies är små textfiler som lagras på din enhet. Vi använder:",
+    "cookiesItem1": "Nödvändiga cookies – krävs för att webbplatsen ska fungera.",
+    "cookiesItem2": "Analyscookies – hjälper till att förstå trafik och användningsmönster.",
+    "cookiesNote": "Du kan när som helst ändra eller återkalla ditt cookiesamtycke via dina webbläsarinställningar.",
+    "rights": "7. Dina rättigheter",
+    "rightsText": "Enligt GDPR har du rätt att få tillgång till, rätta eller radera dina personuppgifter, återkalla samtycke när som helst och klaga till Integritetsskyddsmyndigheten (IMY) om du anser att dina uppgifter har hanterats felaktigt. Kontakta oss för alla integritetsrelaterade förfrågningar.",
+    "security": "8. Datasäkerhet",
+    "securityText": "Vi använder säker hosting och kryptering (HTTPS) för att skydda din information och förhindra obehörig åtkomst.",
+    "updates": "9. Uppdateringar",
+    "updatesText": "Denna policy kan komma att uppdateras med jämna mellanrum för att återspegla juridiska eller tekniska förändringar. Den senaste versionen finns alltid tillgänglig på denna sida.",
+    "lastUpdated": "Senast uppdaterad: juni 2026"
+  }
+}

@@ -3,10 +3,13 @@
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { useLocale, useTranslations } from "next-intl";
 import { Menu, X } from "lucide-react";
 
 import { Line, Row, ToggleButton, useTheme } from "@once-ui-system/core";
 import { ThemeToggle } from "./ThemeToggle";
+import { LanguageToggle } from "./LanguageToggle";
+import { EmailButton } from "./EmailButton";
 import Text3DFlip from "@/registry/magicui/text-3d-flip";
 import styles from "./Header.module.scss";
 
@@ -19,6 +22,9 @@ import {
   services,
   contact,
 } from "@/resources";
+
+/** Strip the leading /en or /sv locale segment for route-matching against locale-agnostic paths. */
+const stripLocale = (pathname: string) => pathname.replace(/^\/(en|sv)(?=\/|$)/, "") || "/";
 
 type TimeDisplayProps = {
   timeZone: string;
@@ -113,6 +119,10 @@ const navLinkStyle = (active: boolean): React.CSSProperties => ({
 
 export const Header = () => {
   const pathname = usePathname() ?? "";
+  const locale = useLocale();
+  const tNav = useTranslations("nav");
+  const localePath = stripLocale(pathname);
+  const withLocale = (path: string) => (path === "/" ? `/${locale}` : `/${locale}${path}`);
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrollHidden, setScrollHidden] = useState(false);
   const [navOpacity, setNavOpacity] = useState(1);
@@ -187,7 +197,7 @@ export const Header = () => {
           {/* LEFT: Site name — always visible */}
           <Row paddingLeft="12" vertical="center" style={navFadeStyle}>
             <Link
-              href="/"
+              href={withLocale("/")}
               style={{
                 textDecoration: "none",
                 display: "inline-block",
@@ -209,7 +219,7 @@ export const Header = () => {
                   whiteSpace: "nowrap",
                 }}
               >
-                MHITARYAN CONSULTING
+                MHITARYAN
               </Text3DFlip>
             </Link>
           </Row>
@@ -229,30 +239,34 @@ export const Header = () => {
             >
               <Row gap="12" vertical="center" style={{ fontSize: "17px" }} suppressHydrationWarning>
               {routes["/"] && (
-                <ToggleButton size="m" prefixIcon="home" href="/" selected={pathname === "/"} />
+                <ToggleButton size="m" prefixIcon="home" href={withLocale("/")} selected={localePath === "/"} />
               )}
               <Line background="neutral-alpha-medium" vert maxHeight="20" />
               {routes["/about"] && (
-                <ToggleButton size="m" href="/about" label={about.label} selected={pathname === "/about"} />
+                <ToggleButton size="m" href={withLocale("/about")} label={tNav("about")} selected={localePath === "/about"} />
               )}
               {routes["/services"] && (
-                <ToggleButton size="m" href={services.path} label={services.label} selected={pathname.startsWith("/services")} />
+                <ToggleButton size="m" href={withLocale(services.path)} label={tNav("services")} selected={localePath.startsWith("/services")} />
               )}
               {routes["/cases"] && (
-                <ToggleButton size="m" href={cases.path} label={cases.label} selected={pathname.startsWith("/cases")} />
+                <ToggleButton size="m" href={withLocale(cases.path)} label={tNav("cases")} selected={localePath.startsWith("/cases")} />
               )}
               {routes["/contact"] && (
-                <ToggleButton size="m" href={contact.path} label={contact.label} selected={pathname.startsWith("/contact")} />
+                <ToggleButton size="m" href={withLocale(contact.path)} label={contact.label} selected={localePath.startsWith("/contact")} />
               )}
               {routes["/blog"] && (
-                <ToggleButton size="m" href="/blog" label={blog.label} selected={pathname.startsWith("/blog")} />
+                <ToggleButton size="m" href={withLocale("/blog")} label={blog.label} selected={localePath.startsWith("/blog")} />
               )}
+              <Line background="neutral-alpha-medium" vert maxHeight="20" />
+              <EmailButton size="m" />
               {display.themeSwitcher && (
                 <>
                   <Line background="neutral-alpha-medium" vert maxHeight="20" />
                   <ThemeToggle size="m" />
                 </>
               )}
+              <Line background="neutral-alpha-medium" vert maxHeight="20" />
+              <LanguageToggle />
               </Row>
             </Row>
           </Row>
@@ -271,35 +285,39 @@ export const Header = () => {
           {menuOpen && (
             <div className={styles.mobileDropdown}>
               {routes["/"] && (
-                <Link href="/" style={navLinkStyle(pathname === "/")} onClick={() => setMenuOpen(false)}>
+                <Link href={withLocale("/")} style={navLinkStyle(localePath === "/")} onClick={() => setMenuOpen(false)}>
                   Home
                 </Link>
               )}
               {routes["/about"] && (
-                <Link href="/about" style={navLinkStyle(pathname === "/about")} onClick={() => setMenuOpen(false)}>
-                  About
+                <Link href={withLocale("/about")} style={navLinkStyle(localePath === "/about")} onClick={() => setMenuOpen(false)}>
+                  {tNav("about")}
                 </Link>
               )}
               {routes["/services"] && (
-                <Link href={services.path} style={navLinkStyle(pathname.startsWith("/services"))} onClick={() => setMenuOpen(false)}>
-                  Services
+                <Link href={withLocale(services.path)} style={navLinkStyle(localePath.startsWith("/services"))} onClick={() => setMenuOpen(false)}>
+                  {tNav("services")}
                 </Link>
               )}
               {routes["/cases"] && (
-                <Link href={cases.path} style={navLinkStyle(pathname.startsWith("/cases"))} onClick={() => setMenuOpen(false)}>
-                  Cases
+                <Link href={withLocale(cases.path)} style={navLinkStyle(localePath.startsWith("/cases"))} onClick={() => setMenuOpen(false)}>
+                  {tNav("cases")}
                 </Link>
               )}
               {routes["/blog"] && (
-                <Link href="/blog" style={navLinkStyle(pathname.startsWith("/blog"))} onClick={() => setMenuOpen(false)}>
+                <Link href={withLocale("/blog")} style={navLinkStyle(localePath.startsWith("/blog"))} onClick={() => setMenuOpen(false)}>
                   Blog
                 </Link>
               )}
               {routes["/contact"] && (
-                <Link href={contact.path} style={navLinkStyle(pathname.startsWith("/contact"))} onClick={() => setMenuOpen(false)}>
+                <Link href={withLocale(contact.path)} style={navLinkStyle(localePath.startsWith("/contact"))} onClick={() => setMenuOpen(false)}>
                   Contact
                 </Link>
               )}
+              <div style={{ padding: "13px 20px", borderBottom: "1px solid var(--neutral-alpha-weak)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <EmailButton size="m" variant="ghost" />
+                <LanguageToggle />
+              </div>
               {display.themeSwitcher && <MobileThemeRow />}
             </div>
           )}

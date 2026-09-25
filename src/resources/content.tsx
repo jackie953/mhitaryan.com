@@ -1,5 +1,6 @@
 import { type About, type Blog, type Home, type Newsletter, type Person, type Social, type Work, Services, Contact } from "@/types";
 import { Line, Logo, Row, Text } from "@once-ui-system/core";
+import { CONTACT_EMAIL, LINKEDIN_URL, SITE_TITLE, SITE_TAGLINE, SITE_DESCRIPTION } from "./site.config";
 
 const person: Person = {
   firstName: "Jacqueline",
@@ -22,12 +23,12 @@ const social: Social = [
   {
     name: "LinkedIn",
     icon: "linkedin",
-    link: "https://www.linkedin.com/company/mhitaryan-consulting/",
+    link: LINKEDIN_URL,
   },
   {
     name: "Email",
     icon: "email",
-    link: "mailto:contact@mhitaryan.com",
+    link: `mailto:${CONTACT_EMAIL}`,
   },
 ];
 
@@ -35,8 +36,8 @@ const home: Home = {
   path: "/",
   image: "/images/og/home.jpg",
   label: "Home",
-  title: "Mhitaryan Consulting",
-  description: "Strategic research and communications at the intersection of power, politics, and people.",
+  title: SITE_TAGLINE,
+  description: SITE_DESCRIPTION,
   headline: (
     <>
       Read the room.
@@ -67,7 +68,7 @@ const home: Home = {
 const about: About = {
   path: "/about",
   label: "About",
-  title: "About | Mhitaryan Consulting",
+  title: "About | Mhitaryan",
   description: "",
   tableOfContent: {
     display: true,
@@ -88,10 +89,10 @@ const about: About = {
     description: (
       <>
         <p>
-        I have spent over a decade working across strategic research, communications, and public affairs — in consulting, civil society, and international contexts. Clients have included government agencies, trade associations, and Fortune 500 companies, alongside NGOs, think tanks, and smaller mission-driven organizations.
+        We have spent over a decade working across strategic research, communications, and public affairs — in consulting, civil society, and international contexts. Clients have included government agencies, trade associations, and Fortune 500 companies, alongside NGOs, think tanks, and smaller mission-driven organizations.
         </p>
         <p>
-        Ultimately the work is an extension of who I am: someone who reads, thinks, writes, and builds things. I come from a culturally mixed background and have lived and worked across several countries. I am based in Stockholm and work in Swedish, English, and Spanish.
+        Ultimately the work is an extension of who we are: people who read, think, write, and build things. We come from a culturally mixed background and have lived and worked across several countries. We are based in Stockholm and work in Swedish, English, and Spanish.
         </p>
       </>
     ),
@@ -111,10 +112,10 @@ const about: About = {
     description: (
       <>
         <p>
-        I work with precision and without unnecessary complexity. Research is thorough, analysis is grounded, and communication is direct — adapted to context. Strategy and execution are not separate things; I do both.
+        We work with precision and without unnecessary complexity. Research is thorough, analysis is grounded, and communication is direct — adapted to context. Strategy and execution are not separate things; we do both.
         </p>
         <p>
-        Most of my work sits at the boundary between sectors or disciplines: policy and communications, research and strategy, local context and international relevance. That's where I'm most useful — translating between worlds, identifying what others miss, and delivering work that holds up under scrutiny.
+        Most of our work sits at the boundary between sectors or disciplines: policy and communications, research and strategy, local context and international relevance. That's where we're most useful — translating between worlds, identifying what others miss, and delivering work that holds up under scrutiny.
         </p>
       </>
     ),
@@ -168,21 +169,21 @@ const about: About = {
 const services = {
   path: "/services",
   label: "Services",
-  title: "Services | Mhitaryan Consulting",
+  title: "Services | Mhitaryan",
   description: "Strategic research and communications services",
 };
 
 const contact = {
   path: "/contact",
   label: "Contact",
-  title: "Contact | Mhitaryan Consulting",
+  title: "Contact | Mhitaryan",
   description: "Get in touch to discuss how we can help you",
 };
 
 const blog: Blog = {
   path: "/blog",
   label: "Insights",
-  title: "Insights | Mhitaryan Consulting",
+  title: "Insights | Mhitaryan",
   description: `Read what ${person.name} has been up to recently`,
   // Create new blog posts by adding a new .mdx file to app/blog/posts
   // All posts will be listed on the /blog route
@@ -191,7 +192,7 @@ const blog: Blog = {
 const cases: Work = {
   path: "/cases",
   label: "Cases",
-  title: "Cases | Mhitaryan Consulting",
+  title: "Cases | Mhitaryan",
   description: "",
   tableOfContent: {
     display: true,
@@ -199,4 +200,11 @@ const cases: Work = {
   },
 };
 
-export { person, social, newsletter, home, about, services, contact, blog, cases };
+const privacy = {
+  path: "/privacy",
+  label: "Privacy",
+  title: "Privacy Policy",
+  description: "Privacy policy and data protection information",
+};
+
+export { person, social, newsletter, home, about, services, contact, blog, cases, privacy };

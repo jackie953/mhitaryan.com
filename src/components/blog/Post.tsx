@@ -1,5 +1,6 @@
 "use client";
 
+import { useLocale } from "next-intl";
 import { Card, Column, Media, Row, Avatar, Text } from "@once-ui-system/core";
 import { formatDate } from "@/utils/formatDate";
 import { person } from "@/resources";
@@ -11,11 +12,12 @@ interface PostProps {
 }
 
 export default function Post({ post, thumbnail, direction }: PostProps) {
+  const locale = useLocale();
   return (
     <Card
       fillWidth
       key={post.slug}
-      href={`/blog/${post.slug}`}
+      href={`/${locale}/blog/${post.slug}`}
       transition="micro-medium"
       direction={direction}
       border="transparent"

@@ -1,0 +1,51 @@
+{
+  "nav": {
+    "about": "About",
+    "services": "Services",
+    "cases": "Cases",
+    "email": "Email Mhitaryan",
+    "emailTooltip": "Get in touch",
+    "language": "Svenska"
+  },
+  "footer": {
+    "copyright": "© 2026 Mhitaryan",
+    "descriptor": "Strategic research & communications",
+    "privacy": "Privacy policy",
+    "emailLabel": "Email",
+    "linkedinLabel": "LinkedIn"
+  },
+  "privacy": {
+    "title": "Privacy & Cookie Policy",
+    "whoResponsible": "1. Who we are",
+    "whoResponsibleText": "Mhitaryan is based in Sweden and operates within the EU and internationally. We respect your privacy and are committed to protecting your personal data in line with the General Data Protection Regulation (GDPR).",
+    "whatWeCollect": "2. What data we collect",
+    "whatWeCollectIntro": "We may collect and process:",
+    "whatWeCollectItem1": "Contact information (name, email, message) when you reach out through email.",
+    "whatWeCollectItem2": "Technical data such as IP address, browser type, and device, for website performance and security.",
+    "whatWeCollectItem3": "Cookies for basic analytics and to improve your browsing experience.",
+    "whatWeCollectNote": "We do not collect sensitive data or sell personal information to third parties.",
+    "howWeUse": "3. How we use your data",
+    "howWeUseItem1": "To respond to messages and inquiries.",
+    "howWeUseItem2": "To improve site functionality and performance.",
+    "howWeUseItem3": "To understand visitor interactions via anonymized analytics.",
+    "howWeUseNote": "Your data is only stored as long as necessary for these purposes.",
+    "legalBasis": "4. Legal basis",
+    "legalBasisIntro": "We process data based on:",
+    "legalBasisItem1": "Consent (e.g., accepting cookies or submitting a form).",
+    "legalBasisItem2": "Legitimate interest (e.g., maintaining website security and performance).",
+    "sharing": "5. Sharing of data",
+    "sharingText": "We only share limited data with trusted service providers, such as website hosting and analytics tools. All providers comply with EU data protection standards.",
+    "cookies": "6. Cookies",
+    "cookiesIntro": "Cookies are small text files stored on your device. We use:",
+    "cookiesItem1": "Essential cookies – required for the site to function.",
+    "cookiesItem2": "Analytics cookies – help understand traffic and usage patterns.",
+    "cookiesNote": "You can change or withdraw your cookie consent anytime via your browser settings.",
+    "rights": "7. Your rights",
+    "rightsText": "Under GDPR, you have the right to access, correct, or delete your personal data, withdraw consent at any time, and complain to the Swedish Authority for Privacy Protection (IMY) if you believe your data has been mishandled. Contact us for any privacy-related requests.",
+    "security": "8. Data security",
+    "securityText": "We use secure hosting and encryption (HTTPS) to protect your information and prevent unauthorized access.",
+    "updates": "9. Updates",
+    "updatesText": "This policy may be updated occasionally to reflect legal or technical changes. The latest version will always be available on this page.",
+    "lastUpdated": "Last updated: June 2026"
+  }
+}

@@ -1,3 +1,4 @@
+import { getLocale } from "next-intl/server";
 import { getPosts } from "@/utils/utils";
 import { Column, Line } from "@once-ui-system/core";
 import { CaseCard } from "@/components";
@@ -7,8 +8,9 @@ interface CasesProps {
   exclude?: string[];
 }
 
-export function Cases({ range, exclude }: CasesProps) {
-  let allCases = getPosts(["src", "app", "cases", "projects"]);
+export async function Cases({ range, exclude }: CasesProps) {
+  const locale = await getLocale();
+  let allCases = getPosts(["src", "app", "[locale]", "cases", "projects"]);
 
   // Exclude by slug (exact match)
   if (exclude && exclude.length > 0) {
@@ -29,7 +31,7 @@ export function Cases({ range, exclude }: CasesProps) {
         <Column key={post.slug} fillWidth gap="l">
           {index > 0 && <Line background="neutral-alpha-weak" />}
           <CaseCard
-            href={`/cases/${post.slug}`}
+            href={`/${locale}/cases/${post.slug}`}
             images={post.metadata.images}
             title={post.metadata.title}
             client={post.metadata.client}

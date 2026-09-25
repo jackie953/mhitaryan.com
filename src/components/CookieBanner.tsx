@@ -1,9 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
+import { useLocale } from "next-intl";
 import { Text, Button } from "@once-ui-system/core";
 
 export function CookieBanner() {
+  const locale = useLocale();
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -29,12 +32,12 @@ export function CookieBanner() {
         <div className="flex-1 flex items-center justify-center">
           <Text variant="body-default-s" onBackground="neutral-weak">
             By continuing to use this site you consent to the use of cookies in accordance with our{" "}
-            <a
+            <Link
               className="text-blue-600 hover:underline font-medium dark:text-blue-500"
-              href="/privacy"
+              href={`/${locale}/privacy`}
             >
               Cookies Policy
-            </a>
+            </Link>
             .
           </Text>
         </div>

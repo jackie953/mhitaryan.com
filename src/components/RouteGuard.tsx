@@ -29,13 +29,17 @@ const RouteGuard: React.FC<RouteGuardProps> = ({ children }) => {
       const checkRouteEnabled = () => {
         if (!pathname) return false;
 
-        if (pathname in routes) {
-          return routes[pathname as keyof typeof routes];
+        // Strip the leading /en or /sv locale segment before matching against
+        // the locale-agnostic `routes` config.
+        const localeStripped = pathname.replace(/^\/(en|sv)(?=\/|$)/, "") || "/";
+
+        if (localeStripped in routes) {
+          return routes[localeStripped as keyof typeof routes];
         }
 
         const dynamicRoutes = ["/blog", "/cases"] as const;
         for (const route of dynamicRoutes) {
-          if (pathname?.startsWith(route) && routes[route]) {
+          if (localeStripped.startsWith(route) && routes[route]) {
             return true;
           }
         }
@@ -46,7 +50,8 @@ const RouteGuard: React.FC<RouteGuardProps> = ({ children }) => {
       const routeEnabled = checkRouteEnabled();
       setIsRouteEnabled(routeEnabled);
 
-      if (protectedRoutes[pathname as keyof typeof protectedRoutes]) {
+      const localeStrippedPath = (pathname ?? "").replace(/^\/(en|sv)(?=\/|$)/, "") || "/";
+      if (protectedRoutes[localeStrippedPath as keyof typeof protectedRoutes]) {
         setIsPasswordRequired(true);
 
         const response = await fetch("/api/check-auth");

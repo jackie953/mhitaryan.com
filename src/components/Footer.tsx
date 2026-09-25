@@ -1,8 +1,14 @@
+"use client";
+
+import { useLocale, useTranslations } from "next-intl";
 import { Row, IconButton, Text } from "@once-ui-system/core";
-import { person, social } from "@/resources";
+import Link from "next/link";
+import { social } from "@/resources";
 import styles from "./Footer.module.scss";
 
 export const Footer = () => {
+  const locale = useLocale();
+  const t = useTranslations("footer");
   const currentYear = new Date().getFullYear();
 
   return (
@@ -22,10 +28,22 @@ export const Footer = () => {
         }}
       >
         <Text variant="body-default-s" onBackground="neutral-strong">
-          <Text onBackground="neutral-weak">© {currentYear} / </Text>
-          <Text>Mhitaryan Consulting</Text>
+          <Text onBackground="neutral-weak">
+            © {currentYear} Mhitaryan ·{" "}
+          </Text>
+          <Text onBackground="neutral-weak">{t("descriptor")}</Text>
         </Text>
-        <Row gap="16">
+        <Row gap="16" vertical="center">
+          <Link
+            href={`/${locale}/privacy`}
+            style={{
+              fontSize: "var(--font-size-body-s, 0.875rem)",
+              color: "var(--neutral-on-background-weak)",
+              textDecoration: "none",
+            }}
+          >
+            {t("privacy")}
+          </Link>
           {social.map(
             (item) =>
               item.link && (

@@ -9,7 +9,18 @@ export {
   cases,
   services,
   contact,
+  privacy,
 } from "./content";
+
+export {
+  CONTACT_EMAIL,
+  LINKEDIN_URL,
+  LOCATION,
+  SHOW_GHOST_WORDMARK,
+  SITE_TITLE,
+  SITE_DESCRIPTION,
+  SITE_TAGLINE,
+} from "./site.config";
 
 export {
   display,

@@ -9,6 +9,7 @@ import {
   RevealFx,
   Grid,
 } from "@once-ui-system/core";
+import { getLocale } from "next-intl/server";
 import { home, about, person, baseURL } from "@/resources";
 import { BookingCTA } from "@/components/BookingCTA";
 import { ServiceCard } from "@/components/ServiceCard";
@@ -25,7 +26,8 @@ export async function generateMetadata() {
   });
 }
 
-export default function Home() {
+export default async function Home() {
+  const locale = await getLocale();
   return (
     <>
       <Column fillWidth gap="80">
@@ -84,13 +86,13 @@ export default function Home() {
         <ScrollReveal>
           <Grid columns="2" s={{ columns: 1 }} fillWidth gap="40">
             <ServiceCard
-              href="/services#research-intelligence"
+              href={`/${locale}/services#research-intelligence`}
               video="/images/projects/project-01/video-1.mp4"
               label="Research & Intelligence"
               heading="Understand the landscape"
             />
             <ServiceCard
-              href="/services#strategic-communications"
+              href={`/${locale}/services#strategic-communications`}
               video="/images/projects/project-01/video-2.mp4"
               label="Strategic Communications"
               heading="Shape the narrative"
@@ -102,7 +104,7 @@ export default function Home() {
             title="Before your next move, talk to us."
             description=""
             buttonText="Get in touch"
-            buttonHrefEncoded="bWFpbHRvOmNvbnRhY3RAbWhpdGFyeWFuLmNvbQ=="
+            buttonHrefEncoded="bWFpbHRvOmhlbGxvQG1oaXRhcnlhbi5jb20="
           />
         </ScrollReveal>
       </Column>

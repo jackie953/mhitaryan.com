@@ -193,14 +193,16 @@ export const Header = () => {
       >
         {/* Inner container — aligned to the same max-width as the main content
             so the logo and menu line up with the page grid's edges */}
-        <Row maxWidth="xl" fillWidth horizontal="between" vertical="center">
+        <Row maxWidth="xl" fillWidth horizontal="between" vertical="center" style={{ minHeight: 48 }}>
           {/* LEFT: Site name — always visible */}
-          <Row paddingLeft="12" vertical="center" style={navFadeStyle}>
+          <Row paddingLeft="12" fillHeight vertical="center" style={{ ...navFadeStyle, minHeight: 48 }}>
             <Link
               href={withLocale("/")}
               style={{
                 textDecoration: "none",
-                display: "inline-block",
+                display: "inline-flex",
+                alignItems: "center",
+                height: "100%",
               }}
             >
               <Text3DFlip
@@ -217,6 +219,8 @@ export const Header = () => {
                   letterSpacing: "0.04em",
                   fontFamily: "var(--font-heading)",
                   whiteSpace: "nowrap",
+                  lineHeight: 1,
+                  alignItems: "center",
                 }}
               >
                 MHITARYAN
@@ -225,7 +229,7 @@ export const Header = () => {
           </Row>
 
           {/* RIGHT: Pill nav — desktop only, right edge aligned to the container */}
-          <Row paddingRight="12" className={styles.desktopOnly} style={navFadeStyle}>
+          <Row paddingRight="12" fillHeight vertical="center" className={styles.desktopOnly} style={{ ...navFadeStyle, minHeight: 48 }}>
             <Row
               background="page"
               border="neutral-alpha-weak"

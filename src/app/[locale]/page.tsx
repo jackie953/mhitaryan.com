@@ -1,6 +1,5 @@
 import {
   Heading,
-  Text,
   Column,
   Badge,
   Row,
@@ -13,7 +12,6 @@ import { getLocale } from "next-intl/server";
 import { home, about, person, baseURL } from "@/resources";
 import { BookingCTA } from "@/components/BookingCTA";
 import { ServiceCard } from "@/components/ServiceCard";
-import { CookieBanner } from "@/components/CookieBanner";
 import { ScrollReveal } from "@/components/ScrollReveal";
 
 export async function generateMetadata() {
@@ -29,7 +27,6 @@ export async function generateMetadata() {
 export default async function Home() {
   const locale = await getLocale();
   return (
-    <>
       <Column fillWidth gap="80">
         <Schema
           as="webPage"
@@ -75,13 +72,6 @@ export default async function Home() {
               </Heading>
             </Column>
           </RevealFx>
-          <RevealFx speed="fast" translateY="8" delay={0.65} fillWidth>
-            <Column maxWidth="m" fillWidth>
-              <Text wrap="balance" onBackground="neutral-weak" variant="heading-default-xl">
-                {home.subline}
-              </Text>
-            </Column>
-          </RevealFx>
         </Column>
         <ScrollReveal>
           <Grid columns="2" s={{ columns: 1 }} fillWidth gap="40">
@@ -108,7 +98,5 @@ export default async function Home() {
           />
         </ScrollReveal>
       </Column>
-      <CookieBanner />
-    </>
   );
 }

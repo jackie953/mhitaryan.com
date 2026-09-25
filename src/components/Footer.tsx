@@ -1,65 +1,61 @@
 "use client";
 
 import { useLocale, useTranslations } from "next-intl";
-import { Row, IconButton, Text } from "@once-ui-system/core";
 import Link from "next/link";
-import { social } from "@/resources";
+import { about, services, cases, CONTACT_EMAIL, LINKEDIN_URL, LOCATION } from "@/resources";
 import styles from "./Footer.module.scss";
 
 export const Footer = () => {
   const locale = useLocale();
   const t = useTranslations("footer");
+  const tNav = useTranslations("nav");
   const currentYear = new Date().getFullYear();
 
+  const withLocale = (path: string) => `/${locale}${path}`;
+
   return (
-    <Row as="footer" fillWidth padding="8" horizontal="center" s={{ direction: "column" }}>
-      <Row
-        className={styles.mobile}
-        maxWidth="m"
-        paddingY="8"
-        paddingX="16"
-        gap="16"
-        horizontal="between"
-        vertical="center"
-        s={{
-          direction: "column",
-          horizontal: "center",
-          align: "center",
-        }}
-      >
-        <Text variant="body-default-s" onBackground="neutral-strong">
-          <Text onBackground="neutral-weak">
-            © {currentYear} Mhitaryan ·{" "}
-          </Text>
-          <Text onBackground="neutral-weak">{t("descriptor")}</Text>
-        </Text>
-        <Row gap="16" vertical="center">
-          <Link
-            href={`/${locale}/privacy`}
-            style={{
-              fontSize: "var(--font-size-body-s, 0.875rem)",
-              color: "var(--neutral-on-background-weak)",
-              textDecoration: "none",
-            }}
-          >
+    <footer style={{ width: "100%", display: "flex", justifyContent: "center" }}>
+      <div className={styles.container}>
+        <div className={styles.hairline} />
+
+        <div className={styles.grid}>
+          <div className={styles.column}>
+            <span className={styles.brand}>Mhitaryan</span>
+            <span className={styles.pronunciation}>{t("pronunciation")}</span>
+          </div>
+
+          <div className={styles.column}>
+            <span className={styles.item}>{LOCATION}</span>
+            <Link href={`mailto:${CONTACT_EMAIL}`} className={styles.link}>
+              {CONTACT_EMAIL}
+            </Link>
+            <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer" className={styles.link}>
+              LinkedIn
+            </a>
+          </div>
+
+          <div className={styles.column}>
+            <Link href={withLocale(about.path)} className={styles.link}>
+              {tNav("about")}
+            </Link>
+            <Link href={withLocale(services.path)} className={styles.link}>
+              {tNav("services")}
+            </Link>
+            <Link href={withLocale(cases.path)} className={styles.link}>
+              {tNav("cases")}
+            </Link>
+          </div>
+        </div>
+
+        <div className={styles.bottomRow}>
+          <span className={styles.bottomText}>
+            © {currentYear} Mhitaryan · {t("descriptor")}
+          </span>
+          <Link href={withLocale("/privacy")} className={styles.bottomLink}>
             {t("privacy")}
           </Link>
-          {social.map(
-            (item) =>
-              item.link && (
-                <IconButton
-                  key={item.name}
-                  href={item.link}
-                  icon={item.icon}
-                  tooltip={item.name}
-                  size="s"
-                  variant="ghost"
-                />
-              ),
-          )}
-        </Row>
-      </Row>
-      <Row height="80" hide s={{ hide: false }} />
-    </Row>
+        </div>
+      </div>
+    </footer>
   );
 };

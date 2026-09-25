@@ -27,15 +27,23 @@ export function CookieBanner() {
   return (
     <div className={styles.wrapper}>
       <div className={styles.cookieCard}>
-        <p className={styles.title}>We use cookies</p>
+        <div className={styles.head}>
+          <span className={styles.icon} aria-hidden="true">
+            🍪
+          </span>
+          <p className={styles.title}>We use cookies</p>
+        </div>
         <p className={styles.description}>
           We use essential cookies to make our site work. With your permission, we&apos;ll also use
           analytics cookies to improve your experience. You can change your choice anytime. See our{" "}
-          <Link href={`/${locale}/privacy`}>Privacy Policy</Link> for details.
+          <Link href={`/${locale}/privacy`}>privacy policy</Link> for details.
         </p>
         <div className={styles.actions}>
           <button className={styles.pref} onClick={handleDismiss}>
             Manage preferences
+          </button>
+          <button className={styles.functional} onClick={handleDismiss}>
+            Only functional
           </button>
           <button className={styles.accept} onClick={handleDismiss}>
             Accept all

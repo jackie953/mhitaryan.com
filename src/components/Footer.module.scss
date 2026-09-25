@@ -1,7 +1,125 @@
 @use "./breakpoints.scss" as breakpoints;
 
-@media (max-width: breakpoints.$s) {
-    .mobile {
-        text-align: center;
-    }
+/* Container matches the CTA box / hero container exactly, so edges line up. */
+.container {
+  width: 100%;
+  max-width: var(--responsive-width-xl);
+  margin: 0 auto;
+  padding-left: var(--static-space-12);
+  padding-right: var(--static-space-12);
+  padding-top: var(--static-space-80);
+  padding-bottom: var(--static-space-32);
+
+  @include breakpoints.s {
+    padding-left: var(--static-space-16);
+    padding-right: var(--static-space-16);
+  }
+}
+
+/* Hairline — same border colour as the CTA box border (neutral-alpha-weak). */
+.hairline {
+  width: 100%;
+  height: var(--static-space-1);
+  background: var(--neutral-alpha-weak);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 1fr;
+  column-gap: var(--static-space-40);
+  row-gap: var(--static-space-32);
+  margin-top: var(--static-space-40);
+
+  @include breakpoints.s {
+    grid-template-columns: 1fr;
+    row-gap: var(--static-space-32);
+  }
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--static-space-8);
+}
+
+.brand {
+  font-size: var(--font-size-body-s);
+  font-weight: var(--font-weight-semiBold);
+  letter-spacing: 0.04em;
+  color: var(--neutral-on-background-strong);
+  text-transform: uppercase;
+}
+
+.pronunciation {
+  font-size: var(--font-size-label-s);
+  color: var(--neutral-on-background-weak);
+}
+
+.item {
+  font-size: var(--font-size-body-s);
+  line-height: 1.6;
+  color: var(--neutral-on-background-medium);
+}
+
+.link {
+  font-size: var(--font-size-body-s);
+  line-height: 1.6;
+  color: var(--neutral-on-background-medium);
+  text-decoration: none;
+  border-radius: var(--radius-xs, 4px);
+
+  &:hover {
+    color: var(--neutral-on-background-strong);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--brand-background-strong);
+    outline-offset: 2px;
+  }
+
+  @include breakpoints.s {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--static-space-44, 2.75rem);
+  }
+}
+
+.bottomRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: var(--static-space-48);
+
+  @include breakpoints.s {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--static-space-12);
+  }
+}
+
+.bottomText,
+.bottomLink {
+  font-size: var(--font-size-body-s);
+  line-height: 1.6;
+  color: var(--neutral-on-background-medium);
+}
+
+.bottomLink {
+  text-decoration: none;
+
+  &:hover {
+    color: var(--neutral-on-background-strong);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--brand-background-strong);
+    outline-offset: 2px;
+    border-radius: var(--radius-xs, 4px);
+  }
+
+  @include breakpoints.s {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--static-space-44, 2.75rem);
+  }
 }

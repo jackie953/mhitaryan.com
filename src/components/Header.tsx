@@ -235,13 +235,13 @@ export const Header = () => {
               border="neutral-alpha-weak"
               radius="l"
               shadow="l"
-              paddingX="16"
+              paddingX="12"
               paddingY="8"
               horizontal="center"
               vertical="center"
               zIndex={1}
             >
-              <Row gap="4" vertical="center" className={styles.navPill} style={{ fontSize: "17px" }} suppressHydrationWarning>
+              <Row gap="2" vertical="center" className={styles.navPill} style={{ fontSize: "17px" }} suppressHydrationWarning>
               {routes["/"] && (
                 <ToggleButton size="m" prefixIcon="home" href={withLocale("/")} selected={localePath === "/"} />
               )}

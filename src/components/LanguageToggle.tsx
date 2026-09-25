@@ -19,6 +19,12 @@ export const LanguageToggle = ({ size = "m" }: { size?: "s" | "m" | "l" }) => {
   const ariaLabel = isSwedish ? "Switch to English" : "Byt till svenska";
 
   return (
-    <ToggleButton size={size} href={toggleHref} label={targetLabel} title={targetLabel} aria-label={ariaLabel} />
+    <ToggleButton
+      size={size}
+      prefixIcon={isSwedish ? "localeEN" : "localeSV"}
+      href={toggleHref}
+      title={targetLabel}
+      aria-label={ariaLabel}
+    />
   );
 };

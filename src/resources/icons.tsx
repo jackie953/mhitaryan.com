@@ -31,7 +31,15 @@ import {
 
 import { FaDiscord, FaGithub, FaLinkedin, FaX, FaThreads, FaXTwitter, FaFacebook, FaPinterest, FaWhatsapp, FaReddit, FaTelegram, } from "react-icons/fa6";
 
+// Plain-text "icons" so the language toggle can share the exact same
+// compact icon-button layout (size, padding, radius) as the home/email/
+// theme buttons instead of the wider text-label button layout.
+const LocaleSV: IconType = () => <span style={{ fontSize: "0.7em", fontWeight: 700 }}>SV</span>;
+const LocaleEN: IconType = () => <span style={{ fontSize: "0.7em", fontWeight: 700 }}>EN</span>;
+
 export const iconLibrary: Record<string, IconType> = {
+  localeSV: LocaleSV,
+  localeEN: LocaleEN,
   arrowUpRight: HiArrowUpRight,
   arrowRight: HiArrowRight,
   email: HiOutlineEnvelope,

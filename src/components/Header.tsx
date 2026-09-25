@@ -109,7 +109,7 @@ const navLinkStyle = (active: boolean): React.CSSProperties => ({
   padding: "13px 20px",
   textDecoration: "none",
   fontSize: "1rem",
-  fontWeight: active ? 600 : 400,
+  fontWeight: active ? 600 : 500,
   color: active
     ? "var(--neutral-on-background-strong)"
     : "var(--neutral-on-background-weak)",
@@ -214,7 +214,7 @@ export const Header = () => {
                 transition={{ type: "spring", damping: 25, stiffness: 160 }}
                 style={{
                   color: "var(--header-color)",
-                  fontSize: "clamp(1.375rem, 2.4vw, 1.75rem)",
+                  fontSize: "clamp(1.625rem, 2.85vw, 2.0625rem)",
                   fontWeight: 700,
                   letterSpacing: "0.04em",
                   fontFamily: "var(--font-heading)",
@@ -241,7 +241,7 @@ export const Header = () => {
               vertical="center"
               zIndex={1}
             >
-              <Row gap="4" vertical="center" style={{ fontSize: "17px" }} suppressHydrationWarning>
+              <Row gap="4" vertical="center" className={styles.navPill} style={{ fontSize: "17px" }} suppressHydrationWarning>
               {routes["/"] && (
                 <ToggleButton size="m" prefixIcon="home" href={withLocale("/")} selected={localePath === "/"} />
               )}

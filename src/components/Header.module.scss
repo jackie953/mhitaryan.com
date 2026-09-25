@@ -13,6 +13,12 @@
     display: flex;
 }
 
+/* Medium (500) nav label weight — the design system's own weight scale
+   only offers 400/600, neither of which matches the desired 500. */
+.navPill :global(.font-label) {
+    font-weight: 500;
+}
+
 /* Mobile hamburger wrapper — hidden on desktop */
 .mobileNav {
     display: none;

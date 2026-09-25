@@ -15,16 +15,10 @@ export const LanguageToggle = ({ size = "m" }: { size?: "s" | "m" | "l" }) => {
   const nextLocale = isSwedish ? "en" : "sv";
   const toggleHref = `/${nextLocale}${basePathname === "/" ? "" : basePathname}`;
 
-  const toggleLabel = isSwedish ? "English" : "Svenska";
+  const targetLabel = isSwedish ? "EN" : "SV";
   const ariaLabel = isSwedish ? "Switch to English" : "Byt till svenska";
 
   return (
-    <ToggleButton
-      size={size}
-      prefixIcon={isSwedish ? "flagSE" : "flagUS"}
-      href={toggleHref}
-      title={toggleLabel}
-      aria-label={ariaLabel}
-    />
+    <ToggleButton size={size} href={toggleHref} label={targetLabel} title={targetLabel} aria-label={ariaLabel} />
   );
 };

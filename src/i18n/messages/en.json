@@ -13,7 +13,10 @@
     "privacy": "Privacy policy",
     "emailLabel": "Email",
     "linkedinLabel": "LinkedIn",
-    "pronunciation": "[mɪˈtɑːɹiən]"
+    "pronunciation": "[mɪˈtɑːɹiən]",
+    "contactHeading": "Contact",
+    "pagesHeading": "Pages",
+    "networkHeading": "Network"
   },
   "privacy": {
     "title": "Privacy & Cookie Policy",

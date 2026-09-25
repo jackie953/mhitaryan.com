@@ -9,7 +9,7 @@ import {
   Grid,
 } from "@once-ui-system/core";
 import { getLocale } from "next-intl/server";
-import { home, about, person, baseURL } from "@/resources";
+import { home, about, person, baseURL, getContactEmail } from "@/resources";
 import { BookingCTA } from "@/components/BookingCTA";
 import { ServiceCard } from "@/components/ServiceCard";
 import { ScrollReveal } from "@/components/ScrollReveal";
@@ -57,7 +57,7 @@ export default async function Home() {
               </Badge>
             </RevealFx>
           )}
-          <RevealFx speed="fast" translateY="4" delay={0.5} fillWidth>
+          <RevealFx speed={1600} translateY="4" delay={0.15} fillWidth>
             <Column maxWidth="l" fillWidth>
               <Heading
                 wrap="balance"
@@ -73,7 +73,7 @@ export default async function Home() {
             </Column>
           </RevealFx>
         </Column>
-        <ScrollReveal>
+        <ScrollReveal delay={0.55}>
           <Grid columns="2" s={{ columns: 1 }} fillWidth gap="40">
             <ServiceCard
               href={`/${locale}/services#research-intelligence`}
@@ -89,12 +89,12 @@ export default async function Home() {
             />
           </Grid>
         </ScrollReveal>
-        <ScrollReveal>
+        <ScrollReveal delay={0.75}>
           <BookingCTA
             title="Before your next move, talk to us."
             description=""
             buttonText="Get in touch"
-            buttonHrefEncoded="bWFpbHRvOmhlbGxvQG1oaXRhcnlhbi5jb20="
+            buttonHrefEncoded={Buffer.from(`mailto:${getContactEmail(locale)}`).toString("base64")}
           />
         </ScrollReveal>
       </Column>

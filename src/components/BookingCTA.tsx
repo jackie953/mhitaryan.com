@@ -121,7 +121,8 @@ export const BookingCTA: React.FC<React.ComponentProps<typeof Column> & BookingC
     <Column
       overflow="hidden"
       fillWidth
-      padding="xl"
+      paddingX="xl"
+      paddingY="80"
       radius="l"
       marginBottom="m"
       horizontal="center"

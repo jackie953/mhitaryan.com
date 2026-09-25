@@ -7,12 +7,13 @@
   margin: 0 auto;
   padding-left: var(--static-space-12);
   padding-right: var(--static-space-12);
-  padding-top: var(--static-space-80);
+  padding-top: var(--static-space-104); /* nearest token to the spec's 96px */
   padding-bottom: var(--static-space-32);
 
   @include breakpoints.s {
     padding-left: var(--static-space-16);
     padding-right: var(--static-space-16);
+    padding-top: var(--static-space-64);
   }
 }
 
@@ -25,7 +26,8 @@
 
 .grid {
   display: grid;
-  grid-template-columns: 1.3fr 1fr 1fr;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  align-items: start;
   column-gap: var(--static-space-40);
   row-gap: var(--static-space-32);
   margin-top: var(--static-space-40);
@@ -39,37 +41,43 @@
 .column {
   display: flex;
   flex-direction: column;
-  gap: var(--static-space-8);
+  gap: var(--static-space-8); /* nearest token to the spec's 10px item gap */
 }
 
 .brand {
-  font-size: var(--font-size-body-s);
+  font-size: var(--font-size-heading-l); /* nearest token to the spec's 22px */
   font-weight: var(--font-weight-semiBold);
   letter-spacing: 0.04em;
   color: var(--neutral-on-background-strong);
-  text-transform: uppercase;
 }
 
 .pronunciation {
-  font-size: var(--font-size-label-s);
-  color: var(--neutral-on-background-weak);
+  font-size: var(--font-size-label-m); /* ~15px */
+  font-weight: var(--font-weight-normal);
+  color: var(--neutral-on-background-strong);
+}
+
+.heading {
+  font-size: var(--font-size-label-s); /* ~13px */
+  font-weight: var(--font-weight-medium);
+  color: var(--neutral-on-background-strong);
 }
 
 .item {
-  font-size: var(--font-size-body-s);
+  font-size: var(--font-size-label-m); /* ~15px */
   line-height: 1.6;
-  color: var(--neutral-on-background-medium);
+  color: var(--neutral-on-background-strong);
 }
 
 .link {
-  font-size: var(--font-size-body-s);
+  font-size: var(--font-size-label-m); /* ~15px */
   line-height: 1.6;
-  color: var(--neutral-on-background-medium);
+  color: var(--neutral-on-background-strong);
   text-decoration: none;
   border-radius: var(--radius-xs, 4px);
 
   &:hover {
-    color: var(--neutral-on-background-strong);
+    text-decoration: underline;
   }
 
   &:focus-visible {
@@ -80,7 +88,7 @@
   @include breakpoints.s {
     display: inline-flex;
     align-items: center;
-    min-height: var(--static-space-44, 2.75rem);
+    min-height: 2.75rem; /* 44px WCAG tap target, per the spec's own requirement */
   }
 }
 
@@ -99,16 +107,16 @@
 
 .bottomText,
 .bottomLink {
-  font-size: var(--font-size-body-s);
+  font-size: var(--font-size-label-m);
   line-height: 1.6;
-  color: var(--neutral-on-background-medium);
+  color: var(--neutral-on-background-strong);
 }
 
 .bottomLink {
   text-decoration: none;
 
   &:hover {
-    color: var(--neutral-on-background-strong);
+    text-decoration: underline;
   }
 
   &:focus-visible {
@@ -120,6 +128,6 @@
   @include breakpoints.s {
     display: inline-flex;
     align-items: center;
-    min-height: var(--static-space-44, 2.75rem);
+    min-height: 2.75rem;
   }
 }

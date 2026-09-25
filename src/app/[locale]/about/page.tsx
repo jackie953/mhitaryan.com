@@ -7,7 +7,8 @@ import {
   Row,
   RevealFx,
 } from "@once-ui-system/core";
-import { baseURL, about, person } from "@/resources";
+import { getLocale } from "next-intl/server";
+import { baseURL, about, person, getContactEmail } from "@/resources";
 import { BookingCTA } from "@/components/BookingCTA";
 import { AboutSection, SectionLabel } from "@/components/about/AboutSection";
 import { Testimonial1 } from "@/components/testimonial-1";
@@ -25,7 +26,8 @@ export async function generateMetadata() {
 
 const principles = ["Principle one", "Principle two", "Principle three", "Principle four"];
 
-export default function About() {
+export default async function About() {
+  const locale = await getLocale();
   return (
     <Column fillWidth gap="xl" className="page-about">
       <Schema
@@ -134,7 +136,7 @@ export default function About() {
           title="Before your next move, talk to us."
           description=""
           buttonText="Get in touch"
-          buttonHrefEncoded="bWFpbHRvOmhlbGxvQG1oaXRhcnlhbi5jb20="
+          buttonHrefEncoded={Buffer.from(`mailto:${getContactEmail(locale)}`).toString("base64")}
         />
       </RevealFx>
     </Column>

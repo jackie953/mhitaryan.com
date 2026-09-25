@@ -1,9 +1,11 @@
 import { Heading, Text, Column } from "@once-ui-system/core";
-import { getTranslations } from "next-intl/server";
-import { CONTACT_EMAIL } from "@/resources";
+import { getTranslations, getLocale } from "next-intl/server";
+import { getContactEmail } from "@/resources";
 
 export const PrivacyContent = async () => {
   const t = await getTranslations("privacy");
+  const locale = await getLocale();
+  const contactEmail = getContactEmail(locale);
 
   return (
     <Column maxWidth="m" fillWidth gap="xl">
@@ -99,8 +101,8 @@ export const PrivacyContent = async () => {
         <Heading variant="heading-strong-m">{t("rights")}</Heading>
         <Text variant="body-default-m" onBackground="neutral-weak">
           {t("rightsText")}{" "}
-          <a href={`mailto:${CONTACT_EMAIL}`} className="text-blue-600 hover:underline dark:text-blue-500">
-            {CONTACT_EMAIL}
+          <a href={`mailto:${contactEmail}`} className="text-blue-600 hover:underline dark:text-blue-500">
+            {contactEmail}
           </a>
           .
         </Text>

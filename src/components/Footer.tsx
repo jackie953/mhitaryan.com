@@ -2,7 +2,7 @@
 
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
-import { about, services, cases, CONTACT_EMAIL, LINKEDIN_URL, LOCATION } from "@/resources";
+import { about, services, cases, getContactEmail, LINKEDIN_URL, LOCATION, NETWORK_LINKS } from "@/resources";
 import styles from "./Footer.module.scss";
 
 export const Footer = () => {
@@ -12,6 +12,7 @@ export const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   const withLocale = (path: string) => `/${locale}${path}`;
+  const contactEmail = getContactEmail(locale);
 
   return (
     <footer style={{ width: "100%", display: "flex", justifyContent: "center" }}>
@@ -20,14 +21,15 @@ export const Footer = () => {
 
         <div className={styles.grid}>
           <div className={styles.column}>
-            <span className={styles.brand}>Mhitaryan</span>
+            <span className={styles.brand}>MHITARYAN</span>
             <span className={styles.pronunciation}>{t("pronunciation")}</span>
           </div>
 
           <div className={styles.column}>
+            <span className={styles.heading}>{t("contactHeading")}</span>
             <span className={styles.item}>{LOCATION}</span>
-            <Link href={`mailto:${CONTACT_EMAIL}`} className={styles.link}>
-              {CONTACT_EMAIL}
+            <Link href={`mailto:${contactEmail}`} className={styles.link}>
+              {contactEmail}
             </Link>
             <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer" className={styles.link}>
               LinkedIn
@@ -35,6 +37,7 @@ export const Footer = () => {
           </div>
 
           <div className={styles.column}>
+            <span className={styles.heading}>{t("pagesHeading")}</span>
             <Link href={withLocale(about.path)} className={styles.link}>
               {tNav("about")}
             </Link>
@@ -45,12 +48,25 @@ export const Footer = () => {
               {tNav("cases")}
             </Link>
           </div>
+
+          <div className={styles.column}>
+            <span className={styles.heading}>{t("networkHeading")}</span>
+            {NETWORK_LINKS.map((network) => (
+              <a
+                key={network.label}
+                href={network.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.link}
+              >
+                {network.label}
+              </a>
+            ))}
+          </div>
         </div>
 
         <div className={styles.bottomRow}>
-          <span className={styles.bottomText}>
-            © {currentYear} Mhitaryan · {t("descriptor")}
-          </span>
+          <span className={styles.bottomText}>{t("copyright")}</span>
           <Link href={withLocale("/privacy")} className={styles.bottomLink}>
             {t("privacy")}
           </Link>

@@ -6,7 +6,8 @@ import {
   RevealFx,
 } from "@once-ui-system/core";
 import { Meta } from "@once-ui-system/core";
-import { baseURL } from "@/resources";
+import { getLocale } from "next-intl/server";
+import { baseURL, getContactEmail } from "@/resources";
 import { AnchoredAccordion } from "@/components/services/AnchoredAccordion";
 import { BookingCTA } from "@/components/BookingCTA";
 import { ScrollReveal } from "@/components/ScrollReveal";
@@ -23,7 +24,8 @@ export async function generateMetadata() {
   });
 }
 
-export default function Services() {
+export default async function Services() {
+  const locale = await getLocale();
   return (
     <Column fillWidth gap="xl" className="page-services">
       <Schema
@@ -125,7 +127,7 @@ export default function Services() {
           title="Before your next move, talk to us."
           description=""
           buttonText="Get in touch"
-          buttonHrefEncoded="bWFpbHRvOmhlbGxvQG1oaXRhcnlhbi5jb20="
+          buttonHrefEncoded={Buffer.from(`mailto:${getContactEmail(locale)}`).toString("base64")}
         />
       </ScrollReveal>
     </Column>

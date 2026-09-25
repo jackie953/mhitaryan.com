@@ -13,7 +13,10 @@
     "privacy": "Integritetspolicy",
     "emailLabel": "E-post",
     "linkedinLabel": "LinkedIn",
-    "pronunciation": "[mɪtaˈɾjɑːn]"
+    "pronunciation": "[mɪtaˈɾjɑːn]",
+    "contactHeading": "Kontakt",
+    "pagesHeading": "Sidor",
+    "networkHeading": "Nätverk"
   },
   "privacy": {
     "title": "Integritets- och cookiepolicy",

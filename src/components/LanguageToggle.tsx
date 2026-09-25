@@ -1,10 +1,11 @@
 "use client";
 
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useLocale } from "next-intl";
-import { ToggleButton } from "@once-ui-system/core";
+import styles from "./LanguageToggle.module.scss";
 
-export const LanguageToggle = ({ size = "m" }: { size?: "s" | "m" | "l" }) => {
+export const LanguageToggle = () => {
   const locale = useLocale();
   const pathname = usePathname() ?? "/";
 
@@ -19,12 +20,8 @@ export const LanguageToggle = ({ size = "m" }: { size?: "s" | "m" | "l" }) => {
   const ariaLabel = isSwedish ? "Switch to English" : "Byt till svenska";
 
   return (
-    <ToggleButton
-      size={size}
-      prefixIcon={isSwedish ? "localeEN" : "localeSV"}
-      href={toggleHref}
-      title={targetLabel}
-      aria-label={ariaLabel}
-    />
+    <Link href={toggleHref} className={styles.toggle} title={targetLabel} aria-label={ariaLabel}>
+      {targetLabel}
+    </Link>
   );
 };

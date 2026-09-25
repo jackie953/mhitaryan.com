@@ -104,6 +104,9 @@ const MobileThemeRow: React.FC = () => {
   );
 };
 
+/** Tighten the library's default 8px horizontal padding on text-label pill buttons. */
+const navPillButtonStyle: React.CSSProperties = { paddingLeft: 6, paddingRight: 6 };
+
 const navLinkStyle = (active: boolean): React.CSSProperties => ({
   display: "block",
   padding: "13px 20px",
@@ -241,25 +244,25 @@ export const Header = () => {
               vertical="center"
               zIndex={1}
             >
-              <Row gap="2" vertical="center" className={styles.navPill} style={{ fontSize: "17px" }} suppressHydrationWarning>
+              <Row gap="2" vertical="center" className={styles.navPill} style={{ fontSize: "15px" }} suppressHydrationWarning>
               {routes["/"] && (
                 <ToggleButton size="m" prefixIcon="home" href={withLocale("/")} selected={localePath === "/"} />
               )}
               <Line background="neutral-alpha-medium" vert maxHeight="20" />
               {routes["/about"] && (
-                <ToggleButton size="m" href={withLocale("/about")} label={tNav("about")} selected={localePath === "/about"} />
+                <ToggleButton size="m" style={navPillButtonStyle} href={withLocale("/about")} label={tNav("about")} selected={localePath === "/about"} />
               )}
               {routes["/services"] && (
-                <ToggleButton size="m" href={withLocale(services.path)} label={tNav("services")} selected={localePath.startsWith("/services")} />
+                <ToggleButton size="m" style={navPillButtonStyle} href={withLocale(services.path)} label={tNav("services")} selected={localePath.startsWith("/services")} />
               )}
               {routes["/cases"] && (
-                <ToggleButton size="m" href={withLocale(cases.path)} label={tNav("cases")} selected={localePath.startsWith("/cases")} />
+                <ToggleButton size="m" style={navPillButtonStyle} href={withLocale(cases.path)} label={tNav("cases")} selected={localePath.startsWith("/cases")} />
               )}
               {routes["/contact"] && (
-                <ToggleButton size="m" href={withLocale(contact.path)} label={contact.label} selected={localePath.startsWith("/contact")} />
+                <ToggleButton size="m" style={navPillButtonStyle} href={withLocale(contact.path)} label={contact.label} selected={localePath.startsWith("/contact")} />
               )}
               {routes["/blog"] && (
-                <ToggleButton size="m" href={withLocale("/blog")} label={blog.label} selected={localePath.startsWith("/blog")} />
+                <ToggleButton size="m" style={navPillButtonStyle} href={withLocale("/blog")} label={blog.label} selected={localePath.startsWith("/blog")} />
               )}
               <Line background="neutral-alpha-medium" vert maxHeight="20" />
               <EmailButton size="m" />

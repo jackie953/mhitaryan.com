@@ -1,0 +1,34 @@
+/* Fixed 32px square to match the size="m" icon buttons (home/email/theme)
+   exactly, instead of relying on ToggleButton's text-label layout which
+   adds its own padding and doesn't line up with icon-only buttons. */
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--static-space-32);
+  height: var(--static-space-32);
+  min-width: var(--static-space-32);
+  padding: 0;
+  border-radius: var(--radius-m);
+  border: 1px solid var(--static-transparent);
+  background: var(--static-transparent);
+  color: var(--neutral-on-background-strong);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+  transition: var(--transition-micro-medium);
+
+  &:hover,
+  &:focus {
+    background: var(--neutral-alpha-weak);
+    border-color: var(--neutral-alpha-weak);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--brand-background-strong);
+    outline-offset: 2px;
+  }
+}

@@ -195,7 +195,7 @@ export const Header = () => {
             >
               <Text3DFlip
                 textClassName="text-[var(--header-color)]"
-                flipTextClassName="text-[#5D3285]"
+                flipTextClassName="text-[#11051D]"
                 rotateDirection="top"
                 staggerDuration={0.02}
                 staggerFrom="first"

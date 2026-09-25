@@ -75,7 +75,7 @@ export default function RootLayout({
               padding="0"
               horizontal="center"
             >
-              <Flex fillWidth minHeight="16" s={{ hide: true }} />
+              <Flex fillWidth minHeight="12" s={{ hide: true }} />
               <Header />
               {/* Spacer so content starts below the fixed header on mobile */}
               <Flex fillWidth hide s={{ hide: false }} style={{ height: '64px', flexShrink: 0 }} />

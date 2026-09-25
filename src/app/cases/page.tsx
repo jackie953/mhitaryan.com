@@ -28,7 +28,7 @@ export default function CasesPage() {
           image: `${baseURL}${person.avatar}`,
         }}
       />
-      <Heading variant="heading-strong-xl">
+      <Heading variant="display-strong-m">
         Cases
       </Heading>
       <Cases />

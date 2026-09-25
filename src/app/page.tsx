@@ -42,7 +42,7 @@ export default function Home() {
             image: `${baseURL}${person.avatar}`,
           }}
         />
-        <Column fillWidth gap="32" paddingTop="128" s={{ paddingTop: "0" }}>
+        <Column fillWidth gap="32" style={{ paddingTop: "96px" }} s={{ style: { paddingTop: "0px" } }}>
           {home.featured.display && (
             <RevealFx speed="fast" delay={0.5} fillWidth>
               <Badge
@@ -63,7 +63,11 @@ export default function Home() {
               <Heading
                 wrap="balance"
                 variant="display-strong-l"
-                style={{ fontSize: "clamp(2.5rem, 6vw, 6rem)", lineHeight: 1.05 }}
+                style={{
+                  fontSize: "clamp(3.25rem, 7.8vw, 7.8rem)",
+                  lineHeight: 0.95,
+                  letterSpacing: "-0.03em",
+                }}
               >
                 {home.headline}
               </Heading>
@@ -83,13 +87,13 @@ export default function Home() {
               href="/services#research-intelligence"
               video="/images/projects/project-01/video-1.mp4"
               label="Research & Intelligence"
-              heading="Understand the landscape."
+              heading="Understand the landscape"
             />
             <ServiceCard
               href="/services#strategic-communications"
               video="/images/projects/project-01/video-2.mp4"
               label="Strategic Communications"
-              heading="Shape the narrative."
+              heading="Shape the narrative"
             />
           </Grid>
         </ScrollReveal>

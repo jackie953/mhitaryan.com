@@ -9,6 +9,7 @@ import {
 } from "@once-ui-system/core";
 import { baseURL, about, person } from "@/resources";
 import { BookingCTA } from "@/components/BookingCTA";
+import { AboutSection, SectionLabel } from "@/components/about/AboutSection";
 import { Testimonial1 } from "@/components/testimonial-1";
 import { testimonials } from "@/components/testimonial-1-data";
 
@@ -21,6 +22,8 @@ export async function generateMetadata() {
     path: about.path,
   });
 }
+
+const principles = ["Principle one", "Principle two", "Principle three", "Principle four"];
 
 export default function About() {
   return (
@@ -39,83 +42,98 @@ export default function About() {
         }}
       />
 
-      {/* Main Header — two-column intro */}
+      {/* 1. About us */}
       <RevealFx translateY="4" delay={0} fillWidth>
-        <Row
-          fillWidth
-          vertical="center"
-          gap="xl"
-          s={{ direction: "column", horizontal: "start" }}
-        >
-          <Column gap="s" flex={1}>
-            <Heading variant="display-strong-m">
-              {person.name}
-            </Heading>
+        <AboutSection showDivider={false} left={<Heading variant="display-strong-m">About us</Heading>}>
+          <Text variant="body-default-l">
+            Mhitaryan Consulting is a Stockholm-based strategic research and communications practice. We help clients understand and navigate complex environments across the Nordics, the EU and the US. Founded in 2018, we work with international companies and mission-driven organizations.
+          </Text>
+        </AboutSection>
+      </RevealFx>
+
+      {/* 2. Our principles */}
+      <RevealFx translateY="4" delay={0.1} fillWidth>
+        <AboutSection left={<SectionLabel>Our principles</SectionLabel>}>
+          <Column gap="s">
+            {principles.slice(0, -1).map((principle) => (
+              <Text
+                key={principle}
+                style={{ fontSize: "2rem", fontWeight: 600, lineHeight: 1.2, color: "rgba(17, 5, 29, 0.25)" }}
+              >
+                {principle}
+              </Text>
+            ))}
+            <Row gap="16" vertical="end" wrap>
+              <Text style={{ fontSize: "2rem", fontWeight: 600, lineHeight: 1.2, color: "#11051D" }}>
+                {principles[principles.length - 1]}
+              </Text>
+              <Text variant="body-default-m" onBackground="neutral-weak">
+                Short line.
+              </Text>
+            </Row>
+          </Column>
+        </AboutSection>
+      </RevealFx>
+
+      {/* 3. Our approach */}
+      {about.approach.display && (
+        <RevealFx translateY="4" delay={0.15} fillWidth>
+          <AboutSection left={<SectionLabel>Our approach</SectionLabel>}>
+            <Column textVariant="body-default-l" gap="m">
+              {about.approach.description}
+            </Column>
+            <Column gap="m">
+              <Heading as="h2" variant="heading-strong-l">
+                How I Work
+              </Heading>
+              <Text variant="body-default-l">
+                Research and communications rarely work in isolation. Most engagements involve both – understanding the landscape and then doing something with that understanding. I take on both one-off projects and ongoing retainers, for new and existing clients.
+              </Text>
+            </Column>
+          </AboutSection>
+        </RevealFx>
+      )}
+
+      {/* 4. Founder */}
+      <RevealFx translateY="4" delay={0.2} fillWidth>
+        <AboutSection left={<SectionLabel>Founder</SectionLabel>}>
+          <Column gap="s">
+            <Heading variant="heading-strong-l">{person.name}</Heading>
+            <Text variant="body-default-l" onBackground="neutral-weak">
+              Founder
+            </Text>
             <Text variant="body-default-l" onBackground="neutral-weak">
               Clear thinking. Direct communication.
             </Text>
           </Column>
-          <div style={{
-            flexShrink: 0,
-            width: 'clamp(100px, 20vw, 200px)',
-            height: 'clamp(100px, 20vw, 200px)',
-            borderRadius: '50%',
-            overflow: 'hidden',
-          }}>
-            <img
-              src="/images/avatar.jpg"
-              alt={person.name}
-              style={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-                display: 'block',
-              }}
-            />
-          </div>
-        </Row>
+          {about.aboutSection.display && (
+            <Column textVariant="body-default-l" gap="m">
+              {about.aboutSection.description}
+            </Column>
+          )}
+          <Text
+            variant="body-default-l"
+            onBackground="neutral-weak"
+            style={{ fontStyle: 'italic' }}
+          >
+            CV available upon request.
+          </Text>
+        </AboutSection>
       </RevealFx>
 
-      {/* Background */}
-      {about.aboutSection.display && (
-        <RevealFx translateY="4" delay={0.1} fillWidth>
-          <Column maxWidth="m" textVariant="body-default-l" fillWidth gap="m">
-            {about.aboutSection.description}
-          </Column>
-        </RevealFx>
-      )}
+      {/* 5. Kind words */}
+      <RevealFx translateY="4" delay={0.25} fillWidth>
+        <AboutSection left={<SectionLabel>Kind words</SectionLabel>}>
+          <Testimonial1 testimonials={testimonials} />
+        </AboutSection>
+      </RevealFx>
 
-      {/* Approach */}
-      {about.approach.display && (
-        <RevealFx translateY="4" delay={0.2} fillWidth>
-          <Column maxWidth="m" textVariant="body-default-l" fillWidth gap="m">
-            <Heading as="h1" id={about.approach.title} variant="heading-strong-l">
-              {about.approach.title}
-            </Heading>
-            {about.approach.description}
-          </Column>
-        </RevealFx>
-      )}
-
+      {/* 6. CTA */}
       <RevealFx translateY="4" delay={0.3} fillWidth>
-        <Text
-          variant="body-default-l"
-          onBackground="neutral-weak"
-          style={{ fontStyle: 'italic' }}
-        >
-          CV available upon request.
-        </Text>
-      </RevealFx>
-
-      <RevealFx translateY="4" delay={0.35} fillWidth>
-        <Testimonial1 testimonials={testimonials} />
-      </RevealFx>
-
-      <RevealFx translateY="4" delay={0.4} fillWidth>
         <BookingCTA
-          title="Let's talk."
-          description="If you think there might be something here, I'm easy to reach."
-          buttonText="Send an email"
+          title="Before your next move, talk to us."
+          description=""
+          buttonText="Get in touch"
           buttonHrefEncoded="bWFpbHRvOmNvbnRhY3RAbWhpdGFyeWFuLmNvbQ=="
         />
       </RevealFx>

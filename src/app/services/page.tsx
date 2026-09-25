@@ -1,18 +1,15 @@
-import React from 'react';
 import {
-  Accordion,
   Column,
   Heading,
   Text,
   Schema,
-  Button,
-  Row,
-  Icon,
   RevealFx,
 } from "@once-ui-system/core";
 import { Meta } from "@once-ui-system/core";
 import { baseURL } from "@/resources";
 import { AnchoredAccordion } from "@/components/services/AnchoredAccordion";
+import { BookingCTA } from "@/components/BookingCTA";
+import { ScrollReveal } from "@/components/ScrollReveal";
 
 export async function generateMetadata() {
   const title = "Services | Mhitaryan Consulting";
@@ -27,13 +24,6 @@ export async function generateMetadata() {
 }
 
 export default function Services() {
-  const about = {
-    calendar: {
-      display: true,
-      link: "https://cal.com/your-link", // Replace with your actual calendar link
-    }
-  };
-
   return (
     <Column fillWidth gap="xl" className="page-services">
       <Schema
@@ -47,7 +37,7 @@ export default function Services() {
       {/* Page Header */}
       <RevealFx translateY="4" delay={0} fillWidth>
         <Heading variant="display-strong-m">
-          Services
+          Our services
         </Heading>
       </RevealFx>
 
@@ -55,7 +45,7 @@ export default function Services() {
       <RevealFx translateY="4" delay={0.1} fillWidth>
         <Column maxWidth="m" textVariant="body-default-l" fillWidth gap="m">
           <Text variant="body-default-l">
-            I work at the intersection of research, strategy, and communications – helping organizations understand complex environments and act with confidence.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
           </Text>
         </Column>
       </RevealFx>
@@ -130,63 +120,14 @@ export default function Services() {
       </Column>
       </RevealFx>
 
-      {/* How I Work */}
-      <RevealFx translateY="4" delay={0.25} fillWidth>
-      <Column maxWidth="m" fillWidth gap="s">
-        <Heading as="h1" id="How I Work" variant="heading-strong-l">
-          How I Work
-        </Heading>
-
-        <Text variant="body-default-l">
-          Research and communications rarely work in isolation. Most engagements involve both – understanding the landscape and then doing something with that understanding. I take on both one-off projects and ongoing retainers, for new and existing clients.
-        </Text>
-
-        {about.calendar.display && (
-          <Row paddingTop="8">
-            <Column
-              position="relative"
-              overflow="hidden"
-              radius="l"
-              style={{ display: 'inline-flex' }}
-            >
-              <div style={{
-                position: 'absolute', inset: 0, pointerEvents: 'none',
-                background: 'radial-gradient(ellipse at 50% 0%, var(--accent-background-strong, rgba(93,50,133,0.35)) 0%, transparent 70%)',
-                opacity: 0.6, borderRadius: 'inherit',
-              }} />
-              <Button
-                id="schedule-call"
-                data-border="rounded"
-                href="mailto:contact@mhitaryan.com"
-                variant="secondary"
-                size="l"
-                style={{ paddingInline: '2rem', paddingBlock: '0.875rem', fontSize: '1.05rem', border: '1px solid var(--neutral-alpha-medium)' }}
-                weight="default"
-                arrowIcon
-                className="text-neutral-900 dark:!text-white"
-              >
-                <Row vertical="center" gap="8">
-                  <Icon name="email" onBackground="brand-weak" />
-                  <span>Get in touch</span>
-                </Row>
-              </Button>
-            </Column>
-          </Row>
-        )}
-      </Column>
-      </RevealFx>
-
-      {/* Accordion example */}
-      <RevealFx translateY="4" delay={0.3} fillWidth>
-        <Column maxWidth="m" fillWidth gap="s">
-          <Accordion title="Example" open>
-            <Text onBackground="neutral-weak">Example content</Text>
-          </Accordion>
-          <Accordion title="Example">
-            <Text onBackground="neutral-weak">Example content</Text>
-          </Accordion>
-        </Column>
-      </RevealFx>
+      <ScrollReveal>
+        <BookingCTA
+          title="Before your next move, talk to us."
+          description=""
+          buttonText="Get in touch"
+          buttonHrefEncoded="bWFpbHRvOmNvbnRhY3RAbWhpdGFyeWFuLmNvbQ=="
+        />
+      </ScrollReveal>
     </Column>
   );
 }

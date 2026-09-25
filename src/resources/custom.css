@@ -55,6 +55,12 @@
   /*
 }*/
 
+/* Flat solid light theme — sand white background, near-black text */
+:root:not([data-theme="dark"]) {
+  --page-background: #F4F1EC;
+  --neutral-on-background-strong: #111111;
+}
+
 /* Force white text on secondary buttons in dark mode */
 [data-theme="dark"] #learn-more,
 [data-theme="dark"] #learn-more *,

@@ -37,7 +37,13 @@ const home: Home = {
   label: "Home",
   title: "Mhitaryan Consulting",
   description: "Strategic research and communications at the intersection of power, politics, and people.",
-  headline: <>Clarity and Courage When It Matters Most</>,
+  headline: (
+    <>
+      Read the room.
+      <br />
+      Make your move.
+    </>
+  ),
   featured: {
     display: false,
     title: (

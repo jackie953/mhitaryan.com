@@ -12,11 +12,10 @@ import {
   Flex,
   Meta,
   type opacity,
-  RevealFx,
   type SpacingToken,
 } from "@once-ui-system/core";
 import { Footer, Header, RouteGuard, Providers } from "@/components";
-import { baseURL, effects, fonts, style, dataStyle, home } from "@/resources";
+import { baseURL, fonts, style, dataStyle, home } from "@/resources";
 
 // CTA chat-bubble widget — hidden for now, kept for future re-enable.
 // import CTAWrapper from "@/components/CTAWrapper";
@@ -76,14 +75,6 @@ export default function RootLayout({
               padding="0"
               horizontal="center"
             >
-              <RevealFx fill position="absolute">
-                <div style={{
-                  position: 'absolute', inset: 0, pointerEvents: 'none',
-                  background: 'radial-gradient(ellipse at 50% 0%, var(--accent-background-strong, rgba(120,80,200,0.35)) 0%, transparent 70%)',
-                  opacity: (effects.gradient.opacity ?? 100) / 100,
-                }} />
-              </RevealFx>
-
               <Flex fillWidth minHeight="16" s={{ hide: true }} />
               <Header />
               {/* Spacer so content starts below the fixed header on mobile */}

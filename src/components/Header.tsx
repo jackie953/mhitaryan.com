@@ -7,7 +7,7 @@ import { Menu, X } from "lucide-react";
 
 import { Line, Row, ToggleButton, useTheme } from "@once-ui-system/core";
 import { ThemeToggle } from "./ThemeToggle";
-import { HyperText } from "@/registry/magicui/hyper-text";
+import Text3DFlip from "@/registry/magicui/text-3d-flip";
 import styles from "./Header.module.scss";
 
 import {
@@ -194,10 +194,13 @@ export const Header = () => {
                 display: "inline-block",
               }}
             >
-              <HyperText
-                as="span"
-                duration={700}
-                className="p-0 overflow-visible"
+              <Text3DFlip
+                textClassName="text-[var(--header-color)]"
+                flipTextClassName="text-[var(--header-color)]"
+                rotateDirection="top"
+                staggerDuration={0.02}
+                staggerFrom="first"
+                transition={{ type: "spring", damping: 25, stiffness: 160 }}
                 style={{
                   color: "var(--header-color)",
                   fontSize: "clamp(1rem, 2.8vw, 1.375rem)",
@@ -208,7 +211,7 @@ export const Header = () => {
                 }}
               >
                 MHITARYAN CONSULTING
-              </HyperText>
+              </Text3DFlip>
             </Link>
           </Row>
 

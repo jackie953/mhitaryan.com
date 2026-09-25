@@ -18,6 +18,7 @@ import { ProjectVideoGrid } from "@/components/work/ProjectVideoGrid";
 import { Posts } from "@/components/blog/Posts";
 import { AnimatedShinyText } from "@/components/ui/animated-shiny-text";
 import { CookieBanner } from "@/components/CookieBanner";
+import { ScrollReveal } from "@/components/ScrollReveal";
 import { Testimonial1 } from "@/components/testimonial-1";
 import { testimonials } from "@/components/testimonial-1-data";
 import { getPosts } from "@/utils/utils";
@@ -64,7 +65,7 @@ export default function Home() {
         <Column maxWidth="m" fillWidth horizontal="center" gap="m">
           <Column horizontal="center" align="center" gap="32">
             {home.featured.display && (
-              <RevealFx fillWidth horizontal="center" paddingLeft="12">
+              <RevealFx speed="fast" delay={0.5} fillWidth horizontal="center" paddingLeft="12">
                 <Badge
                   background="brand-alpha-weak"
                   paddingX="12"
@@ -78,21 +79,21 @@ export default function Home() {
                 </Badge>
               </RevealFx>
             )}
-            <RevealFx translateY="4" fillWidth horizontal="center">
+            <RevealFx speed="fast" translateY="4" delay={0.5} fillWidth horizontal="center">
               <Column maxWidth="s" horizontal="center">
                 <Heading wrap="balance" variant="display-strong-l">
                   {home.headline}
                 </Heading>
               </Column>
             </RevealFx>
-            <RevealFx translateY="8" delay={0.2} fillWidth horizontal="center">
+            <RevealFx speed="fast" translateY="8" delay={0.65} fillWidth horizontal="center">
               <Column maxWidth="m" horizontal="center">
                 <Text wrap="balance" onBackground="neutral-weak" variant="heading-default-xl">
                   {home.subline}
                 </Text>
               </Column>
             </RevealFx>
-            <RevealFx delay={0.4} horizontal="center" paddingLeft="12">
+            <RevealFx speed="fast" delay={0.8} horizontal="center" paddingLeft="12">
               <Column
                 position="relative"
                 overflow="hidden"
@@ -122,11 +123,11 @@ export default function Home() {
           </Column>
         </Column>
         <Column maxWidth="xl" fillWidth horizontal="center">
-          <RevealFx translateY="8" delay={0.2} fillWidth>
+          <ScrollReveal>
             <Column fillWidth paddingX="l">
               <ProjectVideoGrid projects={videoProjects} />
             </Column>
-          </RevealFx>
+          </ScrollReveal>
         </Column>
         {routes["/blog"] && (
           <Column maxWidth="m" fillWidth horizontal="center" gap="24" marginBottom="l">
@@ -149,19 +150,25 @@ export default function Home() {
         )}
         {hasMoreProjects && (
           <Column maxWidth="m" fillWidth horizontal="center">
-            <Projects range={[3]} />
+            <ScrollReveal>
+              <Projects range={[3]} />
+            </ScrollReveal>
           </Column>
         )}
         <Column maxWidth="m" fillWidth paddingX="l">
-          <Testimonial1 testimonials={testimonials} />
+          <ScrollReveal>
+            <Testimonial1 testimonials={testimonials} />
+          </ScrollReveal>
         </Column>
         <Column maxWidth="m" fillWidth>
-          <BookingCTA
-            title="Work with us."
-            description="A short conversation to explore whether there's a fit."
-            buttonText="Get in touch"
-            buttonHref="mailto:contact@mhitaryan.com"
-          />
+          <ScrollReveal>
+            <BookingCTA
+              title="Work with us."
+              description="A short conversation to explore whether there's a fit."
+              buttonText="Get in touch"
+              buttonHref="mailto:contact@mhitaryan.com"
+            />
+          </ScrollReveal>
         </Column>
       </Column>
       <CookieBanner />

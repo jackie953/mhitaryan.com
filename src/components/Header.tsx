@@ -231,13 +231,13 @@ export const Header = () => {
               border="neutral-alpha-weak"
               radius="l"
               shadow="l"
-              paddingX="20"
+              paddingX="16"
               paddingY="8"
               horizontal="center"
               vertical="center"
               zIndex={1}
             >
-              <Row gap="12" vertical="center" style={{ fontSize: "17px" }} suppressHydrationWarning>
+              <Row gap="4" vertical="center" style={{ fontSize: "17px" }} suppressHydrationWarning>
               {routes["/"] && (
                 <ToggleButton size="m" prefixIcon="home" href={withLocale("/")} selected={localePath === "/"} />
               )}
@@ -315,7 +315,7 @@ export const Header = () => {
                 </Link>
               )}
               <div style={{ padding: "13px 20px", borderBottom: "1px solid var(--neutral-alpha-weak)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <EmailButton size="m" variant="ghost" />
+                <EmailButton size="m" />
                 <LanguageToggle />
               </div>
               {display.themeSwitcher && <MobileThemeRow />}

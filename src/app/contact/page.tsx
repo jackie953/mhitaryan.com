@@ -3,7 +3,7 @@ import { Meta } from "@once-ui-system/core";
 import { baseURL } from "@/resources";
 
 export async function generateMetadata() {
-  const title = "Contact | Jacqueline Mhitaryan";
+  const title = "Contact | Mhitaryan Consulting";
   return Meta.generate({
     title,
     description: "Get in touch to discuss how we can work together.",
@@ -15,8 +15,8 @@ export async function generateMetadata() {
 
 export default function Contact() {
   return (
-    <div className="container mx-auto px-4 py-16">
-      <div className="max-w-4xl mx-auto">
+    <div className="w-full">
+      <div className="max-w-4xl">
         <h1 className="text-4xl font-bold mb-8">Contact</h1>
         <div className="prose prose-lg">
           <p className="text-lg mb-8">

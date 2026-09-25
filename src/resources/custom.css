@@ -55,10 +55,17 @@
   /*
 }*/
 
-/* Flat solid light theme — sand white background, near-black text */
+/* Flat solid light theme — sand/plum palette */
 :root:not([data-theme="dark"]) {
-  --page-background: #F4F1EC;
-  --neutral-on-background-strong: #111111;
+  --page-background: #FAF7FC;
+  --neutral-on-background-strong: #11051D;
+  --neutral-alpha-weak: #ECE6F3;
+  --neutral-border-weak: #ECE6F3;
+  --brand-color: #5D3285;
+  --brand-on-background-weak: #5D3285;
+  --brand-on-background-medium: #5D3285;
+  --brand-on-background-strong: #5D3285;
+  --accent-background-strong: #5D3285;
 }
 
 /* Force white text on secondary buttons in dark mode */

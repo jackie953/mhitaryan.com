@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Heading, Text, Column } from "@once-ui-system/core";
+import { Button, Heading, Text, Column, Mask } from "@once-ui-system/core";
 import type { opacity, SpacingToken } from "@once-ui-system/core";
 
 interface BookingCTAConfig {
@@ -115,12 +115,20 @@ export const BookingCTA: React.FC<React.ComponentProps<typeof Column> & BookingC
       className="max-sm:!p-8"
       {...flex}
     >
-      <div style={{
-        position: 'absolute', inset: 0, pointerEvents: 'none',
-        background: 'radial-gradient(ellipse at 50% 0%, var(--accent-background-strong, rgba(120,80,200,0.35)) 0%, transparent 70%)',
-        opacity: bookingConfig.effects.gradient.opacity / 100,
-      }} />
-      
+      {/* Cursor-following spotlight — replays the glow wherever the pointer
+          is over the card, instead of a static fixed-position gradient. */}
+      <Mask
+        cursor={bookingConfig.effects.mask.cursor}
+        radius={30}
+        style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}
+      >
+        <div style={{
+          position: 'absolute', inset: 0,
+          background: 'radial-gradient(ellipse at 50% 50%, var(--accent-background-strong, rgba(93,50,133,0.45)) 0%, transparent 70%)',
+          opacity: bookingConfig.effects.gradient.opacity / 100,
+        }} />
+      </Mask>
+
       <Column maxWidth="xs" horizontal="center">
         <Heading marginBottom="s" variant="display-strong-xs">
           {displayTitle}

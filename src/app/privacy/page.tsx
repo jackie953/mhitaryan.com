@@ -2,7 +2,7 @@ import { Heading, Text, Column, Meta } from "@once-ui-system/core";
 import { baseURL } from "@/resources";
 
 export async function generateMetadata() {
-  const title = "Privacy & Cookie Policy | Jacqueline Mhitaryan";
+  const title = "Privacy | Mhitaryan Consulting";
   return Meta.generate({
     title,
     description: "Privacy and cookie policy for Jacqueline Mhitaryan / Mhitaryan Consulting.",
@@ -16,9 +16,8 @@ export default function PrivacyPage() {
   return (
     <Column
       maxWidth="m"
+      fillWidth
       gap="xl"
-      paddingY="l"
-      paddingX="l"
     >
       <Heading variant="display-strong-s">Privacy & Cookie Policy</Heading>
 

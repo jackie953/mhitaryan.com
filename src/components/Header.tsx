@@ -15,7 +15,7 @@ import {
   display,
   about,
   blog,
-  work,
+  cases,
   services,
   contact,
 } from "@/resources";
@@ -196,17 +196,17 @@ export const Header = () => {
             >
               <Text3DFlip
                 textClassName="text-[var(--header-color)]"
-                flipTextClassName="text-[var(--header-color)]"
+                flipTextClassName="text-[#5D3285]"
                 rotateDirection="top"
                 staggerDuration={0.02}
                 staggerFrom="first"
                 transition={{ type: "spring", damping: 25, stiffness: 160 }}
                 style={{
                   color: "var(--header-color)",
-                  fontSize: "clamp(1rem, 2.8vw, 1.375rem)",
-                  fontWeight: 600,
-                  letterSpacing: "0.02em",
-                  fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+                  fontSize: "clamp(1.375rem, 2.4vw, 1.75rem)",
+                  fontWeight: 700,
+                  letterSpacing: "0.04em",
+                  fontFamily: "var(--font-heading)",
                   whiteSpace: "nowrap",
                 }}
               >
@@ -236,11 +236,11 @@ export const Header = () => {
               {routes["/about"] && (
                 <ToggleButton size="s" href="/about" label={about.label} selected={pathname === "/about"} />
               )}
-              {routes["/work"] && (
-                <ToggleButton size="s" href="/work" label={work.label} selected={pathname.startsWith("/work")} />
-              )}
               {routes["/services"] && (
                 <ToggleButton size="s" href={services.path} label={services.label} selected={pathname.startsWith("/services")} />
+              )}
+              {routes["/cases"] && (
+                <ToggleButton size="s" href={cases.path} label={cases.label} selected={pathname.startsWith("/cases")} />
               )}
               {routes["/contact"] && (
                 <ToggleButton size="s" href={contact.path} label={contact.label} selected={pathname.startsWith("/contact")} />
@@ -286,9 +286,9 @@ export const Header = () => {
                   Services
                 </Link>
               )}
-              {routes["/work"] && (
-                <Link href="/work" style={navLinkStyle(pathname.startsWith("/work"))} onClick={() => setMenuOpen(false)}>
-                  Work
+              {routes["/cases"] && (
+                <Link href={cases.path} style={navLinkStyle(pathname.startsWith("/cases"))} onClick={() => setMenuOpen(false)}>
+                  Cases
                 </Link>
               )}
               {routes["/blog"] && (

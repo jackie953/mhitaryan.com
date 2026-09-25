@@ -1,7 +1,7 @@
 export { Header } from "@/components/Header";
 export { Footer } from "@/components/Footer";
 export { BookingCTA } from "@/components/BookingCTA";
-export { ProjectCard } from "@/components/ProjectCard";
+export { CaseCard } from "@/components/CaseCard";
 export { HeadingLink } from "@/components/HeadingLink";
 export { RouteGuard } from "@/components/RouteGuard";
 export { Providers } from "@/components/Providers";

@@ -79,10 +79,21 @@ export default function RootLayout({
               <Header />
               {/* Spacer so content starts below the fixed header on mobile */}
               <Flex fillWidth hide s={{ hide: false }} style={{ height: '64px', flexShrink: 0 }} />
-              <Flex zIndex={0} fillWidth padding="l" horizontal="center" flex={1}>
-                <Flex horizontal="center" fillWidth minHeight="0">
+              <Flex zIndex={0} fillWidth horizontal="center" flex={1}>
+                {/* Wide, left-aligned container matching the header's max-width
+                    and left inset — every page's content starts at the same
+                    left edge as the logo. */}
+                <Column
+                  maxWidth="xl"
+                  fillWidth
+                  minHeight="0"
+                  paddingX="12"
+                  paddingTop="l"
+                  paddingBottom="xl"
+                  s={{ paddingX: "16" }}
+                >
                   <RouteGuard>{children}</RouteGuard>
-                </Flex>
+                </Column>
               </Flex>
               <Footer />
               {/* <CTAWrapper /> */}

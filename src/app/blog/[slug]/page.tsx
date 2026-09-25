@@ -44,11 +44,13 @@ export async function generateMetadata({
 
   if (!post) return {};
 
+  const title = `${post.metadata.title} | Mhitaryan Consulting`;
+
   return Meta.generate({
-    title: post.metadata.title,
+    title,
     description: post.metadata.summary,
     baseURL: baseURL,
-    image: post.metadata.image || `/api/og/generate?title=${post.metadata.title}`,
+    image: post.metadata.image || `/api/og/generate?title=${encodeURIComponent(title)}`,
     path: `${blog.path}/${post.slug}`,
   });
 }

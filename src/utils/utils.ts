@@ -16,6 +16,11 @@ type Metadata = {
   image?: string;
   images: string[];
   tag?: string;
+  tags?: string[];
+  /** Short client descriptor, e.g. "An international tech company" */
+  client?: string;
+  /** One-line summary shown on the case card/header, falls back to summary */
+  details?: string;
   team: Team[];
   link?: string;
 };
@@ -45,6 +50,9 @@ function readMDXFile(filePath: string) {
     image: data.image || "",
     images: data.images || [],
     tag: data.tag || [],
+    tags: data.tags || [],
+    client: data.client || "",
+    details: data.details || "",
     team: data.team || [],
     link: data.link || "",
   };

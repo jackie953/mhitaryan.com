@@ -55,7 +55,7 @@ const home: Home = {
         </Text>
       </Row>
     ),
-    href: "/work/building-once-ui-a-customizable-design-system",
+    href: "/cases/building-once-ui-a-customizable-design-system",
   },
   subline: (
     <>
@@ -67,7 +67,7 @@ Strategic research and communications at the intersection of power, politics, an
 const about: About = {
   path: "/about",
   label: "About",
-  title: `About – ${person.name}`,
+  title: "About | Mhitaryan Consulting",
   description: "",
   tableOfContent: {
     display: true,
@@ -168,30 +168,30 @@ const about: About = {
 const services = {
   path: "/services",
   label: "Services",
-  title: `Services – ${person.name}`,
+  title: "Services | Mhitaryan Consulting",
   description: "Strategic research and communications services",
 };
 
 const contact = {
   path: "/contact",
   label: "Contact",
-  title: `Contact – ${person.name}`,
+  title: "Contact | Mhitaryan Consulting",
   description: "Get in touch to discuss how we can help you",
 };
 
 const blog: Blog = {
   path: "/blog",
   label: "Insights",
-  title: "Writing about design and tech...",
+  title: "Insights | Mhitaryan Consulting",
   description: `Read what ${person.name} has been up to recently`,
   // Create new blog posts by adding a new .mdx file to app/blog/posts
   // All posts will be listed on the /blog route
 };
 
-const work: Work = {
-  path: "/work",
-  label: "Projects",
-  title: "",
+const cases: Work = {
+  path: "/cases",
+  label: "Cases",
+  title: "Cases | Mhitaryan Consulting",
   description: "",
   tableOfContent: {
     display: true,
@@ -199,4 +199,4 @@ const work: Work = {
   },
 };
 
-export { person, social, newsletter, home, about, services, contact, blog, work };
+export { person, social, newsletter, home, about, services, contact, blog, cases };

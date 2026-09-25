@@ -6,8 +6,8 @@ export {
   home,
   about,
   blog,
-  work,
-  services, 
+  cases,
+  services,
   contact,
 } from "./content";
 

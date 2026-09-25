@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useLocale } from "next-intl";
-import { Text } from "@once-ui-system/core";
+import { Background, Column, Icon, Row, Text } from "@once-ui-system/core";
 
 export function CookieBanner() {
   const locale = useLocale();
@@ -25,76 +25,85 @@ export function CookieBanner() {
   if (!isVisible) return null;
 
   return (
-    <div
-      style={{
-        position: "fixed",
-        bottom: "16px",
-        right: "16px",
-        zIndex: 60,
-        width: "min(320px, calc(100vw - 32px))",
-      }}
+    <Column
+      position="fixed"
+      style={{ bottom: "16px", right: "16px", zIndex: 60 }}
+      maxWidth={18}
+      padding="16"
+      gap="8"
+      radius="l"
+      border="neutral-alpha-weak"
+      overflow="hidden"
+      background="surface"
+      shadow="l"
     >
-      <div
-        style={{
-          position: "relative",
-          overflow: "hidden",
-          borderRadius: "var(--radius-l)",
-          border: "1px solid var(--neutral-alpha-weak)",
-          background: "var(--surface-background)",
-          boxShadow: "var(--shadow-l)",
-          padding: "14px 16px",
+      <Background
+        position="absolute"
+        fill
+        left="0"
+        top="0"
+        gradient={{
+          display: true,
+          opacity: 10,
+          x: 100,
+          y: 0,
+          width: 80,
+          height: 80,
+          colorStart: "accent-background-strong",
+          colorEnd: "static-transparent",
         }}
-      >
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            pointerEvents: "none",
-            background:
-              "radial-gradient(ellipse at 100% 0%, var(--accent-background-strong, rgba(93,50,133,0.45)) 0%, transparent 70%)",
-            opacity: 0.4,
-          }}
+      />
+
+      <Row gap="8" vertical="center" fillWidth style={{ position: "relative" }}>
+        <Icon
+          name="security"
+          size="xs"
+          padding="8"
+          radius="full"
+          background="brand-alpha-weak"
+          onBackground="brand-weak"
         />
-        <button
-          onClick={handleDismiss}
-          aria-label="Dismiss cookie banner"
-          style={{
-            position: "absolute",
-            top: "8px",
-            right: "8px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            width: "20px",
-            height: "20px",
-            border: "none",
-            background: "transparent",
-            color: "var(--neutral-on-background-weak)",
-            cursor: "pointer",
-            padding: 0,
-          }}
-        >
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M18 6 6 18" />
-            <path d="m6 6 12 12" />
-          </svg>
-        </button>
-        <Text
-          variant="body-default-xs"
-          onBackground="neutral-weak"
-          style={{ position: "relative", display: "block", paddingRight: "18px", lineHeight: 1.5 }}
-        >
-          We use essential cookies to make our site work. With your permission, we&apos;ll also use
-          analytics cookies to improve your experience. You can change your choice anytime. See our{" "}
-          <Link
-            href={`/${locale}/privacy`}
-            style={{ color: "var(--neutral-on-background-strong)", textDecoration: "underline" }}
+        <Row fillWidth horizontal="end">
+          <button
+            onClick={handleDismiss}
+            aria-label="Dismiss cookie banner"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "18px",
+              height: "18px",
+              border: "none",
+              background: "transparent",
+              color: "var(--neutral-on-background-weak)",
+              cursor: "pointer",
+              padding: 0,
+            }}
           >
-            Privacy Policy
-          </Link>{" "}
-          for details.
-        </Text>
-      </div>
-    </div>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M18 6 6 18" />
+              <path d="m6 6 12 12" />
+            </svg>
+          </button>
+        </Row>
+      </Row>
+
+      <Text
+        variant="body-default-xs"
+        onBackground="neutral-weak"
+        wrap="balance"
+        style={{ position: "relative", lineHeight: 1.5 }}
+      >
+        We use essential cookies to make our site work. With your permission, we&apos;ll also use
+        analytics cookies to improve your experience. You can change your choice anytime. See our{" "}
+        <Link
+          href={`/${locale}/privacy`}
+          style={{ color: "var(--neutral-on-background-strong)", textDecoration: "underline" }}
+        >
+          Privacy Policy
+        </Link>{" "}
+        for details.
+      </Text>
+    </Column>
   );
 }

@@ -60,10 +60,14 @@
 .column:first-child {
   --brand-size: clamp(2rem, 4vw, 3.5rem);
 
-  /* The wordmark, phonetic line and tagline each need their own amount of
-     space above them, so spacing is set per-element via margin-top below
+  /* The wordmark and phonetic line each need their own amount of space
+     above them, so spacing is set per-element via margin-top below
      instead of the shared flex `gap` the other columns use. */
   gap: 0;
+
+  /* Centers the (now shorter) logo block within the row instead of
+     top-aligning it with the link columns' headings. */
+  align-self: center;
 
   /* A little extra breathing room on top of whatever leftover space the
      1fr logo column ends up with, so the wordmark never butts up right
@@ -89,13 +93,6 @@
   font-weight: var(--font-weight-normal);
   color: var(--neutral-on-background-strong);
   margin-top: 0.5rem;
-}
-
-.tagline {
-  font-size: 0.9375rem; /* ~15px */
-  font-weight: var(--font-weight-normal);
-  color: var(--neutral-on-background-weak); /* same muted grey as the bottom row */
-  margin-top: 0.75rem;
 }
 
 .heading {

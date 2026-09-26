@@ -24,7 +24,6 @@ export const Footer = () => {
           <div className={styles.column}>
             <KineticText className={styles.brand}>MHITARYAN</KineticText>
             <span className={styles.pronunciation}>{t("pronunciation")}</span>
-            <span className={styles.tagline}>{t("descriptor")}</span>
           </div>
 
           <div className={styles.column}>

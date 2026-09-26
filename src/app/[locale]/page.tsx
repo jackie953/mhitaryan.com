@@ -6,12 +6,11 @@ import {
   Schema,
   Meta,
   RevealFx,
-  Grid,
 } from "@once-ui-system/core";
 import { getLocale } from "next-intl/server";
 import { home, about, person, baseURL, getContactEmail } from "@/resources";
 import { BookingCTA } from "@/components/BookingCTA";
-import { ServiceCard } from "@/components/ServiceCard";
+import { HeroGallerySlider } from "@/components/HeroGallerySlider";
 import { ScrollReveal } from "@/components/ScrollReveal";
 
 export async function generateMetadata() {
@@ -74,20 +73,31 @@ export default async function Home() {
           </RevealFx>
         </Column>
         <ScrollReveal delay={0.55}>
-          <Grid columns="2" s={{ columns: 1 }} fillWidth gap="40">
-            <ServiceCard
-              href={`/${locale}/services#research-intelligence`}
-              video="/images/projects/project-01/video-1.mp4"
-              label="Research & Intelligence"
-              heading="Understand the landscape"
-            />
-            <ServiceCard
-              href={`/${locale}/services#strategic-communications`}
-              video="/images/projects/project-01/video-2.mp4"
-              label="Strategic Communications"
-              heading="Shape the narrative"
-            />
-          </Grid>
+          <HeroGallerySlider
+            interval={5000}
+            autoplay
+            showProgress
+            slides={[
+              {
+                video: "/videos/hero/research-network.mp4",
+                poster: "/videos/hero/research-network-poster.jpg",
+                eyebrow: "Research & Intelligence",
+                heading: "Understand the landscape",
+                subtext: "Placeholder subtext for the Research & Intelligence slide.",
+                ctaLabel: "Explore our services",
+                ctaHref: `/${locale}/services#research-intelligence`,
+              },
+              {
+                video: "/videos/hero/comms-water.mp4",
+                poster: "/videos/hero/comms-water-poster.jpg",
+                eyebrow: "Strategic Communications",
+                heading: "Shape the narrative",
+                subtext: "Placeholder subtext for the Strategic Communications slide.",
+                ctaLabel: "Explore our services",
+                ctaHref: `/${locale}/services#strategic-communications`,
+              },
+            ]}
+          />
         </ScrollReveal>
         <ScrollReveal delay={0.75}>
           <BookingCTA

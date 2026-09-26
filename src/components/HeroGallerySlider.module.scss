@@ -1,0 +1,214 @@
+@use "./breakpoints.scss" as breakpoints;
+
+.root {
+  width: 100%;
+}
+
+.stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-l);
+  overflow: hidden;
+  background: var(--neutral-alpha-weak);
+
+  @include breakpoints.s {
+    aspect-ratio: 4 / 5;
+  }
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  filter: blur(24px);
+  transition:
+    opacity 900ms ease,
+    filter 900ms ease;
+  pointer-events: none;
+}
+
+.slideActive {
+  opacity: 1;
+  filter: blur(0);
+  pointer-events: auto;
+}
+
+.media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border: none;
+  outline: none;
+}
+
+.scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.55) 100%);
+}
+
+.content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  pointer-events: none;
+}
+
+.copy {
+  position: absolute;
+  left: var(--static-space-40);
+  right: var(--static-space-40);
+  bottom: var(--static-space-40);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--static-space-8);
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity 600ms ease,
+    transform 600ms ease;
+  pointer-events: none;
+
+  @include breakpoints.s {
+    left: var(--static-space-20);
+    right: var(--static-space-20);
+    bottom: var(--static-space-24);
+  }
+}
+
+.copyActive {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  transition-delay: 200ms;
+}
+
+.eyebrow {
+  color: var(--brand-on-background-weak, #c9a8ee);
+  font-family: var(--font-label);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.heading {
+  color: #fff;
+  font-family: var(--font-heading);
+  font-size: clamp(1.5rem, 3.2vw, 2.5rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.subtext {
+  color: rgba(255, 255, 255, 0.8);
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  max-width: 32rem;
+}
+
+.cta {
+  margin-top: var(--static-space-8);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  border-radius: var(--radius-full, 999px);
+  background: #fff;
+  color: #5d3285;
+  font-family: var(--font-label);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition:
+    transform 200ms ease,
+    background 200ms ease;
+
+  span {
+    display: inline-block;
+    transition: transform 200ms ease;
+  }
+
+  &:hover {
+    background: #f2e9fb;
+
+    span {
+      transform: translateX(2px);
+    }
+  }
+}
+
+.progressTrack {
+  position: absolute;
+  top: var(--static-space-20);
+  left: var(--static-space-40);
+  right: var(--static-space-40);
+  display: flex;
+  gap: var(--static-space-8);
+
+  @include breakpoints.s {
+    left: var(--static-space-20);
+    right: var(--static-space-20);
+  }
+}
+
+.progressDot {
+  flex: 1;
+  height: 3px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.3);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.progressFill {
+  display: block;
+  height: 100%;
+  width: 0%;
+  background: #fff;
+  border-radius: inherit;
+}
+
+.progressFill[data-complete="true"] {
+  width: 100%;
+}
+
+.progressRunning {
+  animation: gs-progress var(--gs-interval, 5000ms) linear forwards;
+  animation-play-state: running;
+}
+
+.progressPaused {
+  animation-play-state: paused;
+}
+
+@keyframes gs-progress {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slide {
+    transition: none;
+  }
+
+  .copy {
+    transition: none;
+  }
+
+  .progressFill {
+    animation: none !important;
+  }
+}

@@ -112,8 +112,7 @@
 
 /* Beats once-ui's global `a:not(.button)` default (which paints every link
    brand-purple) without resorting to `!important`. */
-.column > .link,
-.bottomRow > .bottomLink {
+.column > .link {
   color: var(--neutral-on-background-strong);
   transition: color 200ms ease;
 
@@ -126,11 +125,12 @@
   }
 }
 
+/* Quiet footnote row: smaller, muted text — purple only shows on hover/focus. */
 .bottomRow {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: var(--static-space-48);
+  margin-top: var(--static-space-32);
 
   @include breakpoints.s {
     flex-direction: column;
@@ -141,9 +141,26 @@
 
 .bottomText,
 .bottomLink {
-  font-size: var(--font-size-label-m);
+  font-size: 0.8125rem; /* ~13px, smaller than the column links */
   line-height: 1.6;
-  color: var(--neutral-on-background-strong);
+  color: var(--neutral-on-background-weak);
+}
+
+/* Same specificity fix as `.column > .link` above (needed to beat once-ui's
+   global `a:not(.button)` default), but keeps the muted colour at rest —
+   only the hover/focus state turns brand-purple. */
+.bottomRow > .bottomLink {
+  color: var(--neutral-on-background-weak);
+  transition: color 200ms ease;
+
+  &:hover,
+  &:focus-visible {
+    color: var(--brand-on-background-strong);
+
+    &::after {
+      transform: scaleX(1);
+    }
+  }
 }
 
 .bottomLink {

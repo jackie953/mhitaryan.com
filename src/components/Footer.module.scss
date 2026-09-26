@@ -8,7 +8,7 @@
   padding-left: var(--static-space-12);
   padding-right: var(--static-space-12);
   padding-top: var(--static-space-104); /* nearest token to the spec's 96px */
-  padding-bottom: var(--static-space-32);
+  padding-bottom: var(--static-space-24); /* ~1.5rem, keeps the footer close to the page bottom */
 
   @include breakpoints.s {
     padding-left: var(--static-space-16);
@@ -59,6 +59,11 @@
 .column:first-child {
   --brand-size: clamp(2rem, 4vw, 3.5rem);
 
+  /* The wordmark, phonetic line and tagline each need their own amount of
+     space above them, so spacing is set per-element via margin-top below
+     instead of the shared flex `gap` the other columns use. */
+  gap: 0;
+
   /* Extra breathing room so the logo stands apart from the link columns,
      which read as one group. */
   padding-right: var(--static-space-64); /* ~4rem, on top of the 3rem column-gap */
@@ -78,9 +83,17 @@
 }
 
 .pronunciation {
-  font-size: calc(var(--brand-size) * 0.22);
+  font-size: clamp(1rem, 2vw, 1.125rem);
   font-weight: var(--font-weight-normal);
   color: var(--neutral-on-background-strong);
+  margin-top: 0.5rem;
+}
+
+.tagline {
+  font-size: 0.9375rem; /* ~15px */
+  font-weight: var(--font-weight-normal);
+  color: var(--neutral-on-background-weak); /* same muted grey as the bottom row */
+  margin-top: 0.75rem;
 }
 
 .heading {

@@ -28,7 +28,11 @@ export const Footer = () => {
           <div className={styles.column}>
             <span className={styles.heading}>{t("contactHeading")}</span>
             <span className={styles.item}>{LOCATION}</span>
-            <Link href={`mailto:${contactEmail}`} className={styles.link}>
+            <Link
+              href={`mailto:${contactEmail}`}
+              className={styles.link}
+              onClick={() => window.umami?.track('contact-click')}
+            >
               {contactEmail}
             </Link>
             <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer" className={styles.link}>

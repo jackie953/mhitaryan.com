@@ -13,6 +13,7 @@ interface ButtonProps {
   target?: '_self' | '_blank' | '_parent' | '_top';
   className?: string;
   icon?: React.ReactNode;
+  onClick?: () => void;
 }
 
 const NavigationButton = ({
@@ -20,7 +21,8 @@ const NavigationButton = ({
   text = 'Open',
   icon = undefined,
   target = '_blank',
-  className = ''
+  className = '',
+  onClick
 }: ButtonProps) => {
   const [hovered, setHovered] = useState(false);
 
@@ -36,6 +38,7 @@ const NavigationButton = ({
             )}
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
+            onClick={onClick}
           >
             {!hovered && (
               <motion.div

@@ -13,6 +13,7 @@ export interface NavigationLink {
   icon?: React.ReactNode;
   target?: '_self' | '_blank' | '_parent' | '_top';
   className?: string;
+  onClick?: () => void;
 }
 
 export interface InteractiveCTAProps {
@@ -148,6 +149,7 @@ const InteractiveCTA = ({
                     className={link.className}
                     icon={link.icon}
                     target={link.target}
+                    onClick={link.onClick}
                   />
                 ))}
               </motion.div>

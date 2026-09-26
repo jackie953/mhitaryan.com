@@ -22,6 +22,7 @@ export default function CTAWrapper() {
           icon: <IconMail size={14} />,
           className:
             'px-2 py-1 text-white/70 hover:text-[#2563EB] font-body',
+          onClick: () => window.umami?.track('contact-click'),
         },
         {
           href: 'https://cal.com/mhitaryan',

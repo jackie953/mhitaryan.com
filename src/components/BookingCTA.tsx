@@ -163,6 +163,7 @@ export const BookingCTA: React.FC<React.ComponentProps<typeof Column> & BookingC
         rel="noopener noreferrer"
         aria-disabled={displayButtonHref === undefined}
         style={{ textDecoration: 'none' }}
+        onClick={isMailto ? () => window.umami?.track('contact-click') : undefined}
       >
         <Button size="m" style={{ paddingInline: '2rem' }}>
           {displayButtonText}

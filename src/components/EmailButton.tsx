@@ -18,6 +18,7 @@ export const EmailButton = ({ size = "m" }: EmailButtonProps) => {
       href={`mailto:${getContactEmail(locale)}`}
       title="Get in touch"
       aria-label="Email Mhitaryan"
+      onClick={() => window.umami?.track('contact-click')}
     />
   );
 };

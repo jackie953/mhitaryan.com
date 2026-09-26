@@ -17,21 +17,21 @@ export const PrivacyContent = async () => {
       </Column>
 
       <Column gap="s">
-        <Heading variant="heading-strong-m">{t("analytics")}</Heading>
+        <Heading variant="body-strong-m">{t("analytics")}</Heading>
         <Text variant="body-default-m" onBackground="neutral-weak">
           {t("analyticsText")}
         </Text>
       </Column>
 
       <Column gap="s">
-        <Heading variant="heading-strong-m">{t("contact")}</Heading>
+        <Heading variant="body-strong-m">{t("contact")}</Heading>
         <Text variant="body-default-m" onBackground="neutral-weak">
           {t("contactText")}
         </Text>
       </Column>
 
       <Column gap="s">
-        <Heading variant="heading-strong-m">{t("rights")}</Heading>
+        <Heading variant="body-strong-m">{t("rights")}</Heading>
         <Text variant="body-default-m" onBackground="neutral-weak">
           {t("rightsText")}{" "}
           <a href={`mailto:${contactEmail}`} className="text-blue-600 hover:underline dark:text-blue-500">
@@ -42,7 +42,7 @@ export const PrivacyContent = async () => {
       </Column>
 
       <Column gap="s">
-        <Heading variant="heading-strong-m">{t("changes")}</Heading>
+        <Heading variant="body-strong-m">{t("changes")}</Heading>
         <Text variant="body-default-m" onBackground="neutral-weak">
           {t("changesText")}
         </Text>

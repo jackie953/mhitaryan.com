@@ -26,12 +26,22 @@
 
 .grid {
   display: grid;
-  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  /* Logo column stays wider than the three link columns, which are kept
+     equal width via minmax(0, 1fr) so none of them stretch or leave large
+     empty space on wide screens. */
+  grid-template-columns: minmax(0, 1.5fr) repeat(3, minmax(0, 1fr));
   align-items: start;
-  column-gap: var(--static-space-40);
+  column-gap: var(--static-space-48); /* ~3rem */
   row-gap: var(--static-space-32);
   margin-top: var(--static-space-40);
 
+  /* Tablet: logo takes its own full-width row, the three link columns
+     share the row below it. */
+  @include breakpoints.m {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  /* Mobile: everything stacks in document order. */
   @include breakpoints.s {
     grid-template-columns: 1fr;
     row-gap: var(--static-space-32);
@@ -47,7 +57,16 @@
 /* Wordmark size is driven off a custom property so the phonetic line below
    it can stay locked to the same proportion as it scales. */
 .column:first-child {
-  --brand-size: clamp(2.75rem, 6vw, 5.5rem);
+  --brand-size: clamp(2rem, 4vw, 3.5rem);
+
+  /* Extra breathing room so the logo stands apart from the link columns,
+     which read as one group. */
+  padding-right: var(--static-space-64); /* ~4rem, on top of the 3rem column-gap */
+
+  @include breakpoints.m {
+    grid-column: 1 / -1;
+    padding-right: 0;
+  }
 }
 
 .brand {

@@ -8,7 +8,7 @@
   padding-left: var(--static-space-12);
   padding-right: var(--static-space-12);
   padding-top: var(--static-space-104); /* nearest token to the spec's 96px */
-  padding-bottom: var(--static-space-32);
+  padding-bottom: var(--static-space-12); /* ~0.75rem, keeps the footer close to the page bottom */
 
   @include breakpoints.s {
     padding-left: var(--static-space-16);
@@ -26,12 +26,23 @@
 
 .grid {
   display: grid;
-  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  /* Logo column is 1fr (absorbs all leftover space), the three link
+     columns are content-width (auto) and sit together against the right
+     edge — their combined right edge lines up with "Privacy policy" in
+     .bottomRow below, since both span the same full container width. */
+  grid-template-columns: 1fr auto auto auto;
   align-items: start;
-  column-gap: var(--static-space-40);
+  column-gap: var(--static-space-56); /* ~3.5rem between Network/Pages/Contact */
   row-gap: var(--static-space-32);
   margin-top: var(--static-space-40);
 
+  /* Tablet: logo takes its own full-width row, the three link columns
+     share the row below it. */
+  @include breakpoints.m {
+    grid-template-columns: repeat(3, max-content);
+  }
+
+  /* Mobile: everything stacks in document order. */
   @include breakpoints.s {
     grid-template-columns: 1fr;
     row-gap: var(--static-space-32);
@@ -44,17 +55,44 @@
   gap: var(--static-space-8); /* nearest token to the spec's 10px item gap */
 }
 
+/* Wordmark size is driven off a custom property so the phonetic line below
+   it can stay locked to the same proportion as it scales. */
+.column:first-child {
+  --brand-size: clamp(2rem, 4vw, 3.5rem);
+
+  /* The wordmark and phonetic line each need their own amount of space
+     above them, so spacing is set per-element via margin-top below
+     instead of the shared flex `gap` the other columns use. */
+  gap: 0;
+
+  /* Centers the (now shorter) logo block within the row instead of
+     top-aligning it with the link columns' headings. */
+  align-self: center;
+
+  /* A little extra breathing room on top of whatever leftover space the
+     1fr logo column ends up with, so the wordmark never butts up right
+     against "Network". */
+  padding-right: var(--static-space-40); /* ~2.5rem */
+
+  @include breakpoints.m {
+    grid-column: 1 / -1;
+    padding-right: 0;
+  }
+}
+
 .brand {
-  font-size: var(--font-size-heading-l); /* nearest token to the spec's 22px */
+  font-size: var(--brand-size);
   font-weight: var(--font-weight-semiBold);
-  letter-spacing: 0.04em;
+  letter-spacing: 0.02em;
+  line-height: 1;
   color: var(--neutral-on-background-strong);
 }
 
 .pronunciation {
-  font-size: var(--font-size-label-m); /* ~15px */
+  font-size: clamp(1rem, 2vw, 1.125rem);
   font-weight: var(--font-weight-normal);
   color: var(--neutral-on-background-strong);
+  margin-top: 0.5rem;
 }
 
 .heading {
@@ -70,14 +108,25 @@
 }
 
 .link {
+  position: relative;
+  display: inline-block;
+  width: fit-content;
   font-size: var(--font-size-label-m); /* ~15px */
   line-height: 1.6;
-  color: var(--neutral-on-background-strong);
   text-decoration: none;
   border-radius: var(--radius-xs, 4px);
 
-  &:hover {
-    text-decoration: underline;
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0.1em;
+    width: 100%;
+    height: 1px;
+    background: var(--brand-on-background-strong);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 200ms ease;
   }
 
   &:focus-visible {
@@ -92,11 +141,27 @@
   }
 }
 
+/* Beats once-ui's global `a:not(.button)` default (which paints every link
+   brand-purple) without resorting to `!important`. */
+.column > .link {
+  color: var(--neutral-on-background-strong);
+  transition: color 200ms ease;
+
+  &:hover {
+    color: var(--brand-on-background-strong);
+
+    &::after {
+      transform: scaleX(1);
+    }
+  }
+}
+
+/* Quiet footnote row: smaller, muted text — purple only shows on hover/focus. */
 .bottomRow {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: var(--static-space-48);
+  margin-top: var(--static-space-32);
 
   @include breakpoints.s {
     flex-direction: column;
@@ -107,22 +172,51 @@
 
 .bottomText,
 .bottomLink {
-  font-size: var(--font-size-label-m);
+  font-size: 0.8125rem; /* ~13px, smaller than the column links */
   line-height: 1.6;
-  color: var(--neutral-on-background-strong);
+  color: var(--neutral-on-background-weak);
+}
+
+/* Same specificity fix as `.column > .link` above (needed to beat once-ui's
+   global `a:not(.button)` default), but keeps the muted colour at rest —
+   only the hover/focus state turns brand-purple. */
+.bottomRow > .bottomLink {
+  color: var(--neutral-on-background-weak);
+  transition: color 200ms ease;
+
+  &:hover,
+  &:focus-visible {
+    color: var(--brand-on-background-strong);
+
+    &::after {
+      transform: scaleX(1);
+    }
+  }
 }
 
 .bottomLink {
+  position: relative;
+  display: inline-block;
+  width: fit-content;
   text-decoration: none;
+  border-radius: var(--radius-xs, 4px);
 
-  &:hover {
-    text-decoration: underline;
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0.1em;
+    width: 100%;
+    height: 1px;
+    background: var(--brand-on-background-strong);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 200ms ease;
   }
 
   &:focus-visible {
     outline: 2px solid var(--brand-background-strong);
     outline-offset: 2px;
-    border-radius: var(--radius-xs, 4px);
   }
 
   @include breakpoints.s {

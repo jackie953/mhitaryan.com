@@ -124,12 +124,16 @@ export const BookingCTA: React.FC<React.ComponentProps<typeof Column> & BookingC
       paddingX="xl"
       paddingY="80"
       radius="l"
-      marginBottom="m"
       horizontal="center"
       align="center"
       background="surface"
-      border="neutral-alpha-weak"
-      className="max-sm:!p-8"
+      className="max-sm:!pt-8 max-sm:!px-8 max-sm:!pb-0"
+      style={{
+        // Bleed the card into the gap below it so it touches the footer,
+        // then pull the following content back up by the same amount.
+        paddingBottom: "calc(var(--static-space-80) + var(--responsive-space-xl))",
+        marginBottom: "calc(-1 * var(--responsive-space-xl))",
+      }}
       {...flex}
     >
       {/* Cursor-following spotlight — replays the glow wherever the pointer

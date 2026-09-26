@@ -32,6 +32,7 @@ export default function RootLayout({
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <meta name="apple-mobile-web-app-title" content="MC" />
         <link rel="manifest" href="/site.webmanifest" />
+        <script defer src="https://cloud.umami.is/script.js" data-website-id="c2a62245-10d7-4dd8-ae04-8e9843c9e7db" />
         {/* 🧠 Smart default theme: respects system preference and saved user choice */}
         <Script id="init-theme" strategy="beforeInteractive">
           {`

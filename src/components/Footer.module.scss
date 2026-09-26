@@ -96,9 +96,12 @@
 }
 
 .heading {
-  font-size: var(--font-size-label-s); /* ~13px */
-  font-weight: var(--font-weight-medium);
+  font-size: calc(var(--font-size-label-m) * 0.8); /* 80% of the link font size */
+  font-weight: 500;
   color: var(--neutral-on-background-strong);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: var(--static-space-4);
 }
 
 .item {

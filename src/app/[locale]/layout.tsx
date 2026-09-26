@@ -5,7 +5,6 @@ import classNames from "classnames";
 
 import { Column, Flex } from "@once-ui-system/core";
 import { Footer, Header, RouteGuard } from "@/components";
-import { CookieBanner } from "@/components/CookieBanner";
 import { fonts } from "@/resources";
 
 type Props = {
@@ -65,7 +64,6 @@ export default async function LocaleLayout({ children, params }: Props) {
           {/* <CTAWrapper /> */}
         </Column>
       </Flex>
-      <CookieBanner />
     </NextIntlClientProvider>
   );
 }

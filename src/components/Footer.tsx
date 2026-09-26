@@ -3,6 +3,7 @@
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 import { about, services, cases, getContactEmail, LINKEDIN_URL, LOCATION, NETWORK_LINKS } from "@/resources";
+import { KineticText } from "@/registry/magicui/kinetic-text";
 import styles from "./Footer.module.scss";
 
 export const Footer = () => {
@@ -21,19 +22,23 @@ export const Footer = () => {
 
         <div className={styles.grid}>
           <div className={styles.column}>
-            <span className={styles.brand}>MHITARYAN</span>
+            <KineticText className={styles.brand}>MHITARYAN</KineticText>
             <span className={styles.pronunciation}>{t("pronunciation")}</span>
           </div>
 
           <div className={styles.column}>
-            <span className={styles.heading}>{t("contactHeading")}</span>
-            <span className={styles.item}>{LOCATION}</span>
-            <Link href={`mailto:${contactEmail}`} className={styles.link}>
-              {contactEmail}
-            </Link>
-            <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer" className={styles.link}>
-              LinkedIn
-            </a>
+            <span className={styles.heading}>{t("networkHeading")}</span>
+            {NETWORK_LINKS.map((network) => (
+              <a
+                key={network.label}
+                href={network.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.link}
+              >
+                {network.label}
+              </a>
+            ))}
           </div>
 
           <div className={styles.column}>
@@ -50,18 +55,14 @@ export const Footer = () => {
           </div>
 
           <div className={styles.column}>
-            <span className={styles.heading}>{t("networkHeading")}</span>
-            {NETWORK_LINKS.map((network) => (
-              <a
-                key={network.label}
-                href={network.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.link}
-              >
-                {network.label}
-              </a>
-            ))}
+            <span className={styles.heading}>{t("contactHeading")}</span>
+            <span className={styles.item}>{LOCATION}</span>
+            <Link href={`mailto:${contactEmail}`} className={styles.link}>
+              {contactEmail}
+            </Link>
+            <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer" className={styles.link}>
+              LinkedIn
+            </a>
           </div>
         </div>
 

@@ -44,15 +44,22 @@
   gap: var(--static-space-8); /* nearest token to the spec's 10px item gap */
 }
 
+/* Wordmark size is driven off a custom property so the phonetic line below
+   it can stay locked to the same proportion as it scales. */
+.column:first-child {
+  --brand-size: clamp(2.75rem, 6vw, 5.5rem);
+}
+
 .brand {
-  font-size: var(--font-size-heading-l); /* nearest token to the spec's 22px */
+  font-size: var(--brand-size);
   font-weight: var(--font-weight-semiBold);
-  letter-spacing: 0.04em;
+  letter-spacing: 0.02em;
+  line-height: 1;
   color: var(--neutral-on-background-strong);
 }
 
 .pronunciation {
-  font-size: var(--font-size-label-m); /* ~15px */
+  font-size: calc(var(--brand-size) * 0.22);
   font-weight: var(--font-weight-normal);
   color: var(--neutral-on-background-strong);
 }
@@ -70,14 +77,25 @@
 }
 
 .link {
+  position: relative;
+  display: inline-block;
+  width: fit-content;
   font-size: var(--font-size-label-m); /* ~15px */
   line-height: 1.6;
-  color: var(--neutral-on-background-strong);
   text-decoration: none;
   border-radius: var(--radius-xs, 4px);
 
-  &:hover {
-    text-decoration: underline;
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0.1em;
+    width: 100%;
+    height: 1px;
+    background: var(--brand-on-background-strong);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 200ms ease;
   }
 
   &:focus-visible {
@@ -89,6 +107,22 @@
     display: inline-flex;
     align-items: center;
     min-height: 2.75rem; /* 44px WCAG tap target, per the spec's own requirement */
+  }
+}
+
+/* Beats once-ui's global `a:not(.button)` default (which paints every link
+   brand-purple) without resorting to `!important`. */
+.column > .link,
+.bottomRow > .bottomLink {
+  color: var(--neutral-on-background-strong);
+  transition: color 200ms ease;
+
+  &:hover {
+    color: var(--brand-on-background-strong);
+
+    &::after {
+      transform: scaleX(1);
+    }
   }
 }
 
@@ -113,16 +147,28 @@
 }
 
 .bottomLink {
+  position: relative;
+  display: inline-block;
+  width: fit-content;
   text-decoration: none;
+  border-radius: var(--radius-xs, 4px);
 
-  &:hover {
-    text-decoration: underline;
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0.1em;
+    width: 100%;
+    height: 1px;
+    background: var(--brand-on-background-strong);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 200ms ease;
   }
 
   &:focus-visible {
     outline: 2px solid var(--brand-background-strong);
     outline-offset: 2px;
-    border-radius: var(--radius-xs, 4px);
   }
 
   @include breakpoints.s {

@@ -8,28 +8,29 @@ export const PrivacyContent = async () => {
   const contactEmail = getContactEmail(locale);
 
   return (
-    <Column maxWidth="m" fillWidth gap="xl">
-      <Heading variant="display-strong-s">{t("title")}</Heading>
+    <Column maxWidth="m" fillWidth gap="l">
+      <Column gap="s">
+        <Heading variant="display-strong-s">{t("title")}</Heading>
+        <Text variant="body-default-m" onBackground="neutral-weak">
+          {t("intro")}
+        </Text>
+      </Column>
 
-      <Text variant="body-default-m" onBackground="neutral-weak">
-        {t("intro")}
-      </Text>
-
-      <Column gap="m">
+      <Column gap="s">
         <Heading variant="heading-strong-m">{t("analytics")}</Heading>
         <Text variant="body-default-m" onBackground="neutral-weak">
           {t("analyticsText")}
         </Text>
       </Column>
 
-      <Column gap="m">
+      <Column gap="s">
         <Heading variant="heading-strong-m">{t("contact")}</Heading>
         <Text variant="body-default-m" onBackground="neutral-weak">
           {t("contactText")}
         </Text>
       </Column>
 
-      <Column gap="m">
+      <Column gap="s">
         <Heading variant="heading-strong-m">{t("rights")}</Heading>
         <Text variant="body-default-m" onBackground="neutral-weak">
           {t("rightsText")}{" "}
@@ -40,7 +41,7 @@ export const PrivacyContent = async () => {
         </Text>
       </Column>
 
-      <Column gap="m">
+      <Column gap="s">
         <Heading variant="heading-strong-m">{t("changes")}</Heading>
         <Text variant="body-default-m" onBackground="neutral-weak">
           {t("changesText")}

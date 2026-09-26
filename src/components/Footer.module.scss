@@ -26,12 +26,11 @@
 
 .grid {
   display: grid;
-  /* Content-width columns (not 1fr) so a fixed gap is actually visible —
-     1fr columns stretch to fill the row, which silently absorbs any gap
-     change. justify-content: start keeps the whole group flush left, with
-     leftover space on the right instead of being distributed as gaps. */
-  grid-template-columns: max-content repeat(3, max-content);
-  justify-content: start;
+  /* Logo column is 1fr (absorbs all leftover space), the three link
+     columns are content-width (auto) and sit together against the right
+     edge — their combined right edge lines up with "Privacy policy" in
+     .bottomRow below, since both span the same full container width. */
+  grid-template-columns: 1fr auto auto auto;
   align-items: start;
   column-gap: var(--static-space-56); /* ~3.5rem between Network/Pages/Contact */
   row-gap: var(--static-space-32);
@@ -66,9 +65,9 @@
      instead of the shared flex `gap` the other columns use. */
   gap: 0;
 
-  /* Extra breathing room so the logo stands apart from the link columns,
-     which read as one group: 2.5rem here + the 3.5rem column-gap = 6rem
-     total between the wordmark and "Network". */
+  /* A little extra breathing room on top of whatever leftover space the
+     1fr logo column ends up with, so the wordmark never butts up right
+     against "Network". */
   padding-right: var(--static-space-40); /* ~2.5rem */
 
   @include breakpoints.m {

@@ -28,18 +28,14 @@ export const Footer = () => {
           </div>
 
           <div className={styles.column}>
-            <span className={styles.heading}>{t("networkHeading")}</span>
-            {NETWORK_LINKS.map((network) => (
-              <a
-                key={network.label}
-                href={network.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.link}
-              >
-                {network.label}
-              </a>
-            ))}
+            <span className={styles.heading}>{t("contactHeading")}</span>
+            <span className={styles.item}>{LOCATION}</span>
+            <Link href={`mailto:${contactEmail}`} className={styles.link}>
+              {contactEmail}
+            </Link>
+            <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer" className={styles.link}>
+              LinkedIn
+            </a>
           </div>
 
           <div className={styles.column}>
@@ -56,14 +52,18 @@ export const Footer = () => {
           </div>
 
           <div className={styles.column}>
-            <span className={styles.heading}>{t("contactHeading")}</span>
-            <span className={styles.item}>{LOCATION}</span>
-            <Link href={`mailto:${contactEmail}`} className={styles.link}>
-              {contactEmail}
-            </Link>
-            <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer" className={styles.link}>
-              LinkedIn
-            </a>
+            <span className={styles.heading}>{t("networkHeading")}</span>
+            {NETWORK_LINKS.map((network) => (
+              <a
+                key={network.label}
+                href={network.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.link}
+              >
+                {network.label}
+              </a>
+            ))}
           </div>
         </div>
 

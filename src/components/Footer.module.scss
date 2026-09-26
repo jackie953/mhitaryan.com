@@ -8,7 +8,7 @@
   padding-left: var(--static-space-12);
   padding-right: var(--static-space-12);
   padding-top: var(--static-space-104); /* nearest token to the spec's 96px */
-  padding-bottom: var(--static-space-16); /* ~1rem, keeps the footer close to the page bottom */
+  padding-bottom: var(--static-space-12); /* ~0.75rem, keeps the footer close to the page bottom */
 
   @include breakpoints.s {
     padding-left: var(--static-space-16);
@@ -29,9 +29,9 @@
   /* Logo column stays wider than the three link columns, which are kept
      equal width via minmax(0, 1fr) so none of them stretch or leave large
      empty space on wide screens. */
-  grid-template-columns: minmax(0, 1.1fr) repeat(3, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1.2fr) repeat(3, minmax(0, 1fr));
   align-items: start;
-  column-gap: var(--static-space-32); /* ~2rem, keeps Network/Pages/Contact snug */
+  column-gap: var(--static-space-24); /* ~1.5rem, keeps Network/Pages/Contact snug */
   row-gap: var(--static-space-32);
   margin-top: var(--static-space-40);
 
@@ -66,7 +66,7 @@
 
   /* Extra breathing room so the logo stands apart from the link columns,
      which read as one group. */
-  padding-right: var(--static-space-32); /* ~2rem, on top of the 2rem column-gap */
+  padding-right: var(--static-space-24); /* ~1.5rem, on top of the 1.5rem column-gap */
 
   @include breakpoints.m {
     grid-column: 1 / -1;

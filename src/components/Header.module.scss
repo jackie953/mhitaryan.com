@@ -19,8 +19,8 @@
    so it doesn't leak into the CTA's own (differently coloured) label. */
 .navLinks :global(.font-label) {
     font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
+    text-transform: none;
+    letter-spacing: normal;
     font-size: 14px;
     color: var(--header-color);
 }
@@ -49,8 +49,8 @@
 
 .cta :global(.font-label) {
     font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
+    text-transform: none;
+    letter-spacing: normal;
     font-size: 14px;
     color: var(--page-background);
 }

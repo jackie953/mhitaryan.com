@@ -61,7 +61,7 @@
   position: absolute;
   left: var(--static-space-40);
   right: var(--static-space-40);
-  bottom: var(--static-space-40);
+  bottom: 4.25rem;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -76,7 +76,7 @@
   @include breakpoints.s {
     left: var(--static-space-20);
     right: var(--static-space-20);
-    bottom: var(--static-space-24);
+    bottom: 3.5rem;
   }
 }
 
@@ -144,18 +144,28 @@
   }
 }
 
-.progressTrack {
+// Runs along the very bottom edge, below the copy block, instead of at the
+// top where it used to compete with the hero headline right above it.
+.bottomControls {
   position: absolute;
-  top: var(--static-space-20);
   left: var(--static-space-40);
   right: var(--static-space-40);
+  bottom: var(--static-space-20);
   display: flex;
-  gap: var(--static-space-8);
+  align-items: center;
+  gap: var(--static-space-12);
 
   @include breakpoints.s {
     left: var(--static-space-20);
     right: var(--static-space-20);
+    bottom: var(--static-space-16);
   }
+}
+
+.progressTrack {
+  flex: 1;
+  display: flex;
+  gap: var(--static-space-8);
 }
 
 .progressDot {
@@ -199,65 +209,39 @@
   }
 }
 
-.navButton {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
+// Small, always-on (not hover-gated) so it works the same on touch as on
+// desktop — sits at the end of the bottom bar, in the corner.
+.navNext {
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 1.75rem;
+  height: 1.75rem;
   border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.4);
   background: rgba(0, 0, 0, 0.25);
   color: #fff;
   cursor: pointer;
-  opacity: 0;
+  opacity: 0.85;
   transition:
     opacity 200ms ease,
     background 200ms ease,
-    transform 200ms ease;
+    transform 150ms ease;
 
   &:hover {
+    opacity: 1;
     background: rgba(0, 0, 0, 0.45);
+  }
+
+  &:active {
+    transform: scale(0.92);
   }
 
   &:focus-visible {
     opacity: 1;
     outline: 2px solid #fff;
     outline-offset: 2px;
-  }
-}
-
-.navPrev {
-  left: var(--static-space-20);
-}
-
-.navNext {
-  right: var(--static-space-20);
-}
-
-// Reveal on hover for pointer devices; touch devices get no hover at all,
-// so they keep a faint permanent affordance instead (below).
-.root:hover .navButton {
-  opacity: 1;
-}
-
-@media (hover: none) {
-  .navButton {
-    opacity: 0.85;
-  }
-
-  .navButton:active {
-    transform: translateY(-50%) scale(0.92);
-  }
-}
-
-@include breakpoints.s {
-  .navButton {
-    width: 2.25rem;
-    height: 2.25rem;
   }
 }
 

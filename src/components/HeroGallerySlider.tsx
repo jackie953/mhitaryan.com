@@ -54,10 +54,6 @@ export function HeroGallerySlider({
     [interval],
   );
 
-  const goPrev = useCallback(
-    () => goTo((active - 1 + slides.length) % slides.length),
-    [goTo, active, slides.length],
-  );
   const goNext = useCallback(
     () => goTo((active + 1) % slides.length),
     [goTo, active, slides.length],
@@ -128,75 +124,60 @@ export function HeroGallerySlider({
           ))}
         </div>
 
-        {showProgress && !reducedMotion && (
-          <div className={styles.progressTrack}>
-            {slides.map((slide, index) => (
-              <button
-                key={slide.video}
-                type="button"
-                className={styles.progressDot}
-                aria-label={`Show slide ${index + 1}: ${slide.heading}`}
-                aria-current={index === active}
-                onClick={() => goTo(index)}
-              >
-                <span
-                  key={index === active ? progressKey : undefined}
-                  className={[
-                    styles.progressFill,
-                    index === active ? styles.progressRunning : "",
-                    index === active && paused ? styles.progressPaused : "",
-                  ]
-                    .filter(Boolean)
-                    .join(" ")}
-                  style={
-                    index === active
-                      ? ({ ["--gs-interval" as string]: `${interval}ms` } as React.CSSProperties)
-                      : undefined
-                  }
-                  data-complete={index < active ? "true" : undefined}
-                />
-              </button>
-            ))}
-          </div>
-        )}
+        {(showProgress || slides.length > 1) && !reducedMotion && (
+          <div className={styles.bottomControls}>
+            {showProgress && (
+              <div className={styles.progressTrack}>
+                {slides.map((slide, index) => (
+                  <button
+                    key={slide.video}
+                    type="button"
+                    className={styles.progressDot}
+                    aria-label={`Show slide ${index + 1}: ${slide.heading}`}
+                    aria-current={index === active}
+                    onClick={() => goTo(index)}
+                  >
+                    <span
+                      key={index === active ? progressKey : undefined}
+                      className={[
+                        styles.progressFill,
+                        index === active ? styles.progressRunning : "",
+                        index === active && paused ? styles.progressPaused : "",
+                      ]
+                        .filter(Boolean)
+                        .join(" ")}
+                      style={
+                        index === active
+                          ? ({ ["--gs-interval" as string]: `${interval}ms` } as React.CSSProperties)
+                          : undefined
+                      }
+                      data-complete={index < active ? "true" : undefined}
+                    />
+                  </button>
+                ))}
+              </div>
+            )}
 
-        {slides.length > 1 && (
-          <>
-            <button
-              type="button"
-              className={`${styles.navButton} ${styles.navPrev}`}
-              aria-label="Previous slide"
-              onClick={goPrev}
-            >
-              <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
-                <path
-                  d="M15 6l-6 6 6 6"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </button>
-            <button
-              type="button"
-              className={`${styles.navButton} ${styles.navNext}`}
-              aria-label="Next slide"
-              onClick={goNext}
-            >
-              <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
-                <path
-                  d="M9 6l6 6-6 6"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </button>
-          </>
+            {slides.length > 1 && (
+              <button
+                type="button"
+                className={styles.navNext}
+                aria-label="Next slide"
+                onClick={goNext}
+              >
+                <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+                  <path
+                    d="M9 6l6 6-6 6"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
+            )}
+          </div>
         )}
       </div>
     </div>

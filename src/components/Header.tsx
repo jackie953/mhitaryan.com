@@ -285,7 +285,7 @@ export const Header = () => {
                   color: "var(--page-background)",
                   display: "inline-flex",
                   alignItems: "center",
-                  gap: 6,
+                  gap: 12,
                 }}
               >
                 <span style={{ fontSize: 14, fontWeight: 600 }}>{tNav("briefUs")}</span>
@@ -348,7 +348,7 @@ export const Header = () => {
                     display: "inline-flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    gap: 6,
+                    gap: 12,
                   }}
                   onClick={() => setMenuOpen(false)}
                 >

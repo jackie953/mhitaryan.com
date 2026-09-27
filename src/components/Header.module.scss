@@ -44,18 +44,23 @@
    !important because the base Button component's own hover state would
    otherwise repaint it with the brand colour. */
 .cta {
-    transition: var(--transition-micro-medium), transform 0.15s ease;
+    background-color: var(--header-color) !important;
+    transition: background-color 0.25s ease, transform 0.15s ease;
 }
 
+/* Hover mixes in 18% of the button's own text color rather than a fixed
+   hex — in light mode that lightens the near-black pill a touch, in dark
+   mode it grays the white pill a touch. Same trick either way, no
+   separate dark-mode rule needed. */
 .cta:hover {
-    background: var(--header-color) !important;
-    filter: brightness(1.12);
+    background-color: color-mix(in srgb, var(--header-color) 82%, var(--page-background) 18%) !important;
 }
 
 /* Arrow tail is painted the same color as the button background, so it's
    invisible until hover — then it fades in and the chevron head slides
-   toward it, completing the arrow. Both colors are theme tokens (not
-   hardcoded hex), so this stays correct in both light and dark mode. */
+   toward it, completing the arrow, in sync with the background shifting
+   underneath it. Both colors are theme tokens (not hardcoded hex), so
+   this stays correct in both light and dark mode. */
 .ctaArrowWrapper {
     display: flex;
     align-items: center;
@@ -66,8 +71,8 @@
     position: relative;
     width: 10px;
     height: 2px;
-    background: var(--header-color);
-    transition: background 0.2s;
+    background-color: var(--header-color);
+    transition: background-color 0.25s ease;
 }
 
 .ctaArrow::before {
@@ -80,11 +85,11 @@
     border: solid var(--page-background);
     border-width: 0 2px 2px 0;
     transform: rotate(-45deg);
-    transition: right 0.2s;
+    transition: right 0.25s ease;
 }
 
 .cta:hover .ctaArrow {
-    background: var(--page-background);
+    background-color: var(--page-background);
 }
 
 .cta:hover .ctaArrow::before {
@@ -94,6 +99,14 @@
 @media (prefers-reduced-motion: no-preference) {
     .cta:hover {
         transform: translateY(-1px);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .cta,
+    .ctaArrow,
+    .ctaArrow::before {
+        transition: none;
     }
 }
 

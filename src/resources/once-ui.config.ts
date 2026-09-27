@@ -21,7 +21,7 @@ const routes: RoutesConfig = {
   "/about": true,
   "/cases": true,
   "/services": true,
-  "/contact": false,
+  "/contact": true,
   "/blog": false,
   "/privacy": true,
 };

@@ -1,0 +1,22 @@
+@use "../../components/breakpoints.scss" as breakpoints;
+
+.subheadline {
+  font-family: var(--font-heading);
+  font-weight: 400;
+  font-style: normal;
+  font-size: clamp(1.125rem, 1.6vw, 1.5rem);
+  line-height: 1.45;
+  max-width: 42ch;
+  margin-top: 1.75rem;
+  text-wrap: pretty;
+}
+
+.gallery {
+  margin-top: 5rem;
+}
+
+@include breakpoints.s {
+  .gallery {
+    margin-top: 2.75rem;
+  }
+}

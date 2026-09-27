@@ -1,46 +1,78 @@
-import React from 'react';
-import { Meta } from "@once-ui-system/core";
-import { baseURL } from "@/resources";
+import { Column, Row, Heading, Text, Icon, Meta, Schema, RevealFx } from "@once-ui-system/core";
+import { getTranslations, getLocale } from "next-intl/server";
+import { baseURL, contact, person, getContactEmail, getLocation } from "@/resources";
 import { ContactForm } from "@/components/ContactForm";
 
 export async function generateMetadata() {
-  const title = "Contact | Mhitaryan Consulting";
   return Meta.generate({
-    title,
-    description: "Get in touch to discuss how we can work together.",
+    title: contact.title,
+    description: contact.description,
     baseURL: baseURL,
-    image: `/api/og/generate?title=${encodeURIComponent(title)}`,
-    path: "/contact",
+    image: `/api/og/generate?title=${encodeURIComponent(contact.title)}`,
+    path: contact.path,
   });
 }
 
-export default function Contact() {
+export default async function Contact() {
+  const t = await getTranslations("contact");
+  const locale = await getLocale();
+  const contactEmail = getContactEmail(locale);
+  const location = getLocation(locale);
+
   return (
-    <div className="w-full">
-      <div className="max-w-4xl">
-        <h1 className="text-4xl font-bold mb-8">Contact</h1>
-        <div className="prose prose-lg">
-          <p className="text-lg mb-8">
-            Get in touch to discuss how we can work together.
-          </p>
-          
-          <div className="grid md:grid-cols-2 gap-12">
-            <div>
-              <h3 className="text-xl font-semibold mb-4">Contact Information</h3>
-              <div className="space-y-3">
-                <p>Email: your.email@example.com</p>
-                <p>Phone: +1 (555) 123-4567</p>
-                <p>Location: Your City, Country</p>
-              </div>
-            </div>
-            
-            <div>
-              <h3 className="text-xl font-semibold mb-4">Send a Message</h3>
+    <Column fillWidth horizontal="center" paddingTop="40" className="page-contact">
+      <Schema
+        as="webPage"
+        baseURL={baseURL}
+        title={contact.title}
+        description={contact.description}
+        path={contact.path}
+        image={`/api/og/generate?title=${encodeURIComponent(contact.title)}`}
+        author={{
+          name: person.name,
+          url: `${baseURL}${contact.path}`,
+          image: `${baseURL}${person.avatar}`,
+        }}
+      />
+
+      <RevealFx translateY="4" delay={0} fillWidth horizontal="center">
+        <Column
+          maxWidth="m"
+          fillWidth
+          background="page"
+          radius="l"
+          padding="32"
+          style={{ border: "1px solid var(--neutral-alpha-weak)" }}
+        >
+          <Row fillWidth gap="xl" s={{ direction: "column" }}>
+            {/* LEFT: heading, description, contact details */}
+            <Column gap="m" style={{ flex: "1 1 0%", minWidth: 0 }} s={{ style: { flex: "1 1 100%" } }}>
+              <Heading variant="display-strong-m">{t("heading")}</Heading>
+              <Text variant="body-default-m" onBackground="neutral-weak">
+                {t("description")}
+              </Text>
+
+              <Column gap="12" style={{ marginTop: "0.5rem" }}>
+                <Row gap="8" vertical="center">
+                  <Icon name="email" size="s" onBackground="neutral-weak" decorative />
+                  <a href={`mailto:${contactEmail}`}>
+                    <Text variant="body-default-m">{contactEmail}</Text>
+                  </a>
+                </Row>
+                <Row gap="8" vertical="center">
+                  <Icon name="location" size="s" onBackground="neutral-weak" decorative />
+                  <Text variant="body-default-m">{location}</Text>
+                </Row>
+              </Column>
+            </Column>
+
+            {/* RIGHT: form */}
+            <Column style={{ flex: "1 1 0%", minWidth: 0 }} s={{ style: { flex: "1 1 100%" } }}>
               <ContactForm />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+            </Column>
+          </Row>
+        </Column>
+      </RevealFx>
+    </Column>
   );
 }

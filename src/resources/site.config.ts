@@ -7,9 +7,11 @@ export const CONTACT_EMAIL = "hello@mhitaryan.com";
 export const CONTACT_EMAIL_SV = "hej@mhitaryan.se";
 export const LINKEDIN_URL = "https://www.linkedin.com/company/mhitaryan-consulting/";
 export const LOCATION = "Stockholm, Sweden";
+export const LOCATION_SV = "Stockholm, Sverige";
 export const SHOW_GHOST_WORDMARK = false;
 
 export const getContactEmail = (locale: string) => (locale === "sv" ? CONTACT_EMAIL_SV : CONTACT_EMAIL);
+export const getLocation = (locale: string) => (locale === "sv" ? LOCATION_SV : LOCATION);
 
 export const NETWORK_LINKS = [
   { label: "APCO Worldwide", href: "https://apcoworldwide.com/" },

@@ -243,9 +243,7 @@ export const Header = () => {
           <Row paddingRight="12" fillHeight vertical="center" className={styles.desktopOnly} style={{ ...navFadeStyle, minHeight: 48 }}>
             <Row
               background="page"
-              border="neutral-alpha-weak"
               radius="l"
-              shadow="l"
               paddingX="4"
               paddingY="4"
               horizontal="center"

@@ -3,7 +3,7 @@
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 import { about, services, cases, getContactEmail, LINKEDIN_URL, LOCATION, NETWORK_LINKS } from "@/resources";
-import { KineticText } from "@/registry/magicui/kinetic-text";
+import VariableFontHoverByLetter from "@/components/fancy/text/variable-font-hover-by-letter";
 import styles from "./Footer.module.scss";
 
 export const Footer = () => {
@@ -22,7 +22,13 @@ export const Footer = () => {
 
         <div className={styles.grid}>
           <div className={styles.column}>
-            <KineticText className={styles.brand}>MHITARYAN</KineticText>
+            <VariableFontHoverByLetter
+              label="MHITARYAN"
+              className={styles.brand}
+              staggerDuration={0.03}
+              fromFontVariationSettings="'wght' 400"
+              toFontVariationSettings="'wght' 900"
+            />
             <span className={styles.pronunciation}>{t("pronunciation")}</span>
           </div>
 

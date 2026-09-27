@@ -267,10 +267,11 @@ export const Header = () => {
                 {display.themeSwitcher && <ThemeToggle size="m" />}
                 <LanguageToggle />
               </Row>
-              <Line background="neutral-alpha-medium" vert maxHeight="20" style={{ marginLeft: 4, marginRight: 4 }} />
+              <Line background="neutral-alpha-medium" vert maxHeight="20" style={{ marginLeft: 4, marginRight: 10 }} />
               <Button
                 href={withLocale(contact.path)}
                 label={tNav("briefUs")}
+                arrowIcon
                 size="s"
                 weight="default"
                 className={styles.cta}
@@ -326,6 +327,7 @@ export const Header = () => {
                 <Button
                   href={withLocale(contact.path)}
                   label={tNav("briefUs")}
+                  arrowIcon
                   size="m"
                   weight="default"
                   fillWidth

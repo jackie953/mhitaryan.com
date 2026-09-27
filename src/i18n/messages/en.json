@@ -48,7 +48,7 @@
     "formEmailLabel": "Email",
     "formOrganizationLabel": "Organization (optional)",
     "formMessageLabel": "Message",
-    "formSubmit": "Send message",
+    "formSubmit": "Send",
     "formSending": "Sending…",
     "formSuccess": "Thanks — we've received your message and will be in touch shortly.",
     "formError": "Something went wrong on our end. Please email us directly at"

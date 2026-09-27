@@ -48,7 +48,7 @@
     "formEmailLabel": "E-post",
     "formOrganizationLabel": "Organisation (valfritt)",
     "formMessageLabel": "Meddelande",
-    "formSubmit": "Skicka meddelande",
+    "formSubmit": "Skicka",
     "formSending": "Skickar…",
     "formSuccess": "Tack — vi har tagit emot ditt meddelande och återkommer så snart vi kan.",
     "formError": "Något gick fel på vår sida. Mejla oss gärna direkt på"

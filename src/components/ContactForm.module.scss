@@ -1,0 +1,9 @@
+// once-ui's Input/Textarea hardcode a "neutral-alpha-weak" background on their
+// internal row (class "neutral-background-alpha-weak"). Scope an override to
+// just this form so fields read as transparent with only their existing
+// border, instead of the tinted fill once-ui applies by default.
+.form {
+  :global(.neutral-background-alpha-weak) {
+    background-color: transparent;
+  }
+}

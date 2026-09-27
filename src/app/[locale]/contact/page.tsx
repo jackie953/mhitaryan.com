@@ -20,7 +20,7 @@ export default async function Contact() {
   const location = getLocation(locale);
 
   return (
-    <Column fillWidth gap="xl" className="page-contact">
+    <Column fillWidth horizontal="center" paddingTop="40" className="page-contact">
       <Schema
         as="webPage"
         baseURL={baseURL}
@@ -35,34 +35,43 @@ export default async function Contact() {
         }}
       />
 
-      <RevealFx translateY="4" delay={0} fillWidth>
-        <Row fillWidth gap="xl" s={{ direction: "column" }}>
-          {/* LEFT: heading, description, contact details */}
-          <Column gap="m" style={{ flex: "1 1 0%", minWidth: 0 }} s={{ style: { flex: "1 1 100%" } }}>
-            <Heading variant="display-strong-m">{t("heading")}</Heading>
-            <Text variant="body-default-l" onBackground="neutral-weak">
-              {t("description")}
-            </Text>
+      <RevealFx translateY="4" delay={0} fillWidth horizontal="center">
+        <Column
+          maxWidth="m"
+          fillWidth
+          background="page"
+          radius="l"
+          padding="32"
+          style={{ border: "1px solid var(--neutral-alpha-weak)" }}
+        >
+          <Row fillWidth gap="xl" s={{ direction: "column" }}>
+            {/* LEFT: heading, description, contact details */}
+            <Column gap="m" style={{ flex: "1 1 0%", minWidth: 0 }} s={{ style: { flex: "1 1 100%" } }}>
+              <Heading variant="display-strong-m">{t("heading")}</Heading>
+              <Text variant="body-default-l" onBackground="neutral-weak">
+                {t("description")}
+              </Text>
 
-            <Column gap="12" style={{ marginTop: "0.5rem" }}>
-              <Row gap="8" vertical="center">
-                <Icon name="email" size="s" onBackground="neutral-weak" decorative />
-                <a href={`mailto:${contactEmail}`}>
-                  <Text variant="body-default-m">{contactEmail}</Text>
-                </a>
-              </Row>
-              <Row gap="8" vertical="center">
-                <Icon name="location" size="s" onBackground="neutral-weak" decorative />
-                <Text variant="body-default-m">{location}</Text>
-              </Row>
+              <Column gap="12" style={{ marginTop: "0.5rem" }}>
+                <Row gap="8" vertical="center">
+                  <Icon name="email" size="s" onBackground="neutral-weak" decorative />
+                  <a href={`mailto:${contactEmail}`}>
+                    <Text variant="body-default-m">{contactEmail}</Text>
+                  </a>
+                </Row>
+                <Row gap="8" vertical="center">
+                  <Icon name="location" size="s" onBackground="neutral-weak" decorative />
+                  <Text variant="body-default-m">{location}</Text>
+                </Row>
+              </Column>
             </Column>
-          </Column>
 
-          {/* RIGHT: form */}
-          <Column style={{ flex: "1 1 0%", minWidth: 0 }} s={{ style: { flex: "1 1 100%" } }}>
-            <ContactForm />
-          </Column>
-        </Row>
+            {/* RIGHT: form */}
+            <Column style={{ flex: "1 1 0%", minWidth: 0 }} s={{ style: { flex: "1 1 100%" } }}>
+              <ContactForm />
+            </Column>
+          </Row>
+        </Column>
       </RevealFx>
     </Column>
   );

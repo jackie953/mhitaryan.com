@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Button, Column, Input, Textarea, Text } from "@once-ui-system/core";
 import { getContactEmail } from "@/resources";
+import styles from "./ContactForm.module.scss";
 
 type Status = "idle" | "sending" | "success" | "error";
 
@@ -43,27 +44,15 @@ export const ContactForm = () => {
 
   if (status === "success") {
     return (
-      <Column
-        background="page"
-        radius="l"
-        padding="24"
-        gap="8"
-        style={{ border: "1px solid var(--neutral-alpha-weak)" }}
-      >
+      <Column gap="8">
         <Text variant="body-default-m">{t("formSuccess")}</Text>
       </Column>
     );
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <Column
-        background="page"
-        radius="l"
-        padding="24"
-        gap="16"
-        style={{ border: "1px solid var(--neutral-alpha-weak)" }}
-      >
+    <form onSubmit={handleSubmit} className={styles.form}>
+      <Column gap="16">
         {/* Honeypot — hidden from real visitors via CSS, not `type="hidden"`,
             since bots specifically skip hidden fields. Left blank by anyone
             who can see the form. */}

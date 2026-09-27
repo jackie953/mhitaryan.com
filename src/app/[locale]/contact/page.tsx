@@ -48,7 +48,7 @@ export default async function Contact() {
             {/* LEFT: heading, description, contact details */}
             <Column gap="m" style={{ flex: "1 1 0%", minWidth: 0 }} s={{ style: { flex: "1 1 100%" } }}>
               <Heading variant="display-strong-m">{t("heading")}</Heading>
-              <Text variant="body-default-l" onBackground="neutral-weak">
+              <Text variant="body-default-m" onBackground="neutral-weak">
                 {t("description")}
               </Text>
 

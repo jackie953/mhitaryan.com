@@ -82,7 +82,9 @@
 
 .brand {
   font-size: var(--brand-size);
-  font-weight: var(--font-weight-semiBold);
+  /* Weight is driven by VariableFontHoverByLetter's font-variation-settings
+     tween; an explicit font-weight here would win over the 'wght' axis
+     (CSS Fonts spec) and silence the hover animation. */
   letter-spacing: 0.02em;
   line-height: 1;
   color: var(--neutral-on-background-strong);

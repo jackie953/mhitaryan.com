@@ -66,7 +66,6 @@ export const ContactForm = () => {
         <Input
           id="contact-name"
           label={t("formNameLabel")}
-          placeholder={t("formNamePlaceholder")}
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
@@ -75,7 +74,6 @@ export const ContactForm = () => {
           id="contact-email"
           type="email"
           label={t("formEmailLabel")}
-          placeholder={t("formEmailPlaceholder")}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
@@ -83,14 +81,12 @@ export const ContactForm = () => {
         <Input
           id="contact-organization"
           label={t("formOrganizationLabel")}
-          placeholder={t("formOrganizationPlaceholder")}
           value={organization}
           onChange={(e) => setOrganization(e.target.value)}
         />
         <Textarea
           id="contact-message"
           label={t("formMessageLabel")}
-          placeholder={t("formMessagePlaceholder")}
           lines={4}
           value={message}
           onChange={(e) => setMessage(e.target.value)}
@@ -108,7 +104,7 @@ export const ContactForm = () => {
         )}
 
         <Button type="submit" fillWidth horizontal="center" loading={status === "sending"} disabled={status === "sending"}>
-          {t("formSubmit")}
+          {status === "sending" ? t("formSending") : t("formSubmit")}
         </Button>
       </Column>
     </form>

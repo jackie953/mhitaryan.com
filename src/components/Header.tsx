@@ -6,10 +6,9 @@ import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import { Menu, X } from "lucide-react";
 
-import { Line, Row, ToggleButton, useTheme } from "@once-ui-system/core";
+import { Button, Line, Row, ToggleButton, useTheme } from "@once-ui-system/core";
 import { ThemeToggle } from "./ThemeToggle";
 import { LanguageToggle } from "./LanguageToggle";
-import { EmailButton } from "./EmailButton";
 import Text3DFlip from "@/registry/magicui/text-3d-flip";
 import styles from "./Header.module.scss";
 
@@ -17,7 +16,6 @@ import {
   routes,
   display,
   about,
-  blog,
   cases,
   services,
   contact,
@@ -104,18 +102,28 @@ const MobileThemeRow: React.FC = () => {
   );
 };
 
-/** Tighten the library's default 8px horizontal padding on text-label pill buttons. */
-const navPillButtonStyle: React.CSSProperties = { paddingLeft: 6, paddingRight: 6 };
+/** Override the library's default padding/height so each link reads ~10px
+    horizontal (6px here + the ToggleButton's own 4px inner label padding
+    = 10px) and stands 36px tall, matching the icon buttons and CTA. The
+    lavender hover pill paints on this same box, so it hugs the text. */
+const navPillButtonStyle: React.CSSProperties = {
+  paddingLeft: 6,
+  paddingRight: 6,
+  height: 36,
+  minHeight: 36,
+};
 
 const navLinkStyle = (active: boolean): React.CSSProperties => ({
-  display: "block",
+  display: "flex",
+  alignItems: "center",
   padding: "13px 20px",
   textDecoration: "none",
-  fontSize: "1rem",
-  fontWeight: active ? 600 : 500,
-  color: active
-    ? "var(--neutral-on-background-strong)"
-    : "var(--neutral-on-background-weak)",
+  fontSize: "14px",
+  fontWeight: 500,
+  textTransform: "uppercase",
+  letterSpacing: "0.06em",
+  color: "var(--header-color)",
+  background: active ? "var(--neutral-alpha-medium)" : "transparent",
   borderBottom: "1px solid var(--neutral-alpha-weak)",
   transition: "background 0.15s",
 });
@@ -217,7 +225,7 @@ export const Header = () => {
                 transition={{ type: "spring", damping: 25, stiffness: 160 }}
                 style={{
                   color: "var(--header-color)",
-                  fontSize: "clamp(1.9rem, 3.35vw, 2.4rem)",
+                  fontSize: "clamp(1.7rem, 2.9vw, 2.05rem)",
                   fontWeight: 700,
                   letterSpacing: "0.04em",
                   fontFamily: "var(--font-heading)",
@@ -235,45 +243,58 @@ export const Header = () => {
           <Row paddingRight="12" fillHeight vertical="center" className={styles.desktopOnly} style={{ ...navFadeStyle, minHeight: 48 }}>
             <Row
               background="page"
-              border="neutral-alpha-weak"
               radius="l"
-              shadow="l"
-              paddingX="12"
-              paddingY="8"
+              paddingX="4"
+              paddingY="4"
               horizontal="center"
               vertical="center"
               zIndex={1}
             >
-              <Row gap="2" vertical="center" className={styles.navPill} style={{ fontSize: "15px" }} suppressHydrationWarning>
-              {routes["/"] && (
-                <ToggleButton size="m" prefixIcon="home" href={withLocale("/")} selected={localePath === "/"} />
-              )}
-              <Line background="neutral-alpha-medium" vert maxHeight="20" />
-              {routes["/about"] && (
-                <ToggleButton size="m" style={navPillButtonStyle} href={withLocale("/about")} label={tNav("about")} selected={localePath === "/about"} />
-              )}
-              {routes["/services"] && (
-                <ToggleButton size="m" style={navPillButtonStyle} href={withLocale(services.path)} label={tNav("services")} selected={localePath.startsWith("/services")} />
-              )}
-              {routes["/cases"] && (
-                <ToggleButton size="m" style={navPillButtonStyle} href={withLocale(cases.path)} label={tNav("cases")} selected={localePath.startsWith("/cases")} />
-              )}
-              {routes["/contact"] && (
-                <ToggleButton size="m" style={navPillButtonStyle} href={withLocale(contact.path)} label={contact.label} selected={localePath.startsWith("/contact")} />
-              )}
-              {routes["/blog"] && (
-                <ToggleButton size="m" style={navPillButtonStyle} href={withLocale("/blog")} label={blog.label} selected={localePath.startsWith("/blog")} />
-              )}
-              <Line background="neutral-alpha-medium" vert maxHeight="20" />
-              <EmailButton size="m" />
-              {display.themeSwitcher && (
-                <>
-                  <Line background="neutral-alpha-medium" vert maxHeight="20" />
-                  <ThemeToggle size="m" />
-                </>
-              )}
-              <Line background="neutral-alpha-medium" vert maxHeight="20" />
-              <LanguageToggle />
+              <Row vertical="center" className={styles.navPill} style={{ fontSize: "15px" }} suppressHydrationWarning>
+              <Row gap="2" vertical="center" className={styles.navLinks}>
+                {routes["/about"] && (
+                  <ToggleButton size="m" style={navPillButtonStyle} href={withLocale("/about")} label={tNav("about")} selected={localePath === "/about"} />
+                )}
+                {routes["/services"] && (
+                  <ToggleButton size="m" style={navPillButtonStyle} href={withLocale(services.path)} label={tNav("services")} selected={localePath.startsWith("/services")} />
+                )}
+                {routes["/cases"] && (
+                  <ToggleButton size="m" style={navPillButtonStyle} href={withLocale(cases.path)} label={tNav("cases")} selected={localePath.startsWith("/cases")} />
+                )}
+              </Row>
+              <Line background="neutral-alpha-medium" vert maxHeight="20" style={{ marginLeft: 6, marginRight: 6 }} />
+              <Row gap="4" vertical="center" className={styles.navToggles}>
+                {display.themeSwitcher && <ThemeToggle size="m" />}
+                <LanguageToggle />
+              </Row>
+              <Line background="neutral-alpha-medium" vert maxHeight="20" style={{ marginLeft: 4, marginRight: 10 }} />
+              <Button
+                href={withLocale(contact.path)}
+                size="s"
+                weight="default"
+                className={styles.cta}
+                style={{
+                  height: 32,
+                  minHeight: 32,
+                  borderRadius: 999,
+                  paddingLeft: 4,
+                  paddingRight: 4,
+                  background: "var(--header-color)",
+                  border: "none",
+                  boxShadow: "none",
+                  color: "var(--page-background)",
+                }}
+              >
+                {/* once-ui's Button wraps children in its own inner div, so a
+                    gap on the Button's own style never reaches these two —
+                    the flex + gap has to live on a wrapper we control. */}
+                <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+                  <span style={{ fontSize: 14, fontWeight: 600 }}>{tNav("briefUs")}</span>
+                  <span className={styles.ctaArrowWrapper}>
+                    <span className={styles.ctaArrow} />
+                  </span>
+                </span>
+              </Button>
               </Row>
             </Row>
           </Row>
@@ -291,11 +312,6 @@ export const Header = () => {
 
           {menuOpen && (
             <div className={styles.mobileDropdown}>
-              {routes["/"] && (
-                <Link href={withLocale("/")} style={navLinkStyle(localePath === "/")} onClick={() => setMenuOpen(false)}>
-                  Home
-                </Link>
-              )}
               {routes["/about"] && (
                 <Link href={withLocale("/about")} style={navLinkStyle(localePath === "/about")} onClick={() => setMenuOpen(false)}>
                   {tNav("about")}
@@ -311,21 +327,37 @@ export const Header = () => {
                   {tNav("cases")}
                 </Link>
               )}
-              {routes["/blog"] && (
-                <Link href={withLocale("/blog")} style={navLinkStyle(localePath.startsWith("/blog"))} onClick={() => setMenuOpen(false)}>
-                  Blog
-                </Link>
-              )}
-              {routes["/contact"] && (
-                <Link href={withLocale(contact.path)} style={navLinkStyle(localePath.startsWith("/contact"))} onClick={() => setMenuOpen(false)}>
-                  Contact
-                </Link>
-              )}
-              <div style={{ padding: "13px 20px", borderBottom: "1px solid var(--neutral-alpha-weak)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <EmailButton size="m" />
+              {display.themeSwitcher && <MobileThemeRow />}
+              <div style={{ padding: "13px 20px", borderBottom: "1px solid var(--neutral-alpha-weak)", display: "flex", justifyContent: "flex-end" }}>
                 <LanguageToggle />
               </div>
-              {display.themeSwitcher && <MobileThemeRow />}
+              <div style={{ padding: "13px 20px" }}>
+                <Button
+                  href={withLocale(contact.path)}
+                  size="m"
+                  weight="default"
+                  fillWidth
+                  horizontal="center"
+                  className={styles.cta}
+                  style={{
+                    height: 36,
+                    minHeight: 36,
+                    borderRadius: 999,
+                    background: "var(--header-color)",
+                    border: "none",
+                    boxShadow: "none",
+                    color: "var(--page-background)",
+                  }}
+                  onClick={() => setMenuOpen(false)}
+                >
+                  <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 10 }}>
+                    <span style={{ fontSize: 14, fontWeight: 600 }}>{tNav("briefUs")}</span>
+                    <span className={styles.ctaArrowWrapper}>
+                      <span className={styles.ctaArrow} />
+                    </span>
+                  </span>
+                </Button>
+              </div>
             </div>
           )}
           </div>

@@ -13,10 +13,101 @@
     display: flex;
 }
 
-/* Medium (500) nav label weight — the design system's own weight scale
-   only offers 400/600, neither of which matches the desired 500. */
-.navPill :global(.font-label) {
+/* Nav links read as an uppercase, tracked group — matching the footer's
+   column headings (CONTACT / PAGES / NETWORK) in size, weight and tracking,
+   coloured with the logo's own near-black token. Scoped to .navLinks only
+   so it doesn't leak into the CTA's own (differently coloured) label. */
+.navLinks :global(.font-label) {
     font-weight: 500;
+    text-transform: none;
+    letter-spacing: normal;
+    font-size: 14px;
+    color: var(--header-color);
+}
+
+/* Theme + language toggles sit as one tight pair, matched in size. */
+.navToggles :global(button.button) {
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
+}
+
+.navToggles svg {
+    width: 22px !important;
+    height: 22px !important;
+}
+
+/* Soft near-black/near-white pill CTA — matches the homepage bottom CTA
+   button's colour (the logo's own near-black token, not pure #000),
+   fully rounded to sit flush inside the nav pill. Colours are forced with
+   !important because the base Button component's own hover state would
+   otherwise repaint it with the brand colour. */
+.cta {
+    background-color: var(--header-color) !important;
+    transition: background-color 0.25s ease, transform 0.15s ease;
+}
+
+/* No background color-shift on hover — header-color is a dark violet,
+   not true black, so any lightening (even toward neutral gray) reveals
+   that hue as a visible sheen. Background stays exactly as-is; the
+   arrow reveal + lift below carry the hover feedback instead. */
+.cta:hover {
+    background-color: var(--header-color) !important;
+}
+
+/* Arrow tail is painted the same color as the button background, so it's
+   invisible until hover — then it fades in and the chevron head slides
+   toward it, completing the arrow, in sync with the background shifting
+   underneath it. Both colors are theme tokens (not hardcoded hex), so
+   this stays correct in both light and dark mode. */
+.ctaArrowWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ctaArrow {
+    position: relative;
+    width: 10px;
+    height: 2px;
+    background-color: var(--header-color);
+    transition: background-color 0.25s ease;
+}
+
+.ctaArrow::before {
+    content: "";
+    position: absolute;
+    top: -3px;
+    right: 3px;
+    box-sizing: border-box;
+    padding: 3px;
+    border: solid var(--page-background);
+    border-width: 0 2px 2px 0;
+    transform: rotate(-45deg);
+    transition: right 0.25s ease;
+}
+
+.cta:hover .ctaArrow {
+    background-color: var(--page-background);
+}
+
+.cta:hover .ctaArrow::before {
+    right: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .cta:hover {
+        transform: translateY(-1px);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .cta,
+    .ctaArrow,
+    .ctaArrow::before {
+        transition: none;
+    }
 }
 
 /* Mobile hamburger wrapper — hidden on desktop */

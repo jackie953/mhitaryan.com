@@ -102,9 +102,15 @@ const MobileThemeRow: React.FC = () => {
   );
 };
 
-/** Override the library's default padding so each link reads ~14px horizontal
-    (10px here + the ToggleButton's own 4px inner label padding = 14px). */
-const navPillButtonStyle: React.CSSProperties = { paddingLeft: 10, paddingRight: 10 };
+/** Override the library's default padding/height so each link reads ~14px
+    horizontal (10px here + the ToggleButton's own 4px inner label padding
+    = 14px) and stands 36px tall, matching the icon buttons and CTA. */
+const navPillButtonStyle: React.CSSProperties = {
+  paddingLeft: 10,
+  paddingRight: 10,
+  height: 36,
+  minHeight: 36,
+};
 
 const navLinkStyle = (active: boolean): React.CSSProperties => ({
   display: "flex",
@@ -239,14 +245,14 @@ export const Header = () => {
               border="neutral-alpha-weak"
               radius="l"
               shadow="l"
-              paddingY="8"
+              paddingX="4"
+              paddingY="4"
               horizontal="center"
               vertical="center"
               zIndex={1}
-              style={{ paddingLeft: 6, paddingRight: 6 }}
             >
-              <Row gap="12" vertical="center" className={styles.navPill} style={{ fontSize: "15px" }} suppressHydrationWarning>
-              <Row gap="4" vertical="center" className={styles.navLinks}>
+              <Row vertical="center" className={styles.navPill} style={{ fontSize: "15px" }} suppressHydrationWarning>
+              <Row gap="2" vertical="center" className={styles.navLinks}>
                 {routes["/about"] && (
                   <ToggleButton size="m" style={navPillButtonStyle} href={withLocale("/about")} label={tNav("about")} selected={localePath === "/about"} />
                 )}
@@ -257,12 +263,12 @@ export const Header = () => {
                   <ToggleButton size="m" style={navPillButtonStyle} href={withLocale(cases.path)} label={tNav("cases")} selected={localePath.startsWith("/cases")} />
                 )}
               </Row>
-              <Line background="neutral-alpha-medium" vert maxHeight="20" />
+              <Line background="neutral-alpha-medium" vert maxHeight="20" style={{ marginLeft: 6, marginRight: 6 }} />
               <Row gap="4" vertical="center" className={styles.navToggles}>
                 {display.themeSwitcher && <ThemeToggle size="m" />}
                 <LanguageToggle />
               </Row>
-              <Line background="neutral-alpha-medium" vert maxHeight="20" />
+              <Line background="neutral-alpha-medium" vert maxHeight="20" style={{ marginLeft: 4, marginRight: 4 }} />
               <Button
                 href={withLocale(contact.path)}
                 label={tNav("briefUs")}
@@ -270,11 +276,11 @@ export const Header = () => {
                 weight="default"
                 className={styles.cta}
                 style={{
-                  height: 40,
-                  minHeight: 40,
+                  height: 36,
+                  minHeight: 36,
                   borderRadius: 999,
-                  paddingLeft: 20,
-                  paddingRight: 20,
+                  paddingLeft: 18,
+                  paddingRight: 18,
                   background: "var(--header-color)",
                   border: "none",
                   boxShadow: "none",
@@ -327,8 +333,8 @@ export const Header = () => {
                   horizontal="center"
                   className={styles.cta}
                   style={{
-                    height: 40,
-                    minHeight: 40,
+                    height: 36,
+                    minHeight: 36,
                     borderRadius: 999,
                     background: "var(--header-color)",
                     border: "none",

@@ -1,5 +1,20 @@
 @use "../../components/breakpoints.scss" as breakpoints;
 
+// Wraps only the <Heading> (not the subheading — see HeroHeadline.tsx for
+// why keeping them separate matters). Below 1024px this stays in normal
+// flow; at desktop widths it shrinks to the headline's own content width,
+// which HeroHeadline then measures and applies to the subheading directly.
+.headlineGroup {
+  width: 100%;
+}
+
+@media (min-width: 1024px) {
+  .headlineGroup {
+    width: fit-content;
+    max-width: 100%;
+  }
+}
+
 .subheadline {
   font-family: var(--font-heading);
   font-weight: 400;
@@ -11,18 +26,17 @@
   text-wrap: pretty;
 }
 
+// Default / fallback: flows inline so the paragraph wraps naturally as one
+// block of text. Used below 1024px, and at >=1024px whenever the longest
+// sentence doesn't fit the headline's measured width (see HeroHeadline.tsx).
 .sentence {
   display: inline;
 }
 
-@media (min-width: 1024px) {
-  .subheadline {
-    max-width: none;
-  }
-
-  .sentence {
-    display: block;
-  }
+// Applied once JS confirms the longest sentence fits the measured headline
+// width: each sentence becomes its own line.
+.sentenceBlock {
+  display: block;
 }
 
 .gallery {

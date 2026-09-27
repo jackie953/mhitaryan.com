@@ -1,6 +1,4 @@
 import {
-  Heading,
-  Text,
   Column,
   Badge,
   Row,
@@ -12,6 +10,7 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { home, about, person, baseURL, getContactEmail } from "@/resources";
 import { BookingCTA } from "@/components/BookingCTA";
 import { HeroGallerySlider } from "@/components/HeroGallerySlider";
+import { HeroHeadline } from "@/components/HeroHeadline";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import styles from "./Hero.module.scss";
 
@@ -62,29 +61,15 @@ export default async function Home() {
             )}
             <RevealFx speed={1600} translateY="4" delay={0.15} fillWidth>
               <Column maxWidth="l" fillWidth>
-                <Heading
-                  wrap="balance"
-                  variant="display-strong-l"
-                  style={{
-                    fontSize: "clamp(3.25rem, 7.8vw, 7.8rem)",
+                <HeroHeadline
+                  headline={home.headline}
+                  headingStyle={{
+                    fontSize: "clamp(3.25rem, 7.8vw, 8.8rem)",
                     lineHeight: 0.95,
                     letterSpacing: "-0.03em",
                   }}
-                >
-                  {home.headline}
-                </Heading>
-                <Text
-                  as="p"
-                  onBackground="neutral-weak"
-                  className={styles.subheadline}
-                >
-                  {t.raw("subheadlineSentences").map((sentence: string, index: number, sentences: string[]) => (
-                    <span key={sentence} className={styles.sentence}>
-                      {sentence}
-                      {index < sentences.length - 1 ? " " : ""}
-                    </span>
-                  ))}
-                </Text>
+                  sentences={t.raw("subheadlineSentences")}
+                />
               </Column>
             </RevealFx>
           </Column>

@@ -13,10 +13,27 @@
     display: flex;
 }
 
-/* Medium (500) nav label weight — the design system's own weight scale
-   only offers 400/600, neither of which matches the desired 500. */
+/* Nav links + CTA read as one uppercase, tracked group — matching the
+   footer's column headings (CONTACT / PAGES / NETWORK) in size, weight
+   and tracking. The design system's own weight scale only offers 400/600,
+   neither of which matches the desired 500, so it's set explicitly here. */
 .navPill :global(.font-label) {
     font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: calc(var(--font-size-label-m) * 0.8);
+}
+
+/* Soft black/white pill CTA — matches the homepage bottom CTA button,
+   just fully rounded to sit flush inside the nav pill. */
+.cta {
+    border-radius: 999px !important;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .cta:hover {
+        transform: translateY(-1px);
+    }
 }
 
 /* Mobile hamburger wrapper — hidden on desktop */

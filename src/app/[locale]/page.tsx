@@ -43,7 +43,13 @@ export default async function Home() {
           }}
         />
         <Column fillWidth gap="0">
-          <Column fillWidth gap="32" style={{ paddingTop: "96px" }} s={{ style: { paddingTop: "0px" } }}>
+          <Column
+            fillWidth
+            gap="32"
+            vertical="end"
+            style={{ minHeight: "80vh", paddingTop: "96px", paddingBottom: "3rem" }}
+            s={{ style: { minHeight: "auto", paddingTop: "0px", paddingBottom: "2rem" } }}
+          >
             {home.featured.display && (
               <RevealFx speed="fast" delay={0.5} fillWidth>
                 <Badge

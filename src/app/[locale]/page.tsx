@@ -64,7 +64,7 @@ export default async function Home() {
                 <HeroHeadline
                   headline={home.headline}
                   headingStyle={{
-                    fontSize: "clamp(3.25rem, 7.8vw, 8.8rem)",
+                    fontSize: "clamp(3.25rem, 9.2vw, 9.2rem)",
                     lineHeight: 0.95,
                     letterSpacing: "-0.03em",
                   }}

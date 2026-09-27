@@ -48,12 +48,14 @@
     transition: background-color 0.25s ease, transform 0.15s ease;
 }
 
-/* Hover mixes in 18% of the button's own text color rather than a fixed
-   hex — in light mode that lightens the near-black pill a touch, in dark
-   mode it grays the white pill a touch. Same trick either way, no
-   separate dark-mode rule needed. */
+/* Hover mixes in a touch of neutral gray rather than page-background —
+   header-color is a dark violet, not true black, so mixing in
+   page-background (which is near-white but still lavender-tinted)
+   lightened it into a visible lavender sheen. Gray is truly neutral
+   (equal R/G/B), so the shift reads as a plain tonal change in both
+   themes with no color cast. */
 .cta:hover {
-    background-color: color-mix(in srgb, var(--header-color) 82%, var(--page-background) 18%) !important;
+    background-color: color-mix(in srgb, var(--header-color) 82%, gray 18%) !important;
 }
 
 /* Arrow tail is painted the same color as the button background, so it's

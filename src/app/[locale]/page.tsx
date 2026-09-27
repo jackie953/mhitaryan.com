@@ -81,7 +81,7 @@ export default async function Home() {
           </Column>
           <ScrollReveal delay={0.55} className={styles.gallery}>
             <HeroGallerySlider
-              interval={5000}
+              interval={7000}
               autoplay
               showProgress
               slides={[

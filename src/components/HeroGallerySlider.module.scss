@@ -199,6 +199,68 @@
   }
 }
 
+.navButton {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: rgba(0, 0, 0, 0.25);
+  color: #fff;
+  cursor: pointer;
+  opacity: 0;
+  transition:
+    opacity 200ms ease,
+    background 200ms ease,
+    transform 200ms ease;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.45);
+  }
+
+  &:focus-visible {
+    opacity: 1;
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+  }
+}
+
+.navPrev {
+  left: var(--static-space-20);
+}
+
+.navNext {
+  right: var(--static-space-20);
+}
+
+// Reveal on hover for pointer devices; touch devices get no hover at all,
+// so they keep a faint permanent affordance instead (below).
+.root:hover .navButton {
+  opacity: 1;
+}
+
+@media (hover: none) {
+  .navButton {
+    opacity: 0.85;
+  }
+
+  .navButton:active {
+    transform: translateY(-50%) scale(0.92);
+  }
+}
+
+@include breakpoints.s {
+  .navButton {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .slide {
     transition: none;

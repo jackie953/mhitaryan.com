@@ -54,6 +54,15 @@ export function HeroGallerySlider({
     [interval],
   );
 
+  const goPrev = useCallback(
+    () => goTo((active - 1 + slides.length) % slides.length),
+    [goTo, active, slides.length],
+  );
+  const goNext = useCallback(
+    () => goTo((active + 1) % slides.length),
+    [goTo, active, slides.length],
+  );
+
   useEffect(() => {
     if (!autoplay || paused || reducedMotion || slides.length < 2) return;
     firedRef.current = false;
@@ -149,6 +158,45 @@ export function HeroGallerySlider({
               </button>
             ))}
           </div>
+        )}
+
+        {slides.length > 1 && (
+          <>
+            <button
+              type="button"
+              className={`${styles.navButton} ${styles.navPrev}`}
+              aria-label="Previous slide"
+              onClick={goPrev}
+            >
+              <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+                <path
+                  d="M15 6l-6 6 6 6"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
+            <button
+              type="button"
+              className={`${styles.navButton} ${styles.navNext}`}
+              aria-label="Next slide"
+              onClick={goNext}
+            >
+              <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+                <path
+                  d="M9 6l6 6-6 6"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
+          </>
         )}
       </div>
     </div>

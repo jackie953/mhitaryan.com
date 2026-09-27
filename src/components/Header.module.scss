@@ -48,14 +48,12 @@
     transition: background-color 0.25s ease, transform 0.15s ease;
 }
 
-/* Hover mixes in a touch of neutral gray rather than page-background —
-   header-color is a dark violet, not true black, so mixing in
-   page-background (which is near-white but still lavender-tinted)
-   lightened it into a visible lavender sheen. Gray is truly neutral
-   (equal R/G/B), so the shift reads as a plain tonal change in both
-   themes with no color cast. */
+/* No background color-shift on hover — header-color is a dark violet,
+   not true black, so any lightening (even toward neutral gray) reveals
+   that hue as a visible sheen. Background stays exactly as-is; the
+   arrow reveal + lift below carry the hover feedback instead. */
 .cta:hover {
-    background-color: color-mix(in srgb, var(--header-color) 82%, gray 18%) !important;
+    background-color: var(--header-color) !important;
 }
 
 /* Arrow tail is painted the same color as the button background, so it's

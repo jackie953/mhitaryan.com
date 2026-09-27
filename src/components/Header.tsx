@@ -277,8 +277,8 @@ export const Header = () => {
                   height: 32,
                   minHeight: 32,
                   borderRadius: 999,
-                  paddingLeft: 9,
-                  paddingRight: 9,
+                  paddingLeft: 6,
+                  paddingRight: 6,
                   background: "var(--header-color)",
                   border: "none",
                   boxShadow: "none",
@@ -288,7 +288,7 @@ export const Header = () => {
                 {/* once-ui's Button wraps children in its own inner div, so a
                     gap on the Button's own style never reaches these two —
                     the flex + gap has to live on a wrapper we control. */}
-                <span style={{ display: "inline-flex", alignItems: "center", gap: 10 }}>
+                <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
                   <span style={{ fontSize: 14, fontWeight: 600 }}>{tNav("briefUs")}</span>
                   <span className={styles.ctaArrowWrapper}>
                     <span className={styles.ctaArrow} />

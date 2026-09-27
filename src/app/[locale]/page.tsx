@@ -62,7 +62,13 @@ export default async function Home() {
             <RevealFx speed={1600} translateY="4" delay={0.15} fillWidth>
               <Column maxWidth="l" fillWidth>
                 <HeroHeadline
-                  headline={home.headline}
+                  headline={
+                    <>
+                      {t("headlineLine1")}
+                      <br />
+                      {t("headlineLine2")}
+                    </>
+                  }
                   headingStyle={{
                     fontSize: "clamp(3.25rem, 9.2vw, 9.2rem)",
                     lineHeight: 0.95,

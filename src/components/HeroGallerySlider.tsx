@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import CenterUnderline from "@/components/fancy/text/underline-center";
 import styles from "./HeroGallerySlider.module.scss";
 
 export interface HeroGallerySlide {
@@ -117,8 +118,10 @@ export function HeroGallerySlider({
               <span className={styles.heading}>{slide.heading}</span>
               {slide.subtext && <span className={styles.subtext}>{slide.subtext}</span>}
               <Link href={slide.ctaHref} className={styles.cta}>
-                {slide.ctaLabel}
-                <span aria-hidden="true">→</span>
+                <CenterUnderline>{slide.ctaLabel}</CenterUnderline>
+                <span aria-hidden="true" className={styles.ctaArrow}>
+                  →
+                </span>
               </Link>
             </div>
           ))}

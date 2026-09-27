@@ -91,8 +91,8 @@ export default async function Home() {
                   eyebrow: "Research & Intelligence",
                   heading: "Understand the landscape",
                   subtext: "Placeholder subtext for the Research & Intelligence slide.",
-                  ctaLabel: "Explore our services",
-                  ctaHref: `/${locale}/services#research-intelligence`,
+                  ctaLabel: "Learn more",
+                  ctaHref: `/${locale}/services`,
                 },
                 {
                   video: "/videos/hero/comms-water.mp4",
@@ -100,8 +100,8 @@ export default async function Home() {
                   eyebrow: "Strategic Communications",
                   heading: "Shape the narrative",
                   subtext: "Placeholder subtext for the Strategic Communications slide.",
-                  ctaLabel: "Explore our services",
-                  ctaHref: `/${locale}/services#strategic-communications`,
+                  ctaLabel: "Learn more",
+                  ctaHref: `/${locale}/services`,
                 },
               ]}
             />

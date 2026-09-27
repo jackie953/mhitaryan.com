@@ -38,5 +38,23 @@
     "changes": "Changes",
     "changesText": "We may update this policy occasionally. The current version is always the one posted here.",
     "lastUpdated": "Last updated: September 2026"
+  },
+  "contact": {
+    "heading": "Get in touch",
+    "description": "Have a question about an engagement, or want to talk through what you're facing? Send us a message and we'll get back to you shortly.",
+    "emailLabel": "Email",
+    "locationLabel": "Location",
+    "formNameLabel": "Name",
+    "formNamePlaceholder": "Your name",
+    "formEmailLabel": "Email",
+    "formEmailPlaceholder": "Your email",
+    "formOrganizationLabel": "Organization",
+    "formOrganizationPlaceholder": "Company or organization (optional)",
+    "formMessageLabel": "Message",
+    "formMessagePlaceholder": "Your message",
+    "formSubmit": "Send message",
+    "formSending": "Sending…",
+    "formSuccess": "Thanks — we've received your message and will be in touch shortly.",
+    "formError": "Something went wrong on our end. Please email us directly at"
   }
 }

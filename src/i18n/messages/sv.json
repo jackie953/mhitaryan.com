@@ -38,5 +38,23 @@
     "changes": "Ändringar",
     "changesText": "Vi kan uppdatera denna policy vid behov. Den aktuella versionen finns alltid publicerad här.",
     "lastUpdated": "Senast uppdaterad: September 2026"
+  },
+  "contact": {
+    "heading": "Kontakta oss",
+    "description": "Har du en fråga om ett uppdrag, eller vill du prata igenom en situation? Skicka ett meddelande så återkommer vi så snart vi kan.",
+    "emailLabel": "E-post",
+    "locationLabel": "Plats",
+    "formNameLabel": "Namn",
+    "formNamePlaceholder": "Ditt namn",
+    "formEmailLabel": "E-post",
+    "formEmailPlaceholder": "Din e-postadress",
+    "formOrganizationLabel": "Organisation",
+    "formOrganizationPlaceholder": "Företag eller organisation (valfritt)",
+    "formMessageLabel": "Meddelande",
+    "formMessagePlaceholder": "Ditt meddelande",
+    "formSubmit": "Skicka meddelande",
+    "formSending": "Skickar…",
+    "formSuccess": "Tack — vi har tagit emot ditt meddelande och återkommer så snart vi kan.",
+    "formError": "Något gick fel på vår sida. Mejla oss gärna direkt på"
   }
 }

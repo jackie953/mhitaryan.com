@@ -18,6 +18,8 @@ export {
   getContactEmail,
   LINKEDIN_URL,
   LOCATION,
+  LOCATION_SV,
+  getLocation,
   NETWORK_LINKS,
   SHOW_GHOST_WORDMARK,
   SITE_TITLE,

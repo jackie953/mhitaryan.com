@@ -82,6 +82,11 @@
 
 .brand {
   font-size: var(--brand-size);
+  /* Must be a variable font for the hover tween below to have anything to
+     animate — without this the element falls back to the page's static
+     system-font stack, which has no 'wght' axis, and the hover effect is
+     silently a no-op. */
+  font-family: var(--font-heading);
   /* Weight is driven by VariableFontHoverByLetter's font-variation-settings
      tween; an explicit font-weight here would win over the 'wght' axis
      (CSS Fonts spec) and silence the hover animation. */

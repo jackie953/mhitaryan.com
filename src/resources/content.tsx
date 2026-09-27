@@ -40,9 +40,9 @@ const home: Home = {
   description: SITE_DESCRIPTION,
   headline: (
     <>
-      Read the room.
+      Läs av läget.
       <br />
-      Make your move.
+      Gör ditt drag.
     </>
   ),
   featured: {

@@ -283,14 +283,16 @@ export const Header = () => {
                   border: "none",
                   boxShadow: "none",
                   color: "var(--page-background)",
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: 12,
                 }}
               >
-                <span style={{ fontSize: 14, fontWeight: 600 }}>{tNav("briefUs")}</span>
-                <span className={styles.ctaArrowWrapper}>
-                  <span className={styles.ctaArrow} />
+                {/* once-ui's Button wraps children in its own inner div, so a
+                    gap on the Button's own style never reaches these two —
+                    the flex + gap has to live on a wrapper we control. */}
+                <span style={{ display: "inline-flex", alignItems: "center", gap: 12 }}>
+                  <span style={{ fontSize: 14, fontWeight: 600 }}>{tNav("briefUs")}</span>
+                  <span className={styles.ctaArrowWrapper}>
+                    <span className={styles.ctaArrow} />
+                  </span>
                 </span>
               </Button>
               </Row>
@@ -345,16 +347,14 @@ export const Header = () => {
                     border: "none",
                     boxShadow: "none",
                     color: "var(--page-background)",
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: 12,
                   }}
                   onClick={() => setMenuOpen(false)}
                 >
-                  <span style={{ fontSize: 14, fontWeight: 600 }}>{tNav("briefUs")}</span>
-                  <span className={styles.ctaArrowWrapper}>
-                    <span className={styles.ctaArrow} />
+                  <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 12 }}>
+                    <span style={{ fontSize: 14, fontWeight: 600 }}>{tNav("briefUs")}</span>
+                    <span className={styles.ctaArrowWrapper}>
+                      <span className={styles.ctaArrow} />
+                    </span>
                   </span>
                 </Button>
               </div>

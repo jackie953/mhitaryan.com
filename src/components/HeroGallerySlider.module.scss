@@ -88,7 +88,7 @@
 }
 
 .eyebrow {
-  color: var(--brand-on-background-weak, #c9a8ee);
+  color: rgba(255, 255, 255, 0.85);
   font-family: var(--font-label);
   font-size: 0.75rem;
   font-weight: 600;
@@ -153,7 +153,7 @@
   bottom: var(--static-space-20);
   display: flex;
   align-items: center;
-  gap: var(--static-space-12);
+  gap: var(--static-space-20);
 
   @include breakpoints.s {
     left: var(--static-space-20);
@@ -210,20 +210,21 @@
 }
 
 // Small, always-on (not hover-gated) so it works the same on touch as on
-// desktop — sits at the end of the bottom bar, in the corner.
+// desktop — kept deliberately quiet (no border, low opacity at rest) so it
+// doesn't out-compete the thin progress bars right next to it.
 .navNext {
   flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 1.75rem;
-  height: 1.75rem;
+  width: 1.5rem;
+  height: 1.5rem;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  background: rgba(0, 0, 0, 0.25);
+  border: none;
+  background: rgba(255, 255, 255, 0.14);
   color: #fff;
   cursor: pointer;
-  opacity: 0.85;
+  opacity: 0.6;
   transition:
     opacity 200ms ease,
     background 200ms ease,
@@ -231,7 +232,7 @@
 
   &:hover {
     opacity: 1;
-    background: rgba(0, 0, 0, 0.45);
+    background: rgba(255, 255, 255, 0.28);
   }
 
   &:active {

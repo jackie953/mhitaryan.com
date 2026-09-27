@@ -165,7 +165,7 @@ export function HeroGallerySlider({
                 aria-label="Next slide"
                 onClick={goNext}
               >
-                <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true">
                   <path
                     d="M9 6l6 6-6 6"
                     fill="none"

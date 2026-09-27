@@ -277,8 +277,8 @@ export const Header = () => {
                   height: 32,
                   minHeight: 32,
                   borderRadius: 999,
-                  paddingLeft: 11,
-                  paddingRight: 11,
+                  paddingLeft: 9,
+                  paddingRight: 9,
                   background: "var(--header-color)",
                   border: "none",
                   boxShadow: "none",
@@ -288,7 +288,7 @@ export const Header = () => {
                 {/* once-ui's Button wraps children in its own inner div, so a
                     gap on the Button's own style never reaches these two —
                     the flex + gap has to live on a wrapper we control. */}
-                <span style={{ display: "inline-flex", alignItems: "center", gap: 12 }}>
+                <span style={{ display: "inline-flex", alignItems: "center", gap: 10 }}>
                   <span style={{ fontSize: 14, fontWeight: 600 }}>{tNav("briefUs")}</span>
                   <span className={styles.ctaArrowWrapper}>
                     <span className={styles.ctaArrow} />
@@ -350,7 +350,7 @@ export const Header = () => {
                   }}
                   onClick={() => setMenuOpen(false)}
                 >
-                  <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 12 }}>
+                  <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 10 }}>
                     <span style={{ fontSize: 14, fontWeight: 600 }}>{tNav("briefUs")}</span>
                     <span className={styles.ctaArrowWrapper}>
                       <span className={styles.ctaArrow} />

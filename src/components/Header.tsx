@@ -102,12 +102,13 @@ const MobileThemeRow: React.FC = () => {
   );
 };
 
-/** Override the library's default padding/height so each link reads ~14px
-    horizontal (10px here + the ToggleButton's own 4px inner label padding
-    = 14px) and stands 36px tall, matching the icon buttons and CTA. */
+/** Override the library's default padding/height so each link reads ~10px
+    horizontal (6px here + the ToggleButton's own 4px inner label padding
+    = 10px) and stands 36px tall, matching the icon buttons and CTA. The
+    lavender hover pill paints on this same box, so it hugs the text. */
 const navPillButtonStyle: React.CSSProperties = {
-  paddingLeft: 10,
-  paddingRight: 10,
+  paddingLeft: 6,
+  paddingRight: 6,
   height: 36,
   minHeight: 36,
 };
@@ -279,8 +280,8 @@ export const Header = () => {
                   height: 36,
                   minHeight: 36,
                   borderRadius: 999,
-                  paddingLeft: 18,
-                  paddingRight: 18,
+                  paddingLeft: 16,
+                  paddingRight: 16,
                   background: "var(--header-color)",
                   border: "none",
                   boxShadow: "none",

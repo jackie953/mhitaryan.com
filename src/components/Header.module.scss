@@ -47,17 +47,48 @@
     transition: var(--transition-micro-medium), transform 0.15s ease;
 }
 
-.cta :global(.font-label) {
-    font-weight: 600;
-    text-transform: none;
-    letter-spacing: normal;
-    font-size: 14px;
-    color: var(--page-background);
-}
-
 .cta:hover {
     background: var(--header-color) !important;
     filter: brightness(1.12);
+}
+
+/* Arrow tail is painted the same color as the button background, so it's
+   invisible until hover — then it fades in and the chevron head slides
+   toward it, completing the arrow. Both colors are theme tokens (not
+   hardcoded hex), so this stays correct in both light and dark mode. */
+.ctaArrowWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ctaArrow {
+    position: relative;
+    width: 10px;
+    height: 2px;
+    background: var(--header-color);
+    transition: background 0.2s;
+}
+
+.ctaArrow::before {
+    content: "";
+    position: absolute;
+    top: -3px;
+    right: 3px;
+    box-sizing: border-box;
+    padding: 3px;
+    border: solid var(--page-background);
+    border-width: 0 2px 2px 0;
+    transform: rotate(-45deg);
+    transition: right 0.2s;
+}
+
+.cta:hover .ctaArrow {
+    background: var(--page-background);
+}
+
+.cta:hover .ctaArrow::before {
+    right: 0;
 }
 
 @media (prefers-reduced-motion: no-preference) {

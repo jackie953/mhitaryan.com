@@ -270,8 +270,6 @@ export const Header = () => {
               <Line background="neutral-alpha-medium" vert maxHeight="20" style={{ marginLeft: 4, marginRight: 10 }} />
               <Button
                 href={withLocale(contact.path)}
-                label={tNav("briefUs")}
-                arrowIcon
                 size="s"
                 weight="default"
                 className={styles.cta}
@@ -285,8 +283,16 @@ export const Header = () => {
                   border: "none",
                   boxShadow: "none",
                   color: "var(--page-background)",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 6,
                 }}
-              />
+              >
+                <span style={{ fontSize: 14, fontWeight: 600 }}>{tNav("briefUs")}</span>
+                <span className={styles.ctaArrowWrapper}>
+                  <span className={styles.ctaArrow} />
+                </span>
+              </Button>
               </Row>
             </Row>
           </Row>
@@ -326,8 +332,6 @@ export const Header = () => {
               <div style={{ padding: "13px 20px" }}>
                 <Button
                   href={withLocale(contact.path)}
-                  label={tNav("briefUs")}
-                  arrowIcon
                   size="m"
                   weight="default"
                   fillWidth
@@ -341,9 +345,18 @@ export const Header = () => {
                     border: "none",
                     boxShadow: "none",
                     color: "var(--page-background)",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: 6,
                   }}
                   onClick={() => setMenuOpen(false)}
-                />
+                >
+                  <span style={{ fontSize: 14, fontWeight: 600 }}>{tNav("briefUs")}</span>
+                  <span className={styles.ctaArrowWrapper}>
+                    <span className={styles.ctaArrow} />
+                  </span>
+                </Button>
               </div>
             </div>
           )}

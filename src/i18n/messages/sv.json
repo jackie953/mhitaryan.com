@@ -48,6 +48,7 @@
     "formEmailLabel": "E-post",
     "formOrganizationLabel": "Organisation (valfritt)",
     "formMessageLabel": "Meddelande",
+    "confidentialityNote": "Allt du delar med oss behandlas konfidentiellt.",
     "formSubmit": "Skicka",
     "formSending": "Skickar…",
     "formSuccess": "Tack — vi har tagit emot ditt meddelande och återkommer så snart vi kan.",

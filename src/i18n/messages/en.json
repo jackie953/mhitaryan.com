@@ -48,6 +48,7 @@
     "formEmailLabel": "Email",
     "formOrganizationLabel": "Organization (optional)",
     "formMessageLabel": "Message",
+    "confidentialityNote": "Everything you share with us stays confidential.",
     "formSubmit": "Send",
     "formSending": "Sending…",
     "formSuccess": "Thanks — we've received your message and will be in touch shortly.",

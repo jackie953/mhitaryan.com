@@ -109,6 +109,10 @@ export const ContactForm = () => {
         <Button type="submit" fillWidth horizontal="center" loading={status === "sending"} disabled={status === "sending"}>
           {status === "sending" ? t("formSending") : t("formSubmit")}
         </Button>
+
+        <Text variant="body-default-xs" onBackground="neutral-weak" align="center">
+          {t("confidentialityNote")}
+        </Text>
       </Column>
     </form>
   );

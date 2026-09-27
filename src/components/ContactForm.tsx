@@ -16,6 +16,7 @@ export const ContactForm = () => {
   const [email, setEmail] = useState("");
   const [organization, setOrganization] = useState("");
   const [message, setMessage] = useState("");
+  const [website, setWebsite] = useState(""); // honeypot — left empty by real visitors
   const [status, setStatus] = useState<Status>("idle");
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -27,7 +28,7 @@ export const ContactForm = () => {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, organization, message, locale }),
+        body: JSON.stringify({ name, email, organization, message, website, locale }),
       });
       if (!res.ok) throw new Error("Request failed");
       setStatus("success");
@@ -63,6 +64,19 @@ export const ContactForm = () => {
         gap="16"
         style={{ border: "1px solid var(--neutral-alpha-weak)" }}
       >
+        {/* Honeypot — hidden from real visitors via CSS, not `type="hidden"`,
+            since bots specifically skip hidden fields. Left blank by anyone
+            who can see the form. */}
+        <input
+          type="text"
+          name="website"
+          value={website}
+          onChange={(e) => setWebsite(e.target.value)}
+          tabIndex={-1}
+          autoComplete="off"
+          aria-hidden="true"
+          style={{ position: "absolute", left: "-9999px", width: 1, height: 1, opacity: 0 }}
+        />
         <Input
           id="contact-name"
           label={t("formNameLabel")}

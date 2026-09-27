@@ -277,11 +277,11 @@ export const Header = () => {
                 weight="default"
                 className={styles.cta}
                 style={{
-                  height: 36,
-                  minHeight: 36,
+                  height: 32,
+                  minHeight: 32,
                   borderRadius: 999,
-                  paddingLeft: 16,
-                  paddingRight: 16,
+                  paddingLeft: 14,
+                  paddingRight: 14,
                   background: "var(--header-color)",
                   border: "none",
                   boxShadow: "none",

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
+import Link from "next/link";
 import { Button, Column, Input, Textarea, Text } from "@once-ui-system/core";
 import { getContactEmail } from "@/resources";
 import styles from "./ContactForm.module.scss";
@@ -111,7 +112,13 @@ export const ContactForm = () => {
         </Button>
 
         <Text variant="body-default-xs" onBackground="neutral-weak" align="center">
-          {t("confidentialityNote")}
+          {t.rich("confidentialityNote", {
+            link: (chunks) => (
+              <Link href={`/${locale}/privacy`} style={{ textDecoration: "underline" }}>
+                {chunks}
+              </Link>
+            ),
+          })}
         </Text>
       </Column>
     </form>

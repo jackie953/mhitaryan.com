@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useLocale } from "next-intl";
 import styles from "./LanguageToggle.module.scss";
-import { SwedishFlag, UsUkFlag } from "./flags";
+import { SwedishFlag, UsFlag } from "./flags";
 
 export const LanguageToggle = () => {
   const locale = useLocale();
@@ -21,7 +21,7 @@ export const LanguageToggle = () => {
 
   return (
     <Link href={toggleHref} className={styles.toggle} title={ariaLabel} aria-label={ariaLabel}>
-      {isSwedish ? <UsUkFlag /> : <SwedishFlag />}
+      {isSwedish ? <UsFlag size={22} /> : <SwedishFlag size={22} />}
     </Link>
   );
 };

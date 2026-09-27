@@ -1,13 +1,13 @@
-/* Fixed 32px square to match the size="m" icon buttons (home/email/theme)
-   exactly, instead of relying on ToggleButton's text-label layout which
-   adds its own padding and doesn't line up with icon-only buttons. */
+/* Fixed 36px hit target to match the theme toggle's icon button, instead of
+   relying on ToggleButton's text-label layout which adds its own padding
+   and doesn't line up with icon-only buttons. */
 .toggle {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: var(--static-space-32);
-  height: var(--static-space-32);
-  min-width: var(--static-space-32);
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
   padding: 0;
   border-radius: var(--radius-m);
   border: 1px solid var(--static-transparent);

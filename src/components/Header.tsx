@@ -102,20 +102,21 @@ const MobileThemeRow: React.FC = () => {
   );
 };
 
-/** Tighten the library's default 8px horizontal padding on text-label pill buttons. */
-const navPillButtonStyle: React.CSSProperties = { paddingLeft: 6, paddingRight: 6 };
+/** Override the library's default padding so each link reads ~14px horizontal
+    (10px here + the ToggleButton's own 4px inner label padding = 14px). */
+const navPillButtonStyle: React.CSSProperties = { paddingLeft: 10, paddingRight: 10 };
 
 const navLinkStyle = (active: boolean): React.CSSProperties => ({
-  display: "block",
+  display: "flex",
+  alignItems: "center",
   padding: "13px 20px",
   textDecoration: "none",
-  fontSize: "0.9rem",
-  fontWeight: active ? 600 : 500,
+  fontSize: "14px",
+  fontWeight: 500,
   textTransform: "uppercase",
-  letterSpacing: "0.08em",
-  color: active
-    ? "var(--neutral-on-background-strong)"
-    : "var(--neutral-on-background-weak)",
+  letterSpacing: "0.06em",
+  color: "var(--header-color)",
+  background: active ? "var(--neutral-alpha-medium)" : "transparent",
   borderBottom: "1px solid var(--neutral-alpha-weak)",
   transition: "background 0.15s",
 });
@@ -238,25 +239,29 @@ export const Header = () => {
               border="neutral-alpha-weak"
               radius="l"
               shadow="l"
-              paddingX="12"
               paddingY="8"
               horizontal="center"
               vertical="center"
               zIndex={1}
+              style={{ paddingLeft: 6, paddingRight: 6 }}
             >
-              <Row gap="2" vertical="center" className={styles.navPill} style={{ fontSize: "15px" }} suppressHydrationWarning>
-              {routes["/about"] && (
-                <ToggleButton size="m" style={navPillButtonStyle} href={withLocale("/about")} label={tNav("about")} selected={localePath === "/about"} />
-              )}
-              {routes["/services"] && (
-                <ToggleButton size="m" style={navPillButtonStyle} href={withLocale(services.path)} label={tNav("services")} selected={localePath.startsWith("/services")} />
-              )}
-              {routes["/cases"] && (
-                <ToggleButton size="m" style={navPillButtonStyle} href={withLocale(cases.path)} label={tNav("cases")} selected={localePath.startsWith("/cases")} />
-              )}
+              <Row gap="12" vertical="center" className={styles.navPill} style={{ fontSize: "15px" }} suppressHydrationWarning>
+              <Row gap="4" vertical="center" className={styles.navLinks}>
+                {routes["/about"] && (
+                  <ToggleButton size="m" style={navPillButtonStyle} href={withLocale("/about")} label={tNav("about")} selected={localePath === "/about"} />
+                )}
+                {routes["/services"] && (
+                  <ToggleButton size="m" style={navPillButtonStyle} href={withLocale(services.path)} label={tNav("services")} selected={localePath.startsWith("/services")} />
+                )}
+                {routes["/cases"] && (
+                  <ToggleButton size="m" style={navPillButtonStyle} href={withLocale(cases.path)} label={tNav("cases")} selected={localePath.startsWith("/cases")} />
+                )}
+              </Row>
               <Line background="neutral-alpha-medium" vert maxHeight="20" />
-              {display.themeSwitcher && <ThemeToggle size="m" />}
-              <LanguageToggle />
+              <Row gap="4" vertical="center" className={styles.navToggles}>
+                {display.themeSwitcher && <ThemeToggle size="m" />}
+                <LanguageToggle />
+              </Row>
               <Line background="neutral-alpha-medium" vert maxHeight="20" />
               <Button
                 href={withLocale(contact.path)}
@@ -264,6 +269,17 @@ export const Header = () => {
                 size="s"
                 weight="default"
                 className={styles.cta}
+                style={{
+                  height: 40,
+                  minHeight: 40,
+                  borderRadius: 999,
+                  paddingLeft: 20,
+                  paddingRight: 20,
+                  background: "var(--header-color)",
+                  border: "none",
+                  boxShadow: "none",
+                  color: "var(--page-background)",
+                }}
               />
               </Row>
             </Row>
@@ -310,6 +326,15 @@ export const Header = () => {
                   fillWidth
                   horizontal="center"
                   className={styles.cta}
+                  style={{
+                    height: 40,
+                    minHeight: 40,
+                    borderRadius: 999,
+                    background: "var(--header-color)",
+                    border: "none",
+                    boxShadow: "none",
+                    color: "var(--page-background)",
+                  }}
                   onClick={() => setMenuOpen(false)}
                 />
               </div>

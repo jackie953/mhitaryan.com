@@ -13,21 +13,51 @@
     display: flex;
 }
 
-/* Nav links + CTA read as one uppercase, tracked group — matching the
-   footer's column headings (CONTACT / PAGES / NETWORK) in size, weight
-   and tracking. The design system's own weight scale only offers 400/600,
-   neither of which matches the desired 500, so it's set explicitly here. */
-.navPill :global(.font-label) {
+/* Nav links read as an uppercase, tracked group — matching the footer's
+   column headings (CONTACT / PAGES / NETWORK) in size, weight and tracking,
+   coloured with the logo's own near-black token. Scoped to .navLinks only
+   so it doesn't leak into the CTA's own (differently coloured) label. */
+.navLinks :global(.font-label) {
     font-weight: 500;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
-    font-size: calc(var(--font-size-label-m) * 0.8);
+    letter-spacing: 0.06em;
+    font-size: 14px;
+    color: var(--header-color);
 }
 
-/* Soft black/white pill CTA — matches the homepage bottom CTA button,
-   just fully rounded to sit flush inside the nav pill. */
+/* Theme + language toggles sit as one tight pair, matched in size. */
+.navToggles :global(button.button) {
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
+}
+
+.navToggles svg {
+    width: 22px !important;
+    height: 22px !important;
+}
+
+/* Soft near-black/near-white pill CTA — matches the homepage bottom CTA
+   button's colour (the logo's own near-black token, not pure #000),
+   fully rounded to sit flush inside the nav pill. Colours are forced with
+   !important because the base Button component's own hover state would
+   otherwise repaint it with the brand colour. */
 .cta {
-    border-radius: 999px !important;
+    transition: var(--transition-micro-medium), transform 0.15s ease;
+}
+
+.cta :global(.font-label) {
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 14px;
+    color: var(--page-background);
+}
+
+.cta:hover {
+    background: var(--header-color) !important;
+    filter: brightness(1.12);
 }
 
 @media (prefers-reduced-motion: no-preference) {

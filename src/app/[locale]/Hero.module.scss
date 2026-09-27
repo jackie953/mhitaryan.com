@@ -11,6 +11,20 @@
   text-wrap: pretty;
 }
 
+.sentence {
+  display: inline;
+}
+
+@media (min-width: 1024px) {
+  .subheadline {
+    max-width: none;
+  }
+
+  .sentence {
+    display: block;
+  }
+}
+
 .gallery {
   margin-top: 5rem;
 }

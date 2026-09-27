@@ -78,7 +78,12 @@ export default async function Home() {
                   onBackground="neutral-weak"
                   className={styles.subheadline}
                 >
-                  {t("subheadline")}
+                  {t.raw("subheadlineSentences").map((sentence: string, index: number, sentences: string[]) => (
+                    <span key={sentence} className={styles.sentence}>
+                      {sentence}
+                      {index < sentences.length - 1 ? " " : ""}
+                    </span>
+                  ))}
                 </Text>
               </Column>
             </RevealFx>

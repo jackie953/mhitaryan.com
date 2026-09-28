@@ -23,7 +23,7 @@ export function generateMetadata() {
     ...meta,
     icons: {
       icon: [
-        { url: "/favicon.svg?v=20260928", type: "image/svg+xml" },
+        { url: "/favicon.svg?v=20260928b", type: "image/svg+xml" },
         { url: "/favicon-96x96.png?v=20260928", sizes: "96x96", type: "image/png" },
       ],
       apple: [{ url: "/apple-touch-icon.png?v=20260928" }],
@@ -37,7 +37,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=20260928" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=20260928b" />
         <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png?v=20260928" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=20260928" />
         <meta name="apple-mobile-web-app-title" content="Mhitaryan" />

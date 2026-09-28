@@ -184,28 +184,6 @@ a.cta {
   border-radius: inherit;
 }
 
-.progressFill[data-complete="true"] {
-  width: 100%;
-}
-
-.progressRunning {
-  animation: gs-progress var(--gs-interval, 5000ms) linear forwards;
-  animation-play-state: running;
-}
-
-.progressPaused {
-  animation-play-state: paused;
-}
-
-@keyframes gs-progress {
-  from {
-    width: 0%;
-  }
-  to {
-    width: 100%;
-  }
-}
-
 // Small, always-on (not hover-gated) so it works the same on touch as on
 // desktop — kept deliberately quiet (no border, low opacity at rest) so it
 // doesn't out-compete the thin progress bars right next to it.

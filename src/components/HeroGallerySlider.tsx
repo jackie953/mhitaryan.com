@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, type SyntheticEvent } from "react";
 import Link from "next/link";
 import CenterUnderline from "@/components/fancy/text/underline-center";
 import styles from "./HeroGallerySlider.module.scss";
@@ -17,7 +17,7 @@ export interface HeroGallerySlide {
 
 interface HeroGallerySliderProps {
   slides: HeroGallerySlide[];
-  /** Autoplay interval in ms, should roughly match each slide's video length. */
+  /** Fallback autoplay duration in ms, used until a slide's video reports its own length. */
   interval?: number;
   autoplay?: boolean;
   showProgress?: boolean;
@@ -30,13 +30,16 @@ export function HeroGallerySlider({
   showProgress = true,
 }: HeroGallerySliderProps) {
   const [active, setActive] = useState(0);
-  const [paused, setPaused] = useState(false);
+  const [hoverPaused, setHoverPaused] = useState(false);
+  const [focusPaused, setFocusPaused] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
-  const [progressKey, setProgressKey] = useState(0);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const remainingRef = useRef(interval);
-  const startedAtRef = useRef(0);
-  const firedRef = useRef(false);
+  const [progress, setProgress] = useState(0);
+  const [durations, setDurations] = useState<Record<number, number>>({});
+  const paused = hoverPaused || focusPaused;
+
+  const elapsedRef = useRef(0);
+  const rafRef = useRef<number | null>(null);
+  const lastTsRef = useRef<number | null>(null);
 
   useEffect(() => {
     const query = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -46,41 +49,65 @@ export function HeroGallerySlider({
     return () => query.removeEventListener("change", onChange);
   }, []);
 
-  const goTo = useCallback(
-    (index: number) => {
-      setActive(index);
-      setProgressKey((key) => key + 1);
-      remainingRef.current = interval;
-    },
-    [interval],
-  );
+  const goTo = useCallback((index: number) => {
+    elapsedRef.current = 0;
+    setProgress(0);
+    setActive(index);
+  }, []);
 
   const goNext = useCallback(
     () => goTo((active + 1) % slides.length),
     [goTo, active, slides.length],
   );
 
-  useEffect(() => {
-    if (!autoplay || paused || reducedMotion || slides.length < 2) return;
-    firedRef.current = false;
-    startedAtRef.current = Date.now();
-    timeoutRef.current = setTimeout(() => {
-      firedRef.current = true;
-      goTo((active + 1) % slides.length);
-    }, remainingRef.current);
-    return () => {
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
-      if (!firedRef.current) {
-        remainingRef.current = Math.max(0, remainingRef.current - (Date.now() - startedAtRef.current));
+  const handleLoadedMetadata = useCallback(
+    (index: number) => (event: SyntheticEvent<HTMLVideoElement>) => {
+      const durationMs = event.currentTarget.duration * 1000;
+      if (Number.isFinite(durationMs) && durationMs > 0) {
+        setDurations((prev) => (prev[index] === durationMs ? prev : { ...prev, [index]: durationMs }));
       }
+    },
+    [],
+  );
+
+  // A slide with a video runs exactly as long as its video; otherwise it falls
+  // back to `interval`. This is what keeps the progress bar, the autoplay
+  // advance, and the actual footage in sync, instead of the two drifting apart.
+  const activeDuration = durations[active] ?? interval;
+
+  useEffect(() => {
+    if (!autoplay || paused || reducedMotion || slides.length < 2) {
+      lastTsRef.current = null;
+      return;
+    }
+
+    const tick = (timestamp: number) => {
+      if (lastTsRef.current == null) lastTsRef.current = timestamp;
+      elapsedRef.current += timestamp - lastTsRef.current;
+      lastTsRef.current = timestamp;
+
+      if (elapsedRef.current >= activeDuration) {
+        goTo((active + 1) % slides.length);
+        return;
+      }
+      setProgress(elapsedRef.current / activeDuration);
+      rafRef.current = requestAnimationFrame(tick);
     };
-  }, [active, autoplay, paused, reducedMotion, slides.length, goTo]);
+
+    rafRef.current = requestAnimationFrame(tick);
+    return () => {
+      if (rafRef.current != null) cancelAnimationFrame(rafRef.current);
+      lastTsRef.current = null;
+    };
+  }, [active, autoplay, paused, reducedMotion, slides.length, activeDuration, goTo]);
 
   return (
     <div
       className={styles.root}
-      onFocus={() => setPaused(true)}
-      onBlur={() => setPaused(false)}
+      onMouseEnter={() => setHoverPaused(true)}
+      onMouseLeave={() => setHoverPaused(false)}
+      onFocus={() => setFocusPaused(true)}
+      onBlur={() => setFocusPaused(false)}
     >
       <div className={styles.stage}>
         {slides.map((slide, index) => (
@@ -97,10 +124,13 @@ export function HeroGallerySlider({
                 src={slide.video}
                 poster={slide.poster}
                 autoPlay={index === active}
-                loop
                 muted
                 playsInline
                 preload={index === active ? "auto" : "none"}
+                onLoadedMetadata={handleLoadedMetadata(index)}
+                onEnded={() => {
+                  if (index === active) goNext();
+                }}
               />
             )}
             <div className={styles.scrim} />
@@ -141,20 +171,15 @@ export function HeroGallerySlider({
                     onClick={() => goTo(index)}
                   >
                     <span
-                      key={index === active ? progressKey : undefined}
-                      className={[
-                        styles.progressFill,
-                        index === active ? styles.progressRunning : "",
-                        index === active && paused ? styles.progressPaused : "",
-                      ]
-                        .filter(Boolean)
-                        .join(" ")}
-                      style={
-                        index === active
-                          ? ({ ["--gs-interval" as string]: `${interval}ms` } as React.CSSProperties)
-                          : undefined
-                      }
-                      data-complete={index < active ? "true" : undefined}
+                      className={styles.progressFill}
+                      style={{
+                        width:
+                          index === active
+                            ? `${Math.min(1, progress) * 100}%`
+                            : index < active
+                              ? "100%"
+                              : "0%",
+                      }}
                     />
                   </button>
                 ))}

@@ -113,14 +113,16 @@ export default async function Home() {
             />
           </ScrollReveal>
         </Column>
-        <ScrollReveal style={{ marginBottom: "calc(-1 * var(--responsive-space-xl))" }}>
-          <BookingCTA
-            title="Before your next move, talk to us."
-            description=""
-            buttonText="Get in touch"
-            buttonHrefEncoded={Buffer.from(`mailto:${getContactEmail(locale)}`).toString("base64")}
-          />
-        </ScrollReveal>
+        <div style={{ marginBottom: "calc(-1 * var(--responsive-space-xl))" }}>
+          <ScrollReveal>
+            <BookingCTA
+              title="Before your next move, talk to us."
+              description=""
+              buttonText="Get in touch"
+              buttonHrefEncoded={Buffer.from(`mailto:${getContactEmail(locale)}`).toString("base64")}
+            />
+          </ScrollReveal>
+        </div>
       </Column>
   );
 }

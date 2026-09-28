@@ -114,12 +114,20 @@ export const BookingCTA: React.FC<React.ComponentProps<typeof Column> & BookingC
       overflow="hidden"
       fillWidth
       paddingX="xl"
-      paddingY="40"
+      paddingY="24"
       radius="l"
       horizontal="center"
       align="center"
       background="surface"
       className="max-sm:!pt-6 max-sm:!px-8 max-sm:!pb-6"
+      style={{
+        // Bleed the card into the gap below it so it touches the footer,
+        // then pull the following content back up by the same amount —
+        // keeps the hover spotlight covering the full visible card even
+        // at the smaller padding.
+        paddingBottom: "calc(var(--static-space-24) + var(--responsive-space-xl))",
+        marginBottom: "calc(-1 * var(--responsive-space-xl))",
+      }}
       {...flex}
     >
       <Mask

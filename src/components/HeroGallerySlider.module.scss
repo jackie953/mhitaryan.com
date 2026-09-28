@@ -7,16 +7,15 @@
 .stage {
   position: relative;
   width: 100%;
-  max-width: min(100%, calc((100svh - 7.5rem) * 16 / 9));
   aspect-ratio: 16 / 9;
-  margin-inline: auto;
+  max-height: calc(100svh - 7.5rem);
   border-radius: var(--radius-l);
   overflow: hidden;
   background: var(--neutral-alpha-weak);
 
   @include breakpoints.s {
-    max-width: min(100%, calc((100svh - 6rem) * 4 / 5));
     aspect-ratio: 4 / 5;
+    max-height: calc(100svh - 6rem);
   }
 }
 

@@ -2,7 +2,6 @@
 
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { about, services, cases, getContactEmail, LINKEDIN_URL, LOCATION, NETWORK_LINKS } from "@/resources";
 import VariableFontHoverByLetter from "@/components/fancy/text/variable-font-hover-by-letter";
 import styles from "./Footer.module.scss";
@@ -11,7 +10,6 @@ export const Footer = () => {
   const locale = useLocale();
   const t = useTranslations("footer");
   const tNav = useTranslations("nav");
-  const currentYear = new Date().getFullYear();
 
   const withLocale = (path: string) => `/${locale}${path}`;
   const contactEmail = getContactEmail(locale);
@@ -23,24 +21,13 @@ export const Footer = () => {
 
         <div className={styles.grid}>
           <div className={styles.column}>
-            <motion.div className={styles.brandLockup} whileHover="hover">
-              <VariableFontHoverByLetter
-                inheritHover
-                label="MHITARYAN"
-                className={styles.brand}
-                staggerDuration={0.03}
-                fromFontVariationSettings="'wght' 400"
-                toFontVariationSettings="'wght' 900"
-              />
-              <VariableFontHoverByLetter
-                inheritHover
-                label={t("pronunciation")}
-                className={styles.pronunciation}
-                staggerDuration={0.03}
-                fromFontVariationSettings="'wght' 400"
-                toFontVariationSettings="'wght' 900"
-              />
-            </motion.div>
+            <VariableFontHoverByLetter
+              label={t("pronunciation")}
+              className={styles.brand}
+              staggerDuration={0.03}
+              fromFontVariationSettings="'wght' 400"
+              toFontVariationSettings="'wght' 900"
+            />
           </div>
 
           <div className={styles.column}>

@@ -2,6 +2,7 @@
 
 import { useLayoutEffect, useRef, useState } from "react";
 import type { CSSProperties, ReactNode } from "react";
+import { motion } from "framer-motion";
 import { Heading, Text } from "@once-ui-system/core";
 import styles from "@/app/[locale]/Hero.module.scss";
 
@@ -9,6 +10,8 @@ interface HeroHeadlineProps {
   headline: ReactNode;
   headingStyle: CSSProperties;
   sentences: string[];
+  /** Delay (seconds) before the subline fades in, after the headline lines. */
+  sublineDelay?: number;
 }
 
 // The subheading needs to match the headline's own rendered width (not the
@@ -19,7 +22,12 @@ interface HeroHeadlineProps {
 // sized by whichever child's unwrapped text is widest, which is usually
 // the paragraph, not the headline. So we measure the rendered headline
 // width client-side and drive the subheading from it directly.
-export function HeroHeadline({ headline, headingStyle, sentences }: HeroHeadlineProps) {
+export function HeroHeadline({
+  headline,
+  headingStyle,
+  sentences,
+  sublineDelay = 0,
+}: HeroHeadlineProps) {
   const headingWrapRef = useRef<HTMLDivElement>(null);
   const measureRef = useRef<HTMLSpanElement>(null);
   const [subheadlineStyle, setSubheadlineStyle] = useState<CSSProperties>({});
@@ -71,14 +79,20 @@ export function HeroHeadline({ headline, headingStyle, sentences }: HeroHeadline
           {headline}
         </Heading>
       </div>
-      <Text as="p" onBackground="neutral-weak" className={styles.subheadline} style={subheadlineStyle}>
-        {sentences.map((sentence, index) => (
-          <span key={sentence} className={blockMode ? styles.sentenceBlock : styles.sentence}>
-            {sentence}
-            {index < sentences.length - 1 ? " " : ""}
-          </span>
-        ))}
-      </Text>
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: sublineDelay }}
+      >
+        <Text as="p" onBackground="neutral-weak" className={styles.subheadline} style={subheadlineStyle}>
+          {sentences.map((sentence, index) => (
+            <span key={sentence} className={blockMode ? styles.sentenceBlock : styles.sentence}>
+              {sentence}
+              {index < sentences.length - 1 ? " " : ""}
+            </span>
+          ))}
+        </Text>
+      </motion.div>
       {/* Hidden probe, same font as .subheadline, used only to measure each
           sentence's unwrapped width against the headline's measured width. */}
       <span

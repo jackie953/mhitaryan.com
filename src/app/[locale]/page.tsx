@@ -11,6 +11,7 @@ import { home, about, person, baseURL, getContactEmail } from "@/resources";
 import { BookingCTA } from "@/components/BookingCTA";
 import { HeroGallerySlider } from "@/components/HeroGallerySlider";
 import { HeroHeadline } from "@/components/HeroHeadline";
+import { HeroLineReveal } from "@/components/HeroLineReveal";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import styles from "./Hero.module.scss";
 
@@ -43,7 +44,13 @@ export default async function Home() {
           }}
         />
         <Column fillWidth gap="0">
-          <Column fillWidth gap="32" style={{ paddingTop: "96px" }} s={{ style: { paddingTop: "0px" } }}>
+          <Column
+            fillWidth
+            gap="32"
+            vertical="end"
+            style={{ minHeight: "80vh", paddingTop: "96px", paddingBottom: "3rem" }}
+            s={{ style: { minHeight: "auto", paddingTop: "0px", paddingBottom: "2rem" } }}
+          >
             {home.featured.display && (
               <RevealFx speed="fast" delay={0.5} fillWidth>
                 <Badge
@@ -59,27 +66,26 @@ export default async function Home() {
                 </Badge>
               </RevealFx>
             )}
-            <RevealFx speed={1600} translateY="4" delay={0.15} fillWidth>
-              <Column maxWidth="l" fillWidth>
-                <HeroHeadline
-                  headline={
-                    <>
-                      {t("headlineLine1")}
-                      <br />
-                      {t("headlineLine2")}
-                    </>
-                  }
-                  headingStyle={{
-                    fontSize: "clamp(3.25rem, 9.2vw, 9.2rem)",
-                    lineHeight: 0.95,
-                    letterSpacing: "-0.03em",
-                  }}
-                  sentences={t.raw("subheadlineSentences")}
-                />
-              </Column>
-            </RevealFx>
+            <Column maxWidth="l" fillWidth>
+              <HeroHeadline
+                headline={
+                  <>
+                    <HeroLineReveal delay={0.15}>{t("headlineLine1")}</HeroLineReveal>
+                    <br />
+                    <HeroLineReveal delay={0.55}>{t("headlineLine2")}</HeroLineReveal>
+                  </>
+                }
+                headingStyle={{
+                  fontSize: "clamp(3.25rem, 9.2vw, 9.2rem)",
+                  lineHeight: 0.95,
+                  letterSpacing: "-0.03em",
+                }}
+                sentences={t.raw("subheadlineSentences")}
+                sublineDelay={0.95}
+              />
+            </Column>
           </Column>
-          <ScrollReveal delay={0.55} className={styles.gallery}>
+          <ScrollReveal className={styles.gallery}>
             <HeroGallerySlider
               interval={5000}
               autoplay
@@ -107,7 +113,7 @@ export default async function Home() {
             />
           </ScrollReveal>
         </Column>
-        <ScrollReveal delay={0.75}>
+        <ScrollReveal>
           <BookingCTA
             title="Before your next move, talk to us."
             description=""

@@ -113,7 +113,7 @@ export default async function Home() {
             />
           </ScrollReveal>
         </Column>
-        <ScrollReveal>
+        <ScrollReveal style={{ marginBottom: "calc(-1 * var(--responsive-space-xl))" }}>
           <BookingCTA
             title="Before your next move, talk to us."
             description=""

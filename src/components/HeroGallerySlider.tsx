@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import CenterUnderline from "@/components/fancy/text/underline-center";
 import styles from "./HeroGallerySlider.module.scss";
 
 export interface HeroGallerySlide {
@@ -16,7 +17,7 @@ export interface HeroGallerySlide {
 
 interface HeroGallerySliderProps {
   slides: HeroGallerySlide[];
-  /** Autoplay interval in ms, should roughly match each slide's video length. */
+  /** Autoplay duration in ms for slides with no video to read a clock from (reduced motion). */
   interval?: number;
   autoplay?: boolean;
   showProgress?: boolean;
@@ -29,13 +30,16 @@ export function HeroGallerySlider({
   showProgress = true,
 }: HeroGallerySliderProps) {
   const [active, setActive] = useState(0);
-  const [paused, setPaused] = useState(false);
+  const [focusPaused, setFocusPaused] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
-  const [progressKey, setProgressKey] = useState(0);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const remainingRef = useRef(interval);
-  const startedAtRef = useRef(0);
-  const firedRef = useRef(false);
+  const [progress, setProgress] = useState(0);
+
+  const videoRefs = useRef<Record<number, HTMLVideoElement | null>>({});
+  const rafRef = useRef<number | null>(null);
+  // Only used as a fallback clock when there's no video to read a real
+  // position from (reduced motion). Video-driven slides ignore this.
+  const fallbackElapsedRef = useRef(0);
+  const fallbackLastTsRef = useRef<number | null>(null);
 
   useEffect(() => {
     const query = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -45,37 +49,84 @@ export function HeroGallerySlider({
     return () => query.removeEventListener("change", onChange);
   }, []);
 
-  const goTo = useCallback(
-    (index: number) => {
-      setActive(index);
-      setProgressKey((key) => key + 1);
-      remainingRef.current = interval;
-    },
-    [interval],
+  const goTo = useCallback((index: number) => {
+    fallbackElapsedRef.current = 0;
+    setProgress(0);
+    setActive(index);
+  }, []);
+
+  // Toggling `autoPlay`/`preload` on an already-mounted <video> doesn't make a
+  // browser (re)play it - those attributes are only honored on initial load.
+  // So every time the active slide changes, explicitly rewind and play it,
+  // and pause the one that just lost focus. This is what actually makes the
+  // gallery loop back to the first slide instead of stalling on its last frame.
+  useEffect(() => {
+    if (reducedMotion) return;
+    Object.entries(videoRefs.current).forEach(([key, video]) => {
+      if (!video) return;
+      if (Number(key) === active) {
+        video.currentTime = 0;
+        video.play().catch(() => {});
+      } else {
+        video.pause();
+      }
+    });
+  }, [active, reducedMotion]);
+
+  const goNext = useCallback(
+    () => goTo((active + 1) % slides.length),
+    [goTo, active, slides.length],
   );
 
+  // If a slide finishes while focus-pause is holding it, don't skip the
+  // advance entirely - just apply it once the pause lifts.
   useEffect(() => {
-    if (!autoplay || paused || reducedMotion || slides.length < 2) return;
-    firedRef.current = false;
-    startedAtRef.current = Date.now();
-    timeoutRef.current = setTimeout(() => {
-      firedRef.current = true;
-      goTo((active + 1) % slides.length);
-    }, remainingRef.current);
-    return () => {
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
-      if (!firedRef.current) {
-        remainingRef.current = Math.max(0, remainingRef.current - (Date.now() - startedAtRef.current));
+    if (!focusPaused) {
+      const video = videoRefs.current[active];
+      if (video && video.ended) goNext();
+    }
+  }, [focusPaused, active, goNext]);
+
+  useEffect(() => {
+    if (!autoplay || focusPaused || slides.length < 2) {
+      fallbackLastTsRef.current = null;
+      return;
+    }
+
+    const tick = (timestamp: number) => {
+      // Video slides: read the real playback position each frame, so the bar
+      // can never drift from what's actually on screen. Advancing to the next
+      // slide is handled by the video's own `ended` event, not this clock.
+      const activeVideo = reducedMotion ? null : videoRefs.current[active];
+      if (activeVideo && Number.isFinite(activeVideo.duration) && activeVideo.duration > 0) {
+        setProgress(activeVideo.currentTime / activeVideo.duration);
+        rafRef.current = requestAnimationFrame(tick);
+        return;
       }
+
+      // No video to read from (reduced motion, or metadata not loaded yet):
+      // fall back to a plain wall clock against `interval`.
+      if (fallbackLastTsRef.current == null) fallbackLastTsRef.current = timestamp;
+      fallbackElapsedRef.current += timestamp - fallbackLastTsRef.current;
+      fallbackLastTsRef.current = timestamp;
+
+      if (fallbackElapsedRef.current >= interval) {
+        goTo((active + 1) % slides.length);
+        return;
+      }
+      setProgress(fallbackElapsedRef.current / interval);
+      rafRef.current = requestAnimationFrame(tick);
     };
-  }, [active, autoplay, paused, reducedMotion, slides.length, goTo]);
+
+    rafRef.current = requestAnimationFrame(tick);
+    return () => {
+      if (rafRef.current != null) cancelAnimationFrame(rafRef.current);
+      fallbackLastTsRef.current = null;
+    };
+  }, [active, autoplay, focusPaused, reducedMotion, slides.length, interval, goTo]);
 
   return (
-    <div
-      className={styles.root}
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-    >
+    <div className={styles.root}>
       <div className={styles.stage}>
         {slides.map((slide, index) => (
           <div
@@ -87,21 +138,29 @@ export function HeroGallerySlider({
               <img src={slide.poster} alt="" className={styles.media} />
             ) : (
               <video
+                ref={(element) => {
+                  videoRefs.current[index] = element;
+                }}
                 className={styles.media}
                 src={slide.video}
                 poster={slide.poster}
-                autoPlay={index === active}
-                loop
                 muted
                 playsInline
-                preload={index === active ? "auto" : "none"}
+                preload="auto"
+                onEnded={() => {
+                  if (index === active && !focusPaused) goNext();
+                }}
               />
             )}
             <div className={styles.scrim} />
           </div>
         ))}
 
-        <div className={styles.content}>
+        <div
+          className={styles.content}
+          onFocus={() => setFocusPaused(true)}
+          onBlur={() => setFocusPaused(false)}
+        >
           {slides.map((slide, index) => (
             <div
               key={slide.video}
@@ -112,42 +171,63 @@ export function HeroGallerySlider({
               <span className={styles.heading}>{slide.heading}</span>
               {slide.subtext && <span className={styles.subtext}>{slide.subtext}</span>}
               <Link href={slide.ctaHref} className={styles.cta}>
-                {slide.ctaLabel}
-                <span aria-hidden="true">→</span>
+                <CenterUnderline>{slide.ctaLabel}</CenterUnderline>
+                <span aria-hidden="true" className={styles.ctaArrow}>
+                  →
+                </span>
               </Link>
             </div>
           ))}
         </div>
 
-        {showProgress && !reducedMotion && (
-          <div className={styles.progressTrack}>
-            {slides.map((slide, index) => (
+        {(showProgress || slides.length > 1) && !reducedMotion && (
+          <div className={styles.bottomControls}>
+            {showProgress && (
+              <div className={styles.progressTrack}>
+                {slides.map((slide, index) => (
+                  <button
+                    key={slide.video}
+                    type="button"
+                    className={styles.progressDot}
+                    aria-label={`Show slide ${index + 1}: ${slide.heading}`}
+                    aria-current={index === active}
+                    onClick={() => goTo(index)}
+                  >
+                    <span
+                      className={styles.progressFill}
+                      style={{
+                        width:
+                          index === active
+                            ? `${Math.min(1, Math.max(0, progress)) * 100}%`
+                            : index < active
+                              ? "100%"
+                              : "0%",
+                      }}
+                    />
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {slides.length > 1 && (
               <button
-                key={slide.video}
                 type="button"
-                className={styles.progressDot}
-                aria-label={`Show slide ${index + 1}: ${slide.heading}`}
-                aria-current={index === active}
-                onClick={() => goTo(index)}
+                className={styles.navNext}
+                aria-label="Next slide"
+                onClick={goNext}
               >
-                <span
-                  key={index === active ? progressKey : undefined}
-                  className={[
-                    styles.progressFill,
-                    index === active ? styles.progressRunning : "",
-                    index === active && paused ? styles.progressPaused : "",
-                  ]
-                    .filter(Boolean)
-                    .join(" ")}
-                  style={
-                    index === active
-                      ? ({ ["--gs-interval" as string]: `${interval}ms` } as React.CSSProperties)
-                      : undefined
-                  }
-                  data-complete={index < active ? "true" : undefined}
-                />
+                <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true">
+                  <path
+                    d="M9 6l6 6-6 6"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
               </button>
-            ))}
+            )}
           </div>
         )}
       </div>

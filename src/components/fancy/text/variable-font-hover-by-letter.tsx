@@ -50,6 +50,7 @@ export default function VariableFontHoverByLetter({
     <motion.span
       className={cn("inline-flex", className)}
       whileHover={inheritHover ? undefined : "hover"}
+      variants={inheritHover ? { hover: {} } : undefined}
       onClick={onClick}
       aria-label={label}
     >

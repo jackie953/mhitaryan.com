@@ -80,6 +80,14 @@
   }
 }
 
+.brandLockup {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: fit-content;
+  cursor: default;
+}
+
 .brand {
   font-size: var(--brand-size);
   /* Must be a variable font for the hover tween below to have anything to
@@ -96,8 +104,10 @@
 }
 
 .pronunciation {
+  font-family: var(--font-heading);
   font-size: clamp(1rem, 2vw, 1.125rem);
-  font-weight: var(--font-weight-normal);
+  letter-spacing: 0.02em;
+  line-height: 1.2;
   color: var(--neutral-on-background-strong);
   margin-top: 0.5rem;
 }

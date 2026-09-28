@@ -1,37 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
   <style>
-    #dark-icon { display: none; }
+    .mark { fill: #51347F; }
     @media (prefers-color-scheme: dark) {
-      #light-icon { display: none; }
-      #dark-icon { display: inline; }
+      .mark { fill: #FFFFFF; }
     }
   </style>
-  <g id="light-icon">
-    <rect width="1000" height="1000" fill="#51347F"/>
-    <g fill="#FFFFFF">
-      <rect x="290" y="300" width="20" height="400" rx="10"/>
-      <rect x="690" y="300" width="20" height="400" rx="10"/>
-      <polygon points="292.93,307.07 492.93,507.07 507.07,492.93 307.07,292.93"/>
-      <polygon points="692.93,292.93 492.93,492.93 507.07,507.07 707.07,307.07"/>
-      <circle cx="300" cy="300" r="72"/>
-      <circle cx="700" cy="300" r="72"/>
-      <circle cx="500" cy="500" r="72"/>
-      <circle cx="300" cy="700" r="72"/>
-      <circle cx="700" cy="700" r="72"/>
-    </g>
-  </g>
-  <g id="dark-icon">
-    <rect width="1000" height="1000" fill="#FAF7FC"/>
-    <g fill="#51347F">
-      <rect x="290" y="300" width="20" height="400" rx="10"/>
-      <rect x="690" y="300" width="20" height="400" rx="10"/>
-      <polygon points="292.93,307.07 492.93,507.07 507.07,492.93 307.07,292.93"/>
-      <polygon points="692.93,292.93 492.93,492.93 507.07,507.07 707.07,307.07"/>
-      <circle cx="300" cy="300" r="72"/>
-      <circle cx="700" cy="300" r="72"/>
-      <circle cx="500" cy="500" r="72"/>
-      <circle cx="300" cy="700" r="72"/>
-      <circle cx="700" cy="700" r="72"/>
-    </g>
+  <g class="mark">
+    <rect x="9.28" y="9.6" width="0.64" height="12.8" rx="0.32"/>
+    <rect x="22.08" y="9.6" width="0.64" height="12.8" rx="0.32"/>
+    <polygon points="9.37,9.83 15.77,16.23 16.23,15.77 9.83,9.37"/>
+    <polygon points="22.17,9.37 15.77,15.77 16.23,16.23 22.63,9.83"/>
+    <circle cx="9.6" cy="9.6" r="2.3"/>
+    <circle cx="22.4" cy="9.6" r="2.3"/>
+    <circle cx="16" cy="16" r="2.3"/>
+    <circle cx="9.6" cy="22.4" r="2.3"/>
+    <circle cx="22.4" cy="22.4" r="2.3"/>
   </g>
 </svg>

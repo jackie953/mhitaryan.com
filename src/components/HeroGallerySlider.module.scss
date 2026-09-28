@@ -113,16 +113,23 @@
   max-width: 32rem;
 }
 
-.cta {
+a.cta {
   margin-top: var(--static-space-8);
   display: inline-flex;
   align-items: center;
   gap: 0.375rem;
-  color: #fff;
+  color: #fff !important;
   font-family: var(--font-label);
   font-size: 0.875rem;
   font-weight: 600;
   text-decoration: none;
+
+  &:visited,
+  &:hover,
+  &:focus,
+  &:active {
+    color: #fff !important;
+  }
 }
 
 .ctaArrow {

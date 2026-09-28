@@ -1,6 +1,4 @@
 import { useTranslations } from 'next-intl';
-import { Button } from '@/components/ui/button';
-import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 
 export function InteractiveCta() {
@@ -33,24 +31,25 @@ export function InteractiveCta() {
 
             <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
               <Link href="/#contact" className="w-full sm:w-auto">
-                <Button
-                  size="lg"
-                  className="group relative w-full overflow-hidden bg-white text-slate-900 hover:bg-slate-100 sm:w-auto"
+                <button
+                  type="button"
+                  className="group relative w-full overflow-hidden rounded-lg bg-white px-6 py-3 text-base font-medium text-slate-900 transition-colors hover:bg-slate-100 sm:w-auto"
                 >
-                  <span className="relative z-10 flex items-center gap-2">
+                  <span className="flex items-center justify-center gap-2">
                     {t('cta.primaryButton')}
-                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    <svg className="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
                   </span>
-                </Button>
+                </button>
               </Link>
               <Link href="/services" className="w-full sm:w-auto">
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="w-full border-slate-600 text-white hover:bg-slate-800 sm:w-auto"
+                <button
+                  type="button"
+                  className="w-full rounded-lg border border-slate-600 bg-transparent px-6 py-3 text-base font-medium text-white transition-colors hover:bg-slate-800 sm:w-auto"
                 >
                   {t('cta.secondaryButton')}
-                </Button>
+                </button>
               </Link>
             </div>
           </div>

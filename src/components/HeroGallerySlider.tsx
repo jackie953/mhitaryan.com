@@ -79,8 +79,8 @@ export function HeroGallerySlider({
   return (
     <div
       className={styles.root}
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
+      onFocus={() => setPaused(true)}
+      onBlur={() => setPaused(false)}
     >
       <div className={styles.stage}>
         {slides.map((slide, index) => (

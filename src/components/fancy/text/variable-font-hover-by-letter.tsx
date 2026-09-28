@@ -14,6 +14,8 @@ interface VariableFontHoverByLetterProps {
   staggerFrom?: "first" | "last" | "center" | number;
   className?: string;
   onClick?: () => void;
+  /** When true, hover is owned by a parent `whileHover="hover"` wrapper. */
+  inheritHover?: boolean;
 }
 
 const DEFAULT_TRANSITION: Transition = { type: "spring", duration: 0.7 };
@@ -27,6 +29,7 @@ export default function VariableFontHoverByLetter({
   staggerFrom = "first",
   className,
   onClick,
+  inheritHover = false,
 }: VariableFontHoverByLetterProps) {
   const letters = Array.from(label);
 
@@ -46,7 +49,7 @@ export default function VariableFontHoverByLetter({
   return (
     <motion.span
       className={cn("inline-flex", className)}
-      whileHover="hover"
+      whileHover={inheritHover ? undefined : "hover"}
       onClick={onClick}
       aria-label={label}
     >

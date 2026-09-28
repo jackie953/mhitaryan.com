@@ -72,7 +72,7 @@ export default async function Home() {
                   <>
                     <HeroLineReveal delay={0.15}>{t("headlineLine1")}</HeroLineReveal>
                     <br />
-                    <HeroLineReveal delay={0.35}>{t("headlineLine2")}</HeroLineReveal>
+                    <HeroLineReveal delay={0.55}>{t("headlineLine2")}</HeroLineReveal>
                   </>
                 }
                 headingStyle={{
@@ -81,7 +81,7 @@ export default async function Home() {
                   letterSpacing: "-0.03em",
                 }}
                 sentences={t.raw("subheadlineSentences")}
-                sublineDelay={0.55}
+                sublineDelay={0.95}
               />
             </Column>
           </Column>

@@ -21,16 +21,13 @@
   position: absolute;
   inset: 0;
   opacity: 0;
-  filter: blur(24px);
-  transition:
-    opacity 900ms ease,
-    filter 900ms ease;
+  transition: opacity 700ms ease;
+  will-change: opacity;
   pointer-events: none;
 }
 
 .slideActive {
   opacity: 1;
-  filter: blur(0);
   pointer-events: auto;
 }
 

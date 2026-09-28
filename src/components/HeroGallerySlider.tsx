@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState, type SyntheticEvent } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import CenterUnderline from "@/components/fancy/text/underline-center";
 import styles from "./HeroGallerySlider.module.scss";
@@ -17,7 +17,7 @@ export interface HeroGallerySlide {
 
 interface HeroGallerySliderProps {
   slides: HeroGallerySlide[];
-  /** Fallback autoplay duration in ms, used until a slide's video reports its own length. */
+  /** Autoplay duration in ms for slides with no video to read a clock from (reduced motion). */
   interval?: number;
   autoplay?: boolean;
   showProgress?: boolean;
@@ -30,16 +30,16 @@ export function HeroGallerySlider({
   showProgress = true,
 }: HeroGallerySliderProps) {
   const [active, setActive] = useState(0);
-  const [hoverPaused, setHoverPaused] = useState(false);
   const [focusPaused, setFocusPaused] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [durations, setDurations] = useState<Record<number, number>>({});
-  const paused = hoverPaused || focusPaused;
 
-  const elapsedRef = useRef(0);
+  const videoRefs = useRef<Record<number, HTMLVideoElement | null>>({});
   const rafRef = useRef<number | null>(null);
-  const lastTsRef = useRef<number | null>(null);
+  // Only used as a fallback clock when there's no video to read a real
+  // position from (reduced motion). Video-driven slides ignore this.
+  const fallbackElapsedRef = useRef(0);
+  const fallbackLastTsRef = useRef<number | null>(null);
 
   useEffect(() => {
     const query = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -50,7 +50,7 @@ export function HeroGallerySlider({
   }, []);
 
   const goTo = useCallback((index: number) => {
-    elapsedRef.current = 0;
+    fallbackElapsedRef.current = 0;
     setProgress(0);
     setActive(index);
   }, []);
@@ -60,52 +60,56 @@ export function HeroGallerySlider({
     [goTo, active, slides.length],
   );
 
-  const handleLoadedMetadata = useCallback(
-    (index: number) => (event: SyntheticEvent<HTMLVideoElement>) => {
-      const durationMs = event.currentTarget.duration * 1000;
-      if (Number.isFinite(durationMs) && durationMs > 0) {
-        setDurations((prev) => (prev[index] === durationMs ? prev : { ...prev, [index]: durationMs }));
-      }
-    },
-    [],
-  );
-
-  // A slide with a video runs exactly as long as its video; otherwise it falls
-  // back to `interval`. This is what keeps the progress bar, the autoplay
-  // advance, and the actual footage in sync, instead of the two drifting apart.
-  const activeDuration = durations[active] ?? interval;
+  // If a slide finishes while focus-pause is holding it, don't skip the
+  // advance entirely - just apply it once the pause lifts.
+  useEffect(() => {
+    if (!focusPaused) {
+      const video = videoRefs.current[active];
+      if (video && video.ended) goNext();
+    }
+  }, [focusPaused, active, goNext]);
 
   useEffect(() => {
-    if (!autoplay || paused || reducedMotion || slides.length < 2) {
-      lastTsRef.current = null;
+    if (!autoplay || focusPaused || slides.length < 2) {
+      fallbackLastTsRef.current = null;
       return;
     }
 
     const tick = (timestamp: number) => {
-      if (lastTsRef.current == null) lastTsRef.current = timestamp;
-      elapsedRef.current += timestamp - lastTsRef.current;
-      lastTsRef.current = timestamp;
+      // Video slides: read the real playback position each frame, so the bar
+      // can never drift from what's actually on screen. Advancing to the next
+      // slide is handled by the video's own `ended` event, not this clock.
+      const activeVideo = reducedMotion ? null : videoRefs.current[active];
+      if (activeVideo && Number.isFinite(activeVideo.duration) && activeVideo.duration > 0) {
+        setProgress(activeVideo.currentTime / activeVideo.duration);
+        rafRef.current = requestAnimationFrame(tick);
+        return;
+      }
 
-      if (elapsedRef.current >= activeDuration) {
+      // No video to read from (reduced motion, or metadata not loaded yet):
+      // fall back to a plain wall clock against `interval`.
+      if (fallbackLastTsRef.current == null) fallbackLastTsRef.current = timestamp;
+      fallbackElapsedRef.current += timestamp - fallbackLastTsRef.current;
+      fallbackLastTsRef.current = timestamp;
+
+      if (fallbackElapsedRef.current >= interval) {
         goTo((active + 1) % slides.length);
         return;
       }
-      setProgress(elapsedRef.current / activeDuration);
+      setProgress(fallbackElapsedRef.current / interval);
       rafRef.current = requestAnimationFrame(tick);
     };
 
     rafRef.current = requestAnimationFrame(tick);
     return () => {
       if (rafRef.current != null) cancelAnimationFrame(rafRef.current);
-      lastTsRef.current = null;
+      fallbackLastTsRef.current = null;
     };
-  }, [active, autoplay, paused, reducedMotion, slides.length, activeDuration, goTo]);
+  }, [active, autoplay, focusPaused, reducedMotion, slides.length, interval, goTo]);
 
   return (
     <div
       className={styles.root}
-      onMouseEnter={() => setHoverPaused(true)}
-      onMouseLeave={() => setHoverPaused(false)}
       onFocus={() => setFocusPaused(true)}
       onBlur={() => setFocusPaused(false)}
     >
@@ -120,6 +124,9 @@ export function HeroGallerySlider({
               <img src={slide.poster} alt="" className={styles.media} />
             ) : (
               <video
+                ref={(element) => {
+                  videoRefs.current[index] = element;
+                }}
                 className={styles.media}
                 src={slide.video}
                 poster={slide.poster}
@@ -127,9 +134,8 @@ export function HeroGallerySlider({
                 muted
                 playsInline
                 preload={index === active ? "auto" : "none"}
-                onLoadedMetadata={handleLoadedMetadata(index)}
                 onEnded={() => {
-                  if (index === active) goNext();
+                  if (index === active && !focusPaused) goNext();
                 }}
               />
             )}
@@ -175,7 +181,7 @@ export function HeroGallerySlider({
                       style={{
                         width:
                           index === active
-                            ? `${Math.min(1, progress) * 100}%`
+                            ? `${Math.min(1, Math.max(0, progress)) * 100}%`
                             : index < active
                               ? "100%"
                               : "0%",

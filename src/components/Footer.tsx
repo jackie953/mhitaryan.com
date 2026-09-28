@@ -31,7 +31,6 @@ export const Footer = () => {
           </div>
 
           <div className={styles.column}>
-            <span className={styles.heading}>{t("contactHeading")}</span>
             <span className={styles.item}>{LOCATION}</span>
             <Link
               href={`mailto:${contactEmail}`}
@@ -46,7 +45,6 @@ export const Footer = () => {
           </div>
 
           <div className={styles.column}>
-            <span className={styles.heading}>{t("pagesHeading")}</span>
             <Link href={withLocale(about.path)} className={styles.link}>
               {tNav("about")}
             </Link>
@@ -59,7 +57,6 @@ export const Footer = () => {
           </div>
 
           <div className={styles.column}>
-            <span className={styles.heading}>{t("networkHeading")}</span>
             {NETWORK_LINKS.map((network) => (
               <a
                 key={network.label}

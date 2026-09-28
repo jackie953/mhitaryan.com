@@ -55,6 +55,24 @@ export function HeroGallerySlider({
     setActive(index);
   }, []);
 
+  // Toggling `autoPlay`/`preload` on an already-mounted <video> doesn't make a
+  // browser (re)play it - those attributes are only honored on initial load.
+  // So every time the active slide changes, explicitly rewind and play it,
+  // and pause the one that just lost focus. This is what actually makes the
+  // gallery loop back to the first slide instead of stalling on its last frame.
+  useEffect(() => {
+    if (reducedMotion) return;
+    Object.entries(videoRefs.current).forEach(([key, video]) => {
+      if (!video) return;
+      if (Number(key) === active) {
+        video.currentTime = 0;
+        video.play().catch(() => {});
+      } else {
+        video.pause();
+      }
+    });
+  }, [active, reducedMotion]);
+
   const goNext = useCallback(
     () => goTo((active + 1) % slides.length),
     [goTo, active, slides.length],
@@ -108,11 +126,7 @@ export function HeroGallerySlider({
   }, [active, autoplay, focusPaused, reducedMotion, slides.length, interval, goTo]);
 
   return (
-    <div
-      className={styles.root}
-      onFocus={() => setFocusPaused(true)}
-      onBlur={() => setFocusPaused(false)}
-    >
+    <div className={styles.root}>
       <div className={styles.stage}>
         {slides.map((slide, index) => (
           <div
@@ -130,10 +144,9 @@ export function HeroGallerySlider({
                 className={styles.media}
                 src={slide.video}
                 poster={slide.poster}
-                autoPlay={index === active}
                 muted
                 playsInline
-                preload={index === active ? "auto" : "none"}
+                preload="auto"
                 onEnded={() => {
                   if (index === active && !focusPaused) goNext();
                 }}
@@ -143,7 +156,11 @@ export function HeroGallerySlider({
           </div>
         ))}
 
-        <div className={styles.content}>
+        <div
+          className={styles.content}
+          onFocus={() => setFocusPaused(true)}
+          onBlur={() => setFocusPaused(false)}
+        >
           {slides.map((slide, index) => (
             <div
               key={slide.video}

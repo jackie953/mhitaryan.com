@@ -7,12 +7,15 @@
 .stage {
   position: relative;
   width: 100%;
+  max-width: min(100%, calc((100svh - 7.5rem) * 16 / 9));
   aspect-ratio: 16 / 9;
+  margin-inline: auto;
   border-radius: var(--radius-l);
   overflow: hidden;
   background: var(--neutral-alpha-weak);
 
   @include breakpoints.s {
+    max-width: min(100%, calc((100svh - 6rem) * 4 / 5));
     aspect-ratio: 4 / 5;
   }
 }
@@ -138,8 +141,6 @@ a.cta {
   transform: translateX(3px);
 }
 
-// Runs along the very bottom edge, below the copy block, instead of at the
-// top where it used to compete with the hero headline right above it.
 .bottomControls {
   position: absolute;
   left: var(--static-space-40);
@@ -181,9 +182,6 @@ a.cta {
   border-radius: inherit;
 }
 
-// Small, always-on (not hover-gated) so it works the same on touch as on
-// desktop — kept deliberately quiet (no border, low opacity at rest) so it
-// doesn't out-compete the thin progress bars right next to it.
 .navNext {
   flex-shrink: 0;
   display: flex;

@@ -85,7 +85,7 @@ export default async function Home() {
               />
             </Column>
           </Column>
-          <ScrollReveal delay={0.55} className={styles.gallery}>
+          <ScrollReveal className={styles.gallery}>
             <HeroGallerySlider
               interval={5000}
               autoplay
@@ -113,7 +113,7 @@ export default async function Home() {
             />
           </ScrollReveal>
         </Column>
-        <ScrollReveal delay={0.75}>
+        <ScrollReveal>
           <BookingCTA
             title="Before your next move, talk to us."
             description=""

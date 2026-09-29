@@ -26,13 +26,13 @@
 
 .grid {
   display: grid;
-  /* Logo column is 1fr (absorbs all leftover space), the three link
+  /* Logo column is 1fr (absorbs all leftover space), the two link
      columns are content-width (auto) and sit together against the right
      edge — their combined right edge lines up with "Privacy policy" in
      .bottomRow below, since both span the same full container width. */
-  grid-template-columns: 1fr auto auto auto;
+  grid-template-columns: 1fr auto auto;
   align-items: start;
-  column-gap: var(--static-space-56); /* ~3.5rem between Network/Pages/Contact */
+  column-gap: var(--static-space-56); /* ~3.5rem between Pages/Contact */
   row-gap: var(--static-space-32);
   margin-top: var(--static-space-40);
 
@@ -70,8 +70,7 @@
   align-self: center;
 
   /* A little extra breathing room on top of whatever leftover space the
-     1fr logo column ends up with, so the wordmark never butts up right
-     against "Network". */
+     1fr logo column ends up with. */
   padding-right: var(--static-space-40); /* ~2.5rem */
 
   @include breakpoints.m {

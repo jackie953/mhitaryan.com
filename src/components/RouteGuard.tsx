@@ -12,59 +12,45 @@ interface RouteGuardProps {
 
 const RouteGuard: React.FC<RouteGuardProps> = ({ children }) => {
   const pathname = usePathname();
-  const [isRouteEnabled, setIsRouteEnabled] = useState(false);
-  const [isPasswordRequired, setIsPasswordRequired] = useState(false);
   const [password, setPassword] = useState("");
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [authedPath, setAuthedPath] = useState<string | null>(null);
+  const [checkedPath, setCheckedPath] = useState<string | null>(null);
   const [error, setError] = useState<string | undefined>(undefined);
-  const [loading, setLoading] = useState(true);
+
+  // Route enabled/protected status is pure config lookup, so derive it
+  // synchronously. Doing it in an effect (with a loader in between) unmounted
+  // the page on every navigation and on first render, so content — and its
+  // fade-in animations — only started after a loader flash.
+  const localeStrippedPath = (pathname ?? "").replace(/^\/(en|sv)(?=\/|$)/, "") || "/";
+  const isRouteEnabled = (() => {
+    if (!pathname) return false;
+    if (localeStrippedPath in routes) {
+      return routes[localeStrippedPath as keyof typeof routes];
+    }
+    const dynamicRoutes = ["/blog", "/cases"] as const;
+    return dynamicRoutes.some((route) => localeStrippedPath.startsWith(route) && routes[route]);
+  })();
+  const isPasswordRequired = !!protectedRoutes[localeStrippedPath as keyof typeof protectedRoutes];
+  const isAuthenticated = authedPath === localeStrippedPath;
+  // Only protected routes need an async check, so only they show a loader.
+  const loading = isPasswordRequired && checkedPath !== localeStrippedPath;
 
   useEffect(() => {
-    const performChecks = async () => {
-      setLoading(true);
-      setIsRouteEnabled(false);
-      setIsPasswordRequired(false);
-      setIsAuthenticated(false);
-
-      const checkRouteEnabled = () => {
-        if (!pathname) return false;
-
-        // Strip the leading /en or /sv locale segment before matching against
-        // the locale-agnostic `routes` config.
-        const localeStripped = pathname.replace(/^\/(en|sv)(?=\/|$)/, "") || "/";
-
-        if (localeStripped in routes) {
-          return routes[localeStripped as keyof typeof routes];
-        }
-
-        const dynamicRoutes = ["/blog", "/cases"] as const;
-        for (const route of dynamicRoutes) {
-          if (localeStripped.startsWith(route) && routes[route]) {
-            return true;
-          }
-        }
-
-        return false;
-      };
-
-      const routeEnabled = checkRouteEnabled();
-      setIsRouteEnabled(routeEnabled);
-
-      const localeStrippedPath = (pathname ?? "").replace(/^\/(en|sv)(?=\/|$)/, "") || "/";
-      if (protectedRoutes[localeStrippedPath as keyof typeof protectedRoutes]) {
-        setIsPasswordRequired(true);
-
-        const response = await fetch("/api/check-auth");
-        if (response.ok) {
-          setIsAuthenticated(true);
-        }
-      }
-
-      setLoading(false);
+    if (!isPasswordRequired) return;
+    let cancelled = false;
+    fetch("/api/check-auth")
+      .then((response) => {
+        if (cancelled) return;
+        if (response.ok) setAuthedPath(localeStrippedPath);
+        setCheckedPath(localeStrippedPath);
+      })
+      .catch(() => {
+        if (!cancelled) setCheckedPath(localeStrippedPath);
+      });
+    return () => {
+      cancelled = true;
     };
-
-    performChecks();
-  }, [pathname]);
+  }, [isPasswordRequired, localeStrippedPath]);
 
   const handlePasswordSubmit = async () => {
     const response = await fetch("/api/authenticate", {
@@ -74,7 +60,7 @@ const RouteGuard: React.FC<RouteGuardProps> = ({ children }) => {
     });
 
     if (response.ok) {
-      setIsAuthenticated(true);
+      setAuthedPath(localeStrippedPath);
       setError(undefined);
     } else {
       setError("Incorrect password");

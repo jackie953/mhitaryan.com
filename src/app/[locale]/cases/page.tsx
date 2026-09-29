@@ -1,6 +1,5 @@
 import { Column, Heading, Meta, Schema } from "@once-ui-system/core";
 import { baseURL, about, person, cases } from "@/resources";
-import { Cases } from "@/components/cases/Cases";
 
 export async function generateMetadata() {
   return Meta.generate({
@@ -31,7 +30,6 @@ export default function CasesPage() {
       <Heading variant="display-strong-m">
         Cases
       </Heading>
-      <Cases />
     </Column>
   );
 }

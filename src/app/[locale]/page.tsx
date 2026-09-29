@@ -97,7 +97,7 @@ export default async function Home() {
                   eyebrow: t("gallery.slide1.eyebrow"),
                   heading: t("gallery.slide1.heading"),
                   subtext: t("gallery.slide1.subtext"),
-                  ctaLabel: t("nav.briefUs"),
+                  ctaLabel: t("gallery.cta"),
                   ctaHref: `/${locale}/services`,
                 },
                 {
@@ -106,7 +106,7 @@ export default async function Home() {
                   eyebrow: t("gallery.slide2.eyebrow"),
                   heading: t("gallery.slide2.heading"),
                   subtext: t("gallery.slide2.subtext"),
-                  ctaLabel: t("nav.briefUs"),
+                  ctaLabel: t("gallery.cta"),
                   ctaHref: `/${locale}/services`,
                 },
               ]}

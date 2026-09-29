@@ -33,7 +33,11 @@ export function HeroGallerySlider({
   const [focusPaused, setFocusPaused] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [isHovering, setIsHovering] = useState(false);
+  const [hoverPaused, setHoverPaused] = useState(false);
+  const [userPaused, setUserPaused] = useState(false);
+  const paused = focusPaused || hoverPaused || userPaused;
+  const pausedRef = useRef(paused);
+  pausedRef.current = paused;
 
   const videoRefs = useRef<Record<number, HTMLVideoElement | null>>({});
   const rafRef = useRef<number | null>(null);
@@ -67,12 +71,20 @@ export function HeroGallerySlider({
       if (!video) return;
       if (Number(key) === active) {
         video.currentTime = 0;
-        video.play().catch(() => {});
+        if (!pausedRef.current) video.play().catch(() => {});
       } else {
         video.pause();
       }
     });
   }, [active, reducedMotion]);
+
+  useEffect(() => {
+    if (reducedMotion) return;
+    const video = videoRefs.current[active];
+    if (!video) return;
+    if (paused) video.pause();
+    else video.play().catch(() => {});
+  }, [paused, active, reducedMotion]);
 
   const goNext = useCallback(
     () => goTo((active + 1) % slides.length),
@@ -82,14 +94,14 @@ export function HeroGallerySlider({
   // If a slide finishes while focus-pause is holding it, don't skip the
   // advance entirely - just apply it once the pause lifts.
   useEffect(() => {
-    if (!focusPaused) {
+    if (!paused) {
       const video = videoRefs.current[active];
       if (video && video.ended) goNext();
     }
-  }, [focusPaused, active, goNext]);
+  }, [paused, active, goNext]);
 
   useEffect(() => {
-    if (!autoplay || focusPaused || slides.length < 2) {
+    if (!autoplay || paused || slides.length < 2) {
       fallbackLastTsRef.current = null;
       return;
     }
@@ -124,11 +136,17 @@ export function HeroGallerySlider({
       if (rafRef.current != null) cancelAnimationFrame(rafRef.current);
       fallbackLastTsRef.current = null;
     };
-  }, [active, autoplay, focusPaused, reducedMotion, slides.length, interval, goTo]);
+  }, [active, autoplay, paused, reducedMotion, slides.length, interval, goTo]);
 
   return (
     <div className={styles.root}>
-      <div className={styles.stage}>
+      <div
+        className={styles.stage}
+        onPointerEnter={(event) => {
+          if (event.pointerType === "mouse") setHoverPaused(true);
+        }}
+        onPointerLeave={() => setHoverPaused(false)}
+      >
         {slides.map((slide, index) => (
           <div
             key={slide.video}
@@ -149,7 +167,7 @@ export function HeroGallerySlider({
                 playsInline
                 preload="auto"
                 onEnded={() => {
-                  if (index === active && !focusPaused) goNext();
+                  if (index === active && !pausedRef.current) goNext();
                 }}
               />
             )}
@@ -182,11 +200,7 @@ export function HeroGallerySlider({
         </div>
 
         {(showProgress || slides.length > 1) && !reducedMotion && (
-          <div
-            className={styles.bottomControls}
-            onMouseEnter={() => setIsHovering(true)}
-            onMouseLeave={() => setIsHovering(false)}
-          >
+          <div className={styles.bottomControls}>
             {showProgress && (
               <div className={styles.progressTrack}>
                 {slides.map((slide, index) => (
@@ -216,11 +230,11 @@ export function HeroGallerySlider({
 
             <button
               type="button"
-              className={`${styles.playPause} ${isHovering ? styles.playPauseVisible : ""}`}
-              aria-label={focusPaused ? "Resume slide" : "Pause slide"}
-              onClick={() => setFocusPaused(!focusPaused)}
+              className={styles.playPause}
+              aria-label={userPaused ? "Play slideshow" : "Pause slideshow"}
+              onClick={() => setUserPaused(!userPaused)}
             >
-              {focusPaused ? (
+              {userPaused ? (
                 <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true">
                   <path
                     d="M5 3l14 9-14 9V3z"

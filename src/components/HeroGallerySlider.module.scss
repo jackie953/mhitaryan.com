@@ -181,51 +181,7 @@ a.cta {
   border-radius: inherit;
 }
 
-.playPause {
-  flex-shrink: 0;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  width: 1.5rem;
-  height: 1.5rem;
-  border-radius: 999px;
-  border: none;
-  background: rgba(255, 255, 255, 0.14);
-  color: #fff;
-  cursor: pointer;
-  opacity: 0;
-  transition:
-    opacity 200ms ease,
-    background 200ms ease,
-    transform 150ms ease;
-
-  @include breakpoints.m {
-    display: flex;
-  }
-
-  &:hover {
-    background: rgba(255, 255, 255, 0.28);
-  }
-
-  &:active {
-    transform: scale(0.92);
-  }
-
-  &:focus-visible {
-    opacity: 1;
-    outline: 2px solid #fff;
-    outline-offset: 2px;
-  }
-}
-
-.playPauseVisible {
-  opacity: 0.6;
-
-  &:hover {
-    opacity: 1;
-  }
-}
-
+.playPause,
 .navNext {
   flex-shrink: 0;
   display: flex;

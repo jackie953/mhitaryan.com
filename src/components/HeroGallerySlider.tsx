@@ -33,6 +33,7 @@ export function HeroGallerySlider({
   const [focusPaused, setFocusPaused] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [isHovering, setIsHovering] = useState(false);
 
   const videoRefs = useRef<Record<number, HTMLVideoElement | null>>({});
   const rafRef = useRef<number | null>(null);
@@ -181,7 +182,11 @@ export function HeroGallerySlider({
         </div>
 
         {(showProgress || slides.length > 1) && !reducedMotion && (
-          <div className={styles.bottomControls}>
+          <div
+            className={styles.bottomControls}
+            onMouseEnter={() => setIsHovering(true)}
+            onMouseLeave={() => setIsHovering(false)}
+          >
             {showProgress && (
               <div className={styles.progressTrack}>
                 {slides.map((slide, index) => (
@@ -208,6 +213,29 @@ export function HeroGallerySlider({
                 ))}
               </div>
             )}
+
+            <button
+              type="button"
+              className={`${styles.playPause} ${isHovering ? styles.playPauseVisible : ""}`}
+              aria-label={focusPaused ? "Resume slide" : "Pause slide"}
+              onClick={() => setFocusPaused(!focusPaused)}
+            >
+              {focusPaused ? (
+                <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true">
+                  <path
+                    d="M5 3l14 9-14 9V3z"
+                    fill="currentColor"
+                  />
+                </svg>
+              ) : (
+                <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true">
+                  <path
+                    d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"
+                    fill="currentColor"
+                  />
+                </svg>
+              )}
+            </button>
 
             {slides.length > 1 && (
               <button

@@ -54,7 +54,7 @@ export default async function LocaleLayout({ children, params }: Props) {
               minHeight="0"
               paddingX="12"
               paddingTop="l"
-              paddingBottom="0"
+              paddingBottom="l"
               s={{ paddingX: "16" }}
             >
               <RouteGuard>{children}</RouteGuard>

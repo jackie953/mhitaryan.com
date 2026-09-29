@@ -3,9 +3,20 @@
     "headlineLine1": "Read the room.",
     "headlineLine2": "Make your move.",
     "subheadlineSentences": [
-      "A new market, another regulation, a shifting debate, stakeholders you don't yet know.",
-      "We work out what's really going on and help you shape your strategy."
-    ]
+      "A new market, another regulation, a shifting debate, unfamiliar stakeholders. We work out what's really going on, who's driving it and what it means for you, and help you shape your strategy."
+    ],
+    "gallery": {
+      "slide1": {
+        "eyebrow": "Research & Intelligence",
+        "heading": "Understand the landscape",
+        "subtext": "Research and analysis on policy, regulation, public opinion and political risk, rooted in Sweden and the Nordics, with reach into the EU and the US."
+      },
+      "slide2": {
+        "eyebrow": "Strategic Communications",
+        "heading": "Shape the narrative",
+        "subtext": "Positioning, messaging and strategy for engaging stakeholders and moving issues – built on the analysis."
+      }
+    }
   },
   "nav": {
     "about": "About",

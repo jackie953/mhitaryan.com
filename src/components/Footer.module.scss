@@ -26,11 +26,10 @@
 
 .grid {
   display: grid;
-  /* Logo column is 1fr (absorbs all leftover space), the two link
-     columns are content-width (auto) and sit together against the right
-     edge — their combined right edge lines up with "Privacy policy" in
-     .bottomRow below, since both span the same full container width. */
-  grid-template-columns: 1fr auto auto;
+  /* All three columns (logo, contact, pages) are content-width (auto) and sit
+     together against the left edge, with flexible space on the right to fill
+     the remaining width. */
+  grid-template-columns: auto auto auto 1fr;
   align-items: start;
   column-gap: var(--static-space-56); /* ~3.5rem between Pages/Contact */
   row-gap: var(--static-space-32);
@@ -69,8 +68,7 @@
      top-aligning it with the link columns' headings. */
   align-self: center;
 
-  /* A little extra breathing room on top of whatever leftover space the
-     1fr logo column ends up with. */
+  /* Add breathing room between logo and contact info. */
   padding-right: var(--static-space-40); /* ~2.5rem */
 
   @include breakpoints.m {

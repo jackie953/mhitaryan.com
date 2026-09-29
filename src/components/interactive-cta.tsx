@@ -1,176 +1,60 @@
-'use client';
+import { useTranslations } from 'next-intl';
+import Link from 'next/link';
 
-import React, { useState, useRef, useEffect } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
-import { IconBrandX, IconMail } from '@tabler/icons-react';
-import { MessageCircle, X } from 'lucide-react';
-import NavigationButton from '../components/navigation-button';
-import { cn } from '@/utils/tailwind.utils';
-
-export interface NavigationLink {
-  href: string;
-  text: string;
-  icon?: React.ReactNode;
-  target?: '_self' | '_blank' | '_parent' | '_top';
-  className?: string;
-  onClick?: () => void;
-}
-
-export interface InteractiveCTAProps {
-  heading?: string;
-  subheading?: string;
-  avatar?: React.ReactNode;
-  navigationLinks?: NavigationLink[];
-  initialOpen?: boolean;
-  className?: string;
-  openIcon?: React.ReactNode;
-  closeIcon?: React.ReactNode;
-  openWidth?: string;
-  closeWidth?: string;
-  openHeight?: string;
-  closeHeight?: string;
-}
-
-const DEFAULT_NAVIGATION_LINKS: NavigationLink[] = [
-  {
-    href: 'https://twitter.com/samitkapoorr',
-    text: 'DM me on X',
-    className: 'px-2 py-1 text-white hover:text-blue-500',
-    icon: <IconBrandX size={14} />
-  },
-  {
-    href: 'mailto:samitkapoor77@gmail.com',
-    text: 'Send me an email',
-    className: 'px-2 py-1 text-white hover:text-red-500',
-    icon: <IconMail size={14} />
-  }
-];
-
-const InteractiveCTA = ({
-  heading = 'Want something custom made?',
-  subheading = "Let's talk",
-  avatar,
-  navigationLinks = DEFAULT_NAVIGATION_LINKS,
-  initialOpen = true,
-  className,
-  openIcon,
-  closeIcon,
-  openWidth = '310px',
-  closeWidth = '50px',
-  openHeight = '195px',
-  closeHeight = '50px'
-}: InteractiveCTAProps) => {
-  const [isOpen, setIsOpen] = useState(initialOpen);
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!isOpen) return;
-    const handleClickOutside = (e: MouseEvent) => {
-      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
-        setIsOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [isOpen]);
+export function InteractiveCta() {
+  const t = useTranslations('HomePage');
 
   return (
-    <div ref={containerRef} className={cn('fixed z-50 bottom-4 right-4 sm:bottom-6 sm:right-6 overflow-hidden', className)}>
-      <AnimatePresence mode="popLayout">
-        <motion.div
-          animate={{
-            width: isOpen ? openWidth : closeWidth,
-            height: isOpen ? openHeight : closeHeight,
-            borderColor: !isOpen ? '#3F3F46' : '#888888'
-          }}
-          transition={{ type: 'spring', stiffness: 300, damping: 27 }}
-          style={{ maxWidth: 'calc(100vw - 48px)' }}
-          className="flex-col border-[2px] rounded-xl border-white/5 bg-zinc-900 flex items-center justify-center relative"
-        >
-          {!isOpen && (
-            <motion.button
-              key="open-button"
-              type="button"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsOpen(true)}
-              className="flex items-center justify-center absolute -bottom-0.5 -right-0.5
-                        rounded-xl bg-zinc-900 border border-white/5
-                        hover:bg-white/5 transition"
-              style={{ width: closeWidth, height: closeHeight }}
-            >
-              {openIcon || <MessageCircle size={20} className="text-white" />}  {/* ✅ white icon */}
-            </motion.button>
-            )}
-          {isOpen && (
-            <div className="flex flex-col px-3 pt-4 pb-3 h-full w-full gap-3">
-              <div className="flex items-center justify-center gap-2">
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.1, ease: 'linear', delay: 0.1 }}
-                  key="image-container"
-                  className="rounded-full h-[34px] w-[34px] shrink-0 bg-gradient-to-b from-yellow-400 to-purple-500 flex items-center justify-center overflow-hidden"
-                >
-                  {avatar}
-                </motion.div>
-                <motion.p
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.1, ease: 'linear', delay: 0.1 }}
-                  key="text-container"
-                  className="text-sm font-body text-white/70 font-medium text-center"
-                >
-                  {heading}
-                  {subheading && (
-                    <>
-                      <br />
-                      <span className="text-xs font-normal text-zinc-400">{subheading}</span>
-                    </>
-                  )}
-                </motion.p>
-              </div>
-              <motion.div
-                initial={{ x: 10, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                exit={{ x: -10, opacity: 0 }}
-                transition={{ duration: 0.1, ease: 'linear', delay: 0.1, staggerChildren: 0.1 }}
-                key="navigation-buttons"
-                className="flex flex-col mt-3"
-              >
-                {navigationLinks.map((link, index) => (
-                  <NavigationButton
-                    key={`${link.href}-${index}`}
-                    href={link.href}
-                    text={link.text}
-                    className={link.className}
-                    icon={link.icon}
-                    target={link.target}
-                    onClick={link.onClick}
-                  />
-                ))}
-              </motion.div>
-              <div className="absolute bottom-4 right-4">
-                <motion.button
-                    key="close-button"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    onClick={() => setIsOpen(false)}
-                    className="flex items-center justify-center hover:bg-white/10 place-self-end h-[32px] w-[32px] rounded-md"
-                  >
-                    {closeIcon || <X size={20} className="text-white" />}  {/* ✅ add text-white */}
-                </motion.button>
-              </div>
-            </div>
-          )}
-        </motion.div>
-      </AnimatePresence>
-    </div>
-  );
-};
+    <section
+      className="w-full"
+      style={{ paddingTop: 30, paddingBottom: 30 }}
+    >
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="relative isolate overflow-hidden rounded-2xl bg-gradient-to-r from-slate-900/95 via-slate-800/90 to-slate-900/95 px-6 py-12 shadow-2xl sm:px-12 sm:py-16">
+          {/* Decorative background blur blobs */}
+          <div
+            className="absolute -top-24 -left-24 h-64 w-64 rounded-full bg-blue-500/20 blur-3xl"
+            aria-hidden="true"
+          />
+          <div
+            className="absolute -bottom-24 -right-24 h-64 w-64 rounded-full bg-indigo-500/20 blur-3xl"
+            aria-hidden="true"
+          />
 
-export default InteractiveCTA;
+          <div className="relative mx-auto max-w-3xl text-center">
+            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+              {t('cta.title')}
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-lg text-slate-300">
+              {t('cta.description')}
+            </p>
+
+            <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+              <Link href="/#contact" className="w-full sm:w-auto">
+                <button
+                  type="button"
+                  className="group relative w-full overflow-hidden rounded-lg bg-white px-6 py-3 text-base font-medium text-slate-900 transition-colors hover:bg-slate-100 sm:w-auto"
+                >
+                  <span className="flex items-center justify-center gap-2">
+                    {t('cta.primaryButton')}
+                    <svg className="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                  </span>
+                </button>
+              </Link>
+              <Link href="/services" className="w-full sm:w-auto">
+                <button
+                  type="button"
+                  className="w-full rounded-lg border border-slate-600 bg-transparent px-6 py-3 text-base font-medium text-white transition-colors hover:bg-slate-800 sm:w-auto"
+                >
+                  {t('cta.secondaryButton')}
+                </button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

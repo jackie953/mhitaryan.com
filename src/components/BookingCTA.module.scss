@@ -1,0 +1,100 @@
+/* Header-style pill CTA for the home card. Everything is sized in em off
+   --cta-size so the pill, label and arrow stay in proportion. Same
+   background token and hover behaviour as .cta in Header.module.scss. */
+/* `a.cta.cta` (doubled class) so it beats once-ui's global `a:not(.button)`
+   link colour, which would otherwise paint the label brand-purple. */
+a.cta.cta {
+  --cta-size: 16px;
+  /* White label on the dark pill; in dark theme the pill turns white, so
+     the label flips to the page colour instead. */
+  --cta-fg: #fff;
+  font-family: var(--font-label);
+
+  position: relative;
+  z-index: 2; /* above the cursor spotlight layer */
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  height: 2.75em;
+  padding: 0 1.25em;
+  font-size: var(--cta-size);
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  border-radius: 999px;
+  /* Solid background so nothing from the spotlight can show through. */
+  background-color: var(--header-color);
+  color: var(--cta-fg);
+  transition: transform 0.15s ease;
+}
+
+:global([data-theme="dark"]) a.cta.cta {
+  --cta-fg: var(--page-background);
+}
+
+a.cta.cta:hover,
+a.cta.cta:focus-visible,
+a.cta.cta:visited,
+a.cta.cta:active {
+  background-color: var(--header-color);
+  color: var(--cta-fg);
+}
+
+a.cta.cta:focus-visible {
+  outline: 2px solid var(--brand-background-strong);
+  outline-offset: 3px;
+}
+
+/* Arrow tail matches the button background so it is invisible until hover,
+   then fades in while the chevron slides toward it. */
+.arrow {
+  position: relative;
+  width: 0.75em;
+  height: 0.14em;
+  background-color: var(--header-color);
+  transition: background-color 0.25s ease;
+}
+
+.arrow::before {
+  content: "";
+  position: absolute;
+  top: -0.22em;
+  right: 0.2em;
+  box-sizing: border-box;
+  padding: 0.22em;
+  border: solid var(--cta-fg);
+  border-width: 0 0.14em 0.14em 0;
+  transform: rotate(-45deg);
+  transition: right 0.25s ease;
+}
+
+.cta:hover .arrow {
+  background-color: var(--cta-fg);
+}
+
+.cta:hover .arrow::before {
+  right: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .cta:hover {
+    transform: translateY(-1px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cta,
+  .arrow,
+  .arrow::before {
+    transition: none;
+  }
+}
+
+/* Large headline for the home card. Doubled class + !important because
+   custom.css forces every `.font-display` down to ~2.5rem on mobile with
+   !important, and this size is intentionally responsive on its own. */
+.headline.headline {
+  font-size: clamp(28px, 1.6vw + 24px, 48px) !important;
+  line-height: 1.05 !important;
+  letter-spacing: -0.02em;
+}

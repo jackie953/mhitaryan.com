@@ -33,13 +33,20 @@ export function HeroGallerySlider({
   const [focusPaused, setFocusPaused] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [hoverHeld, setHoverHeld] = useState(false);
+  const [userPaused, setUserPaused] = useState(false);
+  // Hover/focus only freeze the progress bar; the video keeps playing.
+  // The play/pause button is the only thing that stops the video itself.
+  const held = focusPaused || hoverHeld;
+  const heldRef = useRef(held);
+  heldRef.current = held;
+  const userPausedRef = useRef(userPaused);
+  userPausedRef.current = userPaused;
 
   const videoRefs = useRef<Record<number, HTMLVideoElement | null>>({});
   const rafRef = useRef<number | null>(null);
-  // Only used as a fallback clock when there's no video to read a real
-  // position from (reduced motion). Video-driven slides ignore this.
-  const fallbackElapsedRef = useRef(0);
-  const fallbackLastTsRef = useRef<number | null>(null);
+  const elapsedRef = useRef(0);
+  const lastTsRef = useRef<number | null>(null);
 
   useEffect(() => {
     const query = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -50,7 +57,7 @@ export function HeroGallerySlider({
   }, []);
 
   const goTo = useCallback((index: number) => {
-    fallbackElapsedRef.current = 0;
+    elapsedRef.current = 0;
     setProgress(0);
     setActive(index);
   }, []);
@@ -66,68 +73,70 @@ export function HeroGallerySlider({
       if (!video) return;
       if (Number(key) === active) {
         video.currentTime = 0;
-        video.play().catch(() => {});
+        if (!userPausedRef.current) video.play().catch(() => {});
       } else {
         video.pause();
       }
     });
   }, [active, reducedMotion]);
 
+  useEffect(() => {
+    if (reducedMotion) return;
+    const video = videoRefs.current[active];
+    if (!video) return;
+    if (userPaused) video.pause();
+    else if (!video.ended) video.play().catch(() => {});
+  }, [userPaused, active, reducedMotion]);
+
   const goNext = useCallback(
     () => goTo((active + 1) % slides.length),
     [goTo, active, slides.length],
   );
 
-  // If a slide finishes while focus-pause is holding it, don't skip the
-  // advance entirely - just apply it once the pause lifts.
+  // The progress bar runs on its own clock (one video length per slide), so
+  // hover/focus can freeze the bar while the looping video keeps playing.
   useEffect(() => {
-    if (!focusPaused) {
-      const video = videoRefs.current[active];
-      if (video && video.ended) goNext();
-    }
-  }, [focusPaused, active, goNext]);
-
-  useEffect(() => {
-    if (!autoplay || focusPaused || slides.length < 2) {
-      fallbackLastTsRef.current = null;
+    if (!autoplay || userPaused || slides.length < 2) {
+      lastTsRef.current = null;
       return;
     }
 
     const tick = (timestamp: number) => {
-      // Video slides: read the real playback position each frame, so the bar
-      // can never drift from what's actually on screen. Advancing to the next
-      // slide is handled by the video's own `ended` event, not this clock.
-      const activeVideo = reducedMotion ? null : videoRefs.current[active];
-      if (activeVideo && Number.isFinite(activeVideo.duration) && activeVideo.duration > 0) {
-        setProgress(activeVideo.currentTime / activeVideo.duration);
-        rafRef.current = requestAnimationFrame(tick);
-        return;
-      }
+      const last = lastTsRef.current ?? timestamp;
+      lastTsRef.current = timestamp;
+      // Clamp so a throttled background tab doesn't skip straight to the next slide.
+      if (!heldRef.current) elapsedRef.current += Math.min(timestamp - last, 250);
 
-      // No video to read from (reduced motion, or metadata not loaded yet):
-      // fall back to a plain wall clock against `interval`.
-      if (fallbackLastTsRef.current == null) fallbackLastTsRef.current = timestamp;
-      fallbackElapsedRef.current += timestamp - fallbackLastTsRef.current;
-      fallbackLastTsRef.current = timestamp;
+      const video = reducedMotion ? null : videoRefs.current[active];
+      const duration =
+        video && Number.isFinite(video.duration) && video.duration > 0
+          ? video.duration * 1000
+          : interval;
 
-      if (fallbackElapsedRef.current >= interval) {
+      if (elapsedRef.current >= duration) {
         goTo((active + 1) % slides.length);
         return;
       }
-      setProgress(fallbackElapsedRef.current / interval);
+      setProgress(elapsedRef.current / duration);
       rafRef.current = requestAnimationFrame(tick);
     };
 
     rafRef.current = requestAnimationFrame(tick);
     return () => {
       if (rafRef.current != null) cancelAnimationFrame(rafRef.current);
-      fallbackLastTsRef.current = null;
+      lastTsRef.current = null;
     };
-  }, [active, autoplay, focusPaused, reducedMotion, slides.length, interval, goTo]);
+  }, [active, autoplay, userPaused, reducedMotion, slides.length, interval, goTo]);
 
   return (
     <div className={styles.root}>
-      <div className={styles.stage}>
+      <div
+        className={styles.stage}
+        onPointerEnter={(event) => {
+          if (event.pointerType === "mouse") setHoverHeld(true);
+        }}
+        onPointerLeave={() => setHoverHeld(false)}
+      >
         {slides.map((slide, index) => (
           <div
             key={slide.video}
@@ -147,9 +156,7 @@ export function HeroGallerySlider({
                 muted
                 playsInline
                 preload="auto"
-                onEnded={() => {
-                  if (index === active && !focusPaused) goNext();
-                }}
+                loop
               />
             )}
             <div className={styles.scrim} />
@@ -208,6 +215,29 @@ export function HeroGallerySlider({
                 ))}
               </div>
             )}
+
+            <button
+              type="button"
+              className={styles.playPause}
+              aria-label={userPaused ? "Play slideshow" : "Pause slideshow"}
+              onClick={() => setUserPaused(!userPaused)}
+            >
+              {userPaused ? (
+                <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true">
+                  <path
+                    d="M5 3l14 9-14 9V3z"
+                    fill="currentColor"
+                  />
+                </svg>
+              ) : (
+                <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true">
+                  <path
+                    d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"
+                    fill="currentColor"
+                  />
+                </svg>
+              )}
+            </button>
 
             {slides.length > 1 && (
               <button

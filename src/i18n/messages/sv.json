@@ -3,9 +3,22 @@
     "headlineLine1": "Läs av läget.",
     "headlineLine2": "Gör ditt drag.",
     "subheadlineSentences": [
-      "En ny marknad, ännu en reglering, en skiftande debatt, intressenter du inte känner till.",
-      "Vi reder ut vad som egentligen pågår och hjälper dig att utforma din strategi."
-    ]
+      "En ny marknad, ännu en reglering, en skiftande debatt, okända intressenter. Vi reder ut vad som egentligen pågår, vilka som driver på och vad det innebär för dig, och hjälper dig att utforma din strategi."
+    ],
+    "ctaTitle": "Berätta vad du står inför.",
+    "gallery": {
+      "cta": "Läs mer",
+      "slide1": {
+        "eyebrow": "Research & Intelligence",
+        "heading": "Understand the landscape",
+        "subtext": "Research och analys av politik, regelverk, opinion och politisk risk, med förankring i Sverige och Norden och räckvidd i EU och USA."
+      },
+      "slide2": {
+        "eyebrow": "Strategic Communications",
+        "heading": "Shape the narrative",
+        "subtext": "Positionering, budskap och strategi för att nå intressenter och\ndriva frågor – byggt på analysen."
+      }
+    }
   },
   "nav": {
     "about": "Om oss",
@@ -22,10 +35,10 @@
     "privacy": "Integritetspolicy",
     "emailLabel": "E-post",
     "linkedinLabel": "LinkedIn",
-    "pronunciation": "[mɪtaˈɾjɑːn]",
+    "pronunciation": "[mɪtaˈɾaːn]",
     "contactHeading": "Kontakt",
     "pagesHeading": "Sidor",
-    "networkHeading": "Nätverk"
+    "networkHeading": "Organisationer"
   },
   "privacy": {
     "title": "Integritetspolicy",

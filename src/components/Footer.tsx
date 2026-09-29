@@ -2,7 +2,7 @@
 
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
-import { about, services, cases, getContactEmail, LINKEDIN_URL, LOCATION, NETWORK_LINKS } from "@/resources";
+import { about, services, cases, getContactEmail, LINKEDIN_URL, LOCATION } from "@/resources";
 import VariableFontHoverByLetter from "@/components/fancy/text/variable-font-hover-by-letter";
 import styles from "./Footer.module.scss";
 
@@ -10,7 +10,6 @@ export const Footer = () => {
   const locale = useLocale();
   const t = useTranslations("footer");
   const tNav = useTranslations("nav");
-  const currentYear = new Date().getFullYear();
 
   const withLocale = (path: string) => `/${locale}${path}`;
   const contactEmail = getContactEmail(locale);
@@ -23,17 +22,15 @@ export const Footer = () => {
         <div className={styles.grid}>
           <div className={styles.column}>
             <VariableFontHoverByLetter
-              label="MHITARYAN"
+              label={t("pronunciation")}
               className={styles.brand}
               staggerDuration={0.03}
               fromFontVariationSettings="'wght' 400"
               toFontVariationSettings="'wght' 900"
             />
-            <span className={styles.pronunciation}>{t("pronunciation")}</span>
           </div>
 
           <div className={styles.column}>
-            <span className={styles.heading}>{t("contactHeading")}</span>
             <span className={styles.item}>{LOCATION}</span>
             <Link
               href={`mailto:${contactEmail}`}
@@ -48,7 +45,6 @@ export const Footer = () => {
           </div>
 
           <div className={styles.column}>
-            <span className={styles.heading}>{t("pagesHeading")}</span>
             <Link href={withLocale(about.path)} className={styles.link}>
               {tNav("about")}
             </Link>
@@ -58,21 +54,6 @@ export const Footer = () => {
             <Link href={withLocale(cases.path)} className={styles.link}>
               {tNav("cases")}
             </Link>
-          </div>
-
-          <div className={styles.column}>
-            <span className={styles.heading}>{t("networkHeading")}</span>
-            {NETWORK_LINKS.map((network) => (
-              <a
-                key={network.label}
-                href={network.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.link}
-              >
-                {network.label}
-              </a>
-            ))}
           </div>
         </div>
 

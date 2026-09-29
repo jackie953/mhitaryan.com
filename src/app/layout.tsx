@@ -11,13 +11,15 @@ import { Providers } from "@/components";
 import { baseURL, home } from "@/resources";
 
 export function generateMetadata() {
-  return Meta.generate({
+  const meta = Meta.generate({
     title: home.title,
     description: home.description,
     baseURL: baseURL,
     path: home.path,
     image: home.image,
   });
+
+  return meta;
 }
 
 export default function RootLayout({
@@ -26,14 +28,9 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <link rel="shortcut icon" href="/favicon.ico" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-        <meta name="apple-mobile-web-app-title" content="MC" />
+        <meta name="apple-mobile-web-app-title" content="Mhitaryan" />
         <link rel="manifest" href="/site.webmanifest" />
         <script defer src="https://cloud.umami.is/script.js" data-website-id="c2a62245-10d7-4dd8-ae04-8e9843c9e7db" />
-        {/* 🧠 Smart default theme: respects system preference and saved user choice */}
         <Script id="init-theme" strategy="beforeInteractive">
           {`
             try {

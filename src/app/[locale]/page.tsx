@@ -7,7 +7,7 @@ import {
   RevealFx,
 } from "@once-ui-system/core";
 import { getLocale, getTranslations } from "next-intl/server";
-import { home, about, person, baseURL, getContactEmail } from "@/resources";
+import { home, about, person, baseURL, contact } from "@/resources";
 import { BookingCTA } from "@/components/BookingCTA";
 import { HeroGallerySlider } from "@/components/HeroGallerySlider";
 import { HeroHeadline } from "@/components/HeroHeadline";
@@ -28,8 +28,9 @@ export async function generateMetadata() {
 export default async function Home() {
   const locale = await getLocale();
   const t = await getTranslations("home");
+  const tNav = await getTranslations("nav");
   return (
-      <Column fillWidth gap="80">
+      <Column fillWidth gap="40">
         <Schema
           as="webPage"
           baseURL={baseURL}
@@ -94,33 +95,40 @@ export default async function Home() {
                 {
                   video: "/videos/hero/research-network.mp4",
                   poster: "/videos/hero/research-network-poster.jpg",
-                  eyebrow: "Research & Intelligence",
-                  heading: "Understand the landscape",
-                  subtext: "Placeholder subtext for the Research & Intelligence slide.",
-                  ctaLabel: "Learn more",
+                  eyebrow: t("gallery.slide1.eyebrow"),
+                  heading: t("gallery.slide1.heading"),
+                  subtext: t("gallery.slide1.subtext"),
+                  ctaLabel: t("gallery.cta"),
                   ctaHref: `/${locale}/services`,
                 },
                 {
                   video: "/videos/hero/comms-water.mp4",
                   poster: "/videos/hero/comms-water-poster.jpg",
-                  eyebrow: "Strategic Communications",
-                  heading: "Shape the narrative",
-                  subtext: "Placeholder subtext for the Strategic Communications slide.",
-                  ctaLabel: "Learn more",
+                  eyebrow: t("gallery.slide2.eyebrow"),
+                  heading: t("gallery.slide2.heading"),
+                  subtext: t("gallery.slide2.subtext"),
+                  ctaLabel: t("gallery.cta"),
                   ctaHref: `/${locale}/services`,
                 },
               ]}
             />
           </ScrollReveal>
         </Column>
-        <ScrollReveal>
-          <BookingCTA
-            title="Before your next move, talk to us."
-            description=""
-            buttonText="Get in touch"
-            buttonHrefEncoded={Buffer.from(`mailto:${getContactEmail(locale)}`).toString("base64")}
-          />
-        </ScrollReveal>
+        <div 
+          style={{ 
+            marginBottom: "calc(-1 * var(--responsive-space-xl) - 2rem)",
+          }}
+        >
+          <ScrollReveal>
+            <BookingCTA
+              title={t("ctaTitle")}
+              description=""
+              large
+              buttonText={tNav("briefUs")}
+              buttonHref={`/${locale}${contact.path}`}
+            />
+          </ScrollReveal>
+        </div>
       </Column>
   );
 }

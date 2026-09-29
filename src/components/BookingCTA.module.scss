@@ -1,9 +1,9 @@
 /* Header-style pill CTA for the home card. Everything is sized in em off
    --cta-size so the pill, label and arrow stay in proportion. Same
    background token and hover behaviour as .cta in Header.module.scss. */
-/* `a.cta` (not just `.cta`) so it beats once-ui's global `a:not(.button)`
+/* `a.cta.cta` (doubled class) so it beats once-ui's global `a:not(.button)`
    link colour, which would otherwise paint the label brand-purple. */
-a.cta {
+a.cta.cta {
   --cta-size: 16px;
   /* White label on the dark pill; in dark theme the pill turns white, so
      the label flips to the page colour instead. */
@@ -28,17 +28,19 @@ a.cta {
   transition: transform 0.15s ease;
 }
 
-:global([data-theme="dark"]) a.cta {
+:global([data-theme="dark"]) a.cta.cta {
   --cta-fg: var(--page-background);
 }
 
-a.cta:hover,
-a.cta:focus-visible {
+a.cta.cta:hover,
+a.cta.cta:focus-visible,
+a.cta.cta:visited,
+a.cta.cta:active {
   background-color: var(--header-color);
   color: var(--cta-fg);
 }
 
-a.cta:focus-visible {
+a.cta.cta:focus-visible {
   outline: 2px solid var(--brand-background-strong);
   outline-offset: 3px;
 }

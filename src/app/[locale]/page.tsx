@@ -115,7 +115,6 @@ export default async function Home() {
         </Column>
         <div 
           style={{ 
-            marginTop: "-2rem",
             marginBottom: "calc(-1 * var(--responsive-space-xl) - 2rem)",
           }}
         >

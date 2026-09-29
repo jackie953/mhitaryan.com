@@ -123,12 +123,12 @@ export const BookingCTA: React.FC<React.ComponentProps<typeof Column> & BookingC
       overflow="hidden"
       fillWidth
       paddingX="xl"
-      paddingY="80"
+      paddingY="128"
       radius="l"
       horizontal="center"
       align="center"
       background="surface"
-      className="max-sm:!pt-12 max-sm:!px-8 max-sm:!pb-12"
+      className="max-sm:!pt-16 max-sm:!px-8 max-sm:!pb-16"
       {...flex}
     >
       {/* Cursor-following spotlight — replays the glow wherever the pointer

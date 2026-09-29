@@ -93,6 +93,14 @@ interface BookingCTAOverrides {
   description?: string;
   buttonText?: string;
   buttonHref?: string;
+  /**
+   * Base64-encoded href (use for a mailto: address). Decoded client-side
+   * after mount, so the plain address never appears in the page's HTML or
+   * the React Server Component payload — a prop value like `buttonHref`
+   * gets serialized into that payload verbatim regardless of when the
+   * component chooses to render it, so gating render time alone isn't
+   * enough to keep an address out of the served bytes.
+   */
   buttonHrefEncoded?: string;
 }
 
@@ -111,21 +119,20 @@ export const BookingCTA: React.FC<React.ComponentProps<typeof Column> & BookingC
 
   return (
     <Column
+      position="relative"
       overflow="hidden"
       fillWidth
       paddingX="xl"
-      paddingY="40"
+      paddingY="80"
       radius="l"
       horizontal="center"
       align="center"
       background="surface"
-      className="max-sm:!pt-6 max-sm:!px-8 max-sm:!pb-6"
-      style={{
-        paddingBottom: "calc(var(--static-space-40) + var(--responsive-space-xl))",
-        marginBottom: "calc(-1 * var(--responsive-space-xl))",
-      }}
+      className="max-sm:!pt-12 max-sm:!px-8 max-sm:!pb-12"
       {...flex}
     >
+      {/* Cursor-following spotlight — replays the glow wherever the pointer
+          is over the card, instead of a static fixed-position gradient. */}
       <Mask
         cursor={bookingConfig.effects.mask.cursor}
         radius={30}
@@ -139,7 +146,7 @@ export const BookingCTA: React.FC<React.ComponentProps<typeof Column> & BookingC
       </Mask>
 
       <Column maxWidth="xs" horizontal="center">
-        <Heading marginBottom={displayDescription ? "s" : "m"} variant="display-strong-xs">
+        <Heading marginBottom={displayDescription ? "s" : "l"} variant="display-strong-xs">
           {displayTitle}
         </Heading>
         {displayDescription && (
@@ -154,7 +161,7 @@ export const BookingCTA: React.FC<React.ComponentProps<typeof Column> & BookingC
         target={isMailto ? '_self' : '_blank'}
         rel="noopener noreferrer"
         aria-disabled={displayButtonHref === undefined}
-        style={{ textDecoration: 'none' }}
+        style={{ textDecoration: 'none', display: 'inline-block' }}
         onClick={isMailto ? () => window.umami?.track('contact-click') : undefined}
       >
         <Button size="m" style={{ paddingInline: '2rem' }}>

@@ -8,31 +8,31 @@ export const PrivacyContent = async () => {
   const contactEmail = getContactEmail(locale);
 
   return (
-    <Column maxWidth="m" fillWidth gap="l">
-      <Column gap="s">
+    <Column maxWidth="m" fillWidth gap="m">
+      <Column gap="xs">
         <Heading variant="display-strong-s">{t("title")}</Heading>
-        <Text variant="body-default-m" onBackground="neutral-weak">
+        <Text variant="body-default-m" onBackground="neutral-weak" style={{ lineHeight: 1.5 }}>
           {t("intro")}
         </Text>
       </Column>
 
-      <Column gap="s">
+      <Column gap="xs">
         <Heading variant="body-strong-m">{t("analytics")}</Heading>
-        <Text variant="body-default-m" onBackground="neutral-weak">
+        <Text variant="body-default-m" onBackground="neutral-weak" style={{ lineHeight: 1.5 }}>
           {t("analyticsText")}
         </Text>
       </Column>
 
-      <Column gap="s">
+      <Column gap="xs">
         <Heading variant="body-strong-m">{t("contact")}</Heading>
-        <Text variant="body-default-m" onBackground="neutral-weak">
+        <Text variant="body-default-m" onBackground="neutral-weak" style={{ lineHeight: 1.5 }}>
           {t("contactText")}
         </Text>
       </Column>
 
-      <Column gap="s">
+      <Column gap="xs">
         <Heading variant="body-strong-m">{t("rights")}</Heading>
-        <Text variant="body-default-m" onBackground="neutral-weak">
+        <Text variant="body-default-m" onBackground="neutral-weak" style={{ lineHeight: 1.5 }}>
           {t("rightsText")}{" "}
           <a href={`mailto:${contactEmail}`} className="text-blue-600 hover:underline dark:text-blue-500">
             {contactEmail}
@@ -41,12 +41,12 @@ export const PrivacyContent = async () => {
         </Text>
       </Column>
 
-      <Column gap="s">
+      <Column gap="xs">
         <Heading variant="body-strong-m">{t("changes")}</Heading>
-        <Text variant="body-default-m" onBackground="neutral-weak">
+        <Text variant="body-default-m" onBackground="neutral-weak" style={{ lineHeight: 1.5 }}>
           {t("changesText")}
         </Text>
-        <Text variant="body-default-s" onBackground="neutral-weak" style={{ fontStyle: "italic" }}>
+        <Text variant="body-default-s" onBackground="neutral-weak" style={{ fontStyle: "italic", lineHeight: 1.5 }}>
           {t("lastUpdated")}
         </Text>
       </Column>

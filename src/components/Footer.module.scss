@@ -7,13 +7,13 @@
   margin: 0 auto;
   padding-left: var(--static-space-12);
   padding-right: var(--static-space-12);
-  padding-top: var(--static-space-104); /* nearest token to the spec's 96px */
+  padding-top: var(--static-space-48); /* nearest token to the spec's 96px */
   padding-bottom: var(--static-space-12); /* ~0.75rem, keeps the footer close to the page bottom */
 
   @include breakpoints.s {
     padding-left: var(--static-space-16);
     padding-right: var(--static-space-16);
-    padding-top: var(--static-space-64);
+    padding-top: var(--static-space-32);
   }
 }
 

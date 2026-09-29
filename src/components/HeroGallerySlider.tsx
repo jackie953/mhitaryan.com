@@ -35,7 +35,7 @@ export function HeroGallerySlider({
   const [progress, setProgress] = useState(0);
   const [hoverHeld, setHoverHeld] = useState(false);
   const [userPaused, setUserPaused] = useState(false);
-  // Hover/focus only hold the slide from advancing; the video keeps playing.
+  // Hover/focus only freeze the progress bar; the video keeps playing.
   // The play/pause button is the only thing that stops the video itself.
   const held = focusPaused || hoverHeld;
   const heldRef = useRef(held);
@@ -45,10 +45,8 @@ export function HeroGallerySlider({
 
   const videoRefs = useRef<Record<number, HTMLVideoElement | null>>({});
   const rafRef = useRef<number | null>(null);
-  // Only used as a fallback clock when there's no video to read a real
-  // position from (reduced motion). Video-driven slides ignore this.
-  const fallbackElapsedRef = useRef(0);
-  const fallbackLastTsRef = useRef<number | null>(null);
+  const elapsedRef = useRef(0);
+  const lastTsRef = useRef<number | null>(null);
 
   useEffect(() => {
     const query = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -59,7 +57,7 @@ export function HeroGallerySlider({
   }, []);
 
   const goTo = useCallback((index: number) => {
-    fallbackElapsedRef.current = 0;
+    elapsedRef.current = 0;
     setProgress(0);
     setActive(index);
   }, []);
@@ -95,55 +93,38 @@ export function HeroGallerySlider({
     [goTo, active, slides.length],
   );
 
-  // If a slide finishes while hover/focus is holding it, don't skip the
-  // advance entirely - just apply it once the hold lifts.
-  useEffect(() => {
-    if (!held && !userPaused) {
-      const video = videoRefs.current[active];
-      if (video && video.ended) goNext();
-    }
-  }, [held, userPaused, active, goNext]);
-
+  // The progress bar runs on its own clock (one video length per slide), so
+  // hover/focus can freeze the bar while the looping video keeps playing.
   useEffect(() => {
     if (!autoplay || userPaused || slides.length < 2) {
-      fallbackLastTsRef.current = null;
+      lastTsRef.current = null;
       return;
     }
 
     const tick = (timestamp: number) => {
-      // Video slides: read the real playback position each frame, so the bar
-      // can never drift from what's actually on screen. Advancing to the next
-      // slide is handled by the video's own `ended` event, not this clock.
-      const activeVideo = reducedMotion ? null : videoRefs.current[active];
-      if (activeVideo && Number.isFinite(activeVideo.duration) && activeVideo.duration > 0) {
-        setProgress(activeVideo.currentTime / activeVideo.duration);
-        rafRef.current = requestAnimationFrame(tick);
-        return;
-      }
+      const last = lastTsRef.current ?? timestamp;
+      lastTsRef.current = timestamp;
+      // Clamp so a throttled background tab doesn't skip straight to the next slide.
+      if (!heldRef.current) elapsedRef.current += Math.min(timestamp - last, 250);
 
-      // No video to read from (reduced motion, or metadata not loaded yet):
-      // fall back to a plain wall clock against `interval`.
-      if (heldRef.current) {
-        fallbackLastTsRef.current = timestamp;
-        rafRef.current = requestAnimationFrame(tick);
-        return;
-      }
-      if (fallbackLastTsRef.current == null) fallbackLastTsRef.current = timestamp;
-      fallbackElapsedRef.current += timestamp - fallbackLastTsRef.current;
-      fallbackLastTsRef.current = timestamp;
+      const video = reducedMotion ? null : videoRefs.current[active];
+      const duration =
+        video && Number.isFinite(video.duration) && video.duration > 0
+          ? video.duration * 1000
+          : interval;
 
-      if (fallbackElapsedRef.current >= interval) {
+      if (elapsedRef.current >= duration) {
         goTo((active + 1) % slides.length);
         return;
       }
-      setProgress(fallbackElapsedRef.current / interval);
+      setProgress(elapsedRef.current / duration);
       rafRef.current = requestAnimationFrame(tick);
     };
 
     rafRef.current = requestAnimationFrame(tick);
     return () => {
       if (rafRef.current != null) cancelAnimationFrame(rafRef.current);
-      fallbackLastTsRef.current = null;
+      lastTsRef.current = null;
     };
   }, [active, autoplay, userPaused, reducedMotion, slides.length, interval, goTo]);
 
@@ -175,9 +156,7 @@ export function HeroGallerySlider({
                 muted
                 playsInline
                 preload="auto"
-                onEnded={() => {
-                  if (index === active && !heldRef.current) goNext();
-                }}
+                loop
               />
             )}
             <div className={styles.scrim} />

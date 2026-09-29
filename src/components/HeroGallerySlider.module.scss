@@ -182,6 +182,11 @@ a.cta {
   border-radius: inherit;
 }
 
+.playPause {
+  /* Pull closer to the next button than the shared bar gap. */
+  margin-right: calc(var(--static-space-12) - var(--static-space-20));
+}
+
 .playPause,
 .navNext {
   flex-shrink: 0;

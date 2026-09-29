@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { Button, Heading, Text, Column, Mask } from "@once-ui-system/core";
+import styles from "./BookingCTA.module.scss";
 import type { opacity, SpacingToken } from "@once-ui-system/core";
 
 interface BookingCTAConfig {
@@ -102,9 +104,11 @@ interface BookingCTAOverrides {
    * enough to keep an address out of the served bytes.
    */
   buttonHrefEncoded?: string;
+  /** Larger headline plus the header-style "Brief us" pill (home page). */
+  large?: boolean;
 }
 
-export const BookingCTA: React.FC<React.ComponentProps<typeof Column> & BookingCTAOverrides> = ({ title, description, buttonText, buttonHref, buttonHrefEncoded, ...flex }) => {
+export const BookingCTA: React.FC<React.ComponentProps<typeof Column> & BookingCTAOverrides> = ({ title, description, buttonText, buttonHref, buttonHrefEncoded, large, ...flex }) => {
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
@@ -147,8 +151,13 @@ export const BookingCTA: React.FC<React.ComponentProps<typeof Column> & BookingC
         }} />
       </Mask>
 
-      <Column maxWidth="xs" horizontal="center">
-        <Heading marginBottom={displayDescription ? "s" : "l"} variant="display-strong-xs">
+      <Column maxWidth={large ? "l" : "xs"} horizontal="center" style={{ position: "relative", zIndex: 1 }}>
+        <Heading
+          marginBottom={displayDescription ? "s" : "l"}
+          variant="display-strong-xs"
+          wrap="balance"
+          className={large ? styles.headline : undefined}
+        >
           {displayTitle}
         </Heading>
         {displayDescription && (
@@ -158,18 +167,25 @@ export const BookingCTA: React.FC<React.ComponentProps<typeof Column> & BookingC
         )}
       </Column>
 
-      <a
-        href={displayButtonHref}
-        target={isMailto ? '_self' : '_blank'}
-        rel="noopener noreferrer"
-        aria-disabled={displayButtonHref === undefined}
-        style={{ textDecoration: 'none', display: 'inline-block' }}
-        onClick={isMailto ? () => window.umami?.track('contact-click') : undefined}
-      >
-        <Button size="m" style={{ paddingInline: '2rem' }}>
+      {large ? (
+        <Link href={displayButtonHref ?? "#"} className={styles.cta}>
           {displayButtonText}
-        </Button>
-      </a>
+          <span className={styles.arrow} />
+        </Link>
+      ) : (
+        <a
+          href={displayButtonHref}
+          target={isMailto ? "_self" : "_blank"}
+          rel="noopener noreferrer"
+          aria-disabled={displayButtonHref === undefined}
+          style={{ textDecoration: "none", display: "inline-block", position: "relative", zIndex: 1 }}
+          onClick={isMailto ? () => window.umami?.track("contact-click") : undefined}
+        >
+          <Button size="m" style={{ paddingInline: "2rem" }}>
+            {displayButtonText}
+          </Button>
+        </a>
+      )}
     </Column>
   );
 };

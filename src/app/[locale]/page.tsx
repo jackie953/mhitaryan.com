@@ -7,7 +7,7 @@ import {
   RevealFx,
 } from "@once-ui-system/core";
 import { getLocale, getTranslations } from "next-intl/server";
-import { home, about, person, baseURL, getContactEmail } from "@/resources";
+import { home, about, person, baseURL, contact } from "@/resources";
 import { BookingCTA } from "@/components/BookingCTA";
 import { HeroGallerySlider } from "@/components/HeroGallerySlider";
 import { HeroHeadline } from "@/components/HeroHeadline";
@@ -28,6 +28,7 @@ export async function generateMetadata() {
 export default async function Home() {
   const locale = await getLocale();
   const t = await getTranslations("home");
+  const tNav = await getTranslations("nav");
   return (
       <Column fillWidth gap="40">
         <Schema
@@ -122,8 +123,9 @@ export default async function Home() {
             <BookingCTA
               title="Before your next move, talk to us."
               description=""
-              buttonText="Get in touch"
-              buttonHrefEncoded={Buffer.from(`mailto:${getContactEmail(locale)}`).toString("base64")}
+              large
+              buttonText={tNav("briefUs")}
+              buttonHref={`/${locale}${contact.path}`}
             />
           </ScrollReveal>
         </div>

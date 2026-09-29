@@ -29,7 +29,7 @@ export default async function Home() {
   const locale = await getLocale();
   const t = await getTranslations("home");
   return (
-      <Column fillWidth gap="80">
+      <Column fillWidth gap="40">
         <Schema
           as="webPage"
           baseURL={baseURL}

@@ -32,14 +32,19 @@
      .bottomRow below, since both span the same full container width. */
   grid-template-columns: 1fr auto auto;
   align-items: start;
-  column-gap: var(--static-space-56); /* ~3.5rem between Pages/Contact */
+  column-gap: 100px; /* between the Contact and Pages columns */
   row-gap: var(--static-space-32);
   margin-top: var(--static-space-40);
+  /* Pulls the link group in from the container's right edge; the logo and
+     the bottom row keep their full-width positions. */
+  padding-right: 9%;
 
   /* Tablet: logo takes its own full-width row, the three link columns
      share the row below it. */
   @include breakpoints.m {
     grid-template-columns: repeat(3, max-content);
+    column-gap: var(--static-space-56);
+    padding-right: 0;
   }
 
   /* Mobile: everything stacks in document order. */

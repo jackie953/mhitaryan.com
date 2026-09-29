@@ -33,11 +33,15 @@ export function HeroGallerySlider({
   const [focusPaused, setFocusPaused] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [hoverPaused, setHoverPaused] = useState(false);
+  const [hoverHeld, setHoverHeld] = useState(false);
   const [userPaused, setUserPaused] = useState(false);
-  const paused = focusPaused || hoverPaused || userPaused;
-  const pausedRef = useRef(paused);
-  pausedRef.current = paused;
+  // Hover/focus only hold the slide from advancing; the video keeps playing.
+  // The play/pause button is the only thing that stops the video itself.
+  const held = focusPaused || hoverHeld;
+  const heldRef = useRef(held);
+  heldRef.current = held;
+  const userPausedRef = useRef(userPaused);
+  userPausedRef.current = userPaused;
 
   const videoRefs = useRef<Record<number, HTMLVideoElement | null>>({});
   const rafRef = useRef<number | null>(null);
@@ -71,7 +75,7 @@ export function HeroGallerySlider({
       if (!video) return;
       if (Number(key) === active) {
         video.currentTime = 0;
-        if (!pausedRef.current) video.play().catch(() => {});
+        if (!userPausedRef.current) video.play().catch(() => {});
       } else {
         video.pause();
       }
@@ -82,26 +86,26 @@ export function HeroGallerySlider({
     if (reducedMotion) return;
     const video = videoRefs.current[active];
     if (!video) return;
-    if (paused) video.pause();
-    else video.play().catch(() => {});
-  }, [paused, active, reducedMotion]);
+    if (userPaused) video.pause();
+    else if (!video.ended) video.play().catch(() => {});
+  }, [userPaused, active, reducedMotion]);
 
   const goNext = useCallback(
     () => goTo((active + 1) % slides.length),
     [goTo, active, slides.length],
   );
 
-  // If a slide finishes while focus-pause is holding it, don't skip the
-  // advance entirely - just apply it once the pause lifts.
+  // If a slide finishes while hover/focus is holding it, don't skip the
+  // advance entirely - just apply it once the hold lifts.
   useEffect(() => {
-    if (!paused) {
+    if (!held && !userPaused) {
       const video = videoRefs.current[active];
       if (video && video.ended) goNext();
     }
-  }, [paused, active, goNext]);
+  }, [held, userPaused, active, goNext]);
 
   useEffect(() => {
-    if (!autoplay || paused || slides.length < 2) {
+    if (!autoplay || userPaused || slides.length < 2) {
       fallbackLastTsRef.current = null;
       return;
     }
@@ -119,6 +123,11 @@ export function HeroGallerySlider({
 
       // No video to read from (reduced motion, or metadata not loaded yet):
       // fall back to a plain wall clock against `interval`.
+      if (heldRef.current) {
+        fallbackLastTsRef.current = timestamp;
+        rafRef.current = requestAnimationFrame(tick);
+        return;
+      }
       if (fallbackLastTsRef.current == null) fallbackLastTsRef.current = timestamp;
       fallbackElapsedRef.current += timestamp - fallbackLastTsRef.current;
       fallbackLastTsRef.current = timestamp;
@@ -136,16 +145,16 @@ export function HeroGallerySlider({
       if (rafRef.current != null) cancelAnimationFrame(rafRef.current);
       fallbackLastTsRef.current = null;
     };
-  }, [active, autoplay, paused, reducedMotion, slides.length, interval, goTo]);
+  }, [active, autoplay, userPaused, reducedMotion, slides.length, interval, goTo]);
 
   return (
     <div className={styles.root}>
       <div
         className={styles.stage}
         onPointerEnter={(event) => {
-          if (event.pointerType === "mouse") setHoverPaused(true);
+          if (event.pointerType === "mouse") setHoverHeld(true);
         }}
-        onPointerLeave={() => setHoverPaused(false)}
+        onPointerLeave={() => setHoverHeld(false)}
       >
         {slides.map((slide, index) => (
           <div
@@ -167,7 +176,7 @@ export function HeroGallerySlider({
                 playsInline
                 preload="auto"
                 onEnded={() => {
-                  if (index === active && !pausedRef.current) goNext();
+                  if (index === active && !heldRef.current) goNext();
                 }}
               />
             )}

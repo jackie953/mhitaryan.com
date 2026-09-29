@@ -135,12 +135,12 @@ export const BookingCTA: React.FC<React.ComponentProps<typeof Column> & BookingC
           is over the card, instead of a static fixed-position gradient. */}
       <Mask
         cursor={bookingConfig.effects.mask.cursor}
-        radius={30}
+        radius={50}
         style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}
       >
         <div style={{
           position: 'absolute', inset: 0,
-          background: 'radial-gradient(ellipse at 50% 50%, var(--accent-background-strong, rgba(93,50,133,0.45)) 0%, transparent 70%)',
+          background: 'radial-gradient(ellipse 80% 100% at 50% 50%, var(--accent-background-strong, rgba(93,50,133,0.45)) 0%, transparent 70%)',
           opacity: bookingConfig.effects.gradient.opacity / 100,
         }} />
       </Mask>

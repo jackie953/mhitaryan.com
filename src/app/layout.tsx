@@ -19,16 +19,7 @@ export function generateMetadata() {
     image: home.image,
   });
 
-  return {
-    ...meta,
-    icons: {
-      icon: [
-        { url: "/favicon.svg?v=20260928b", type: "image/svg+xml" },
-        { url: "/favicon-96x96.png?v=20260928", sizes: "96x96", type: "image/png" },
-      ],
-      apple: [{ url: "/apple-touch-icon.png?v=20260928" }],
-    },
-  };
+  return meta;
 }
 
 export default function RootLayout({
@@ -37,9 +28,6 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=20260928b" />
-        <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png?v=20260928" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=20260928" />
         <meta name="apple-mobile-web-app-title" content="Mhitaryan" />
         <link rel="manifest" href="/site.webmanifest" />
         <script defer src="https://cloud.umami.is/script.js" data-website-id="c2a62245-10d7-4dd8-ae04-8e9843c9e7db" />

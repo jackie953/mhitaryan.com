@@ -121,7 +121,7 @@ export default async function Home() {
         >
           <ScrollReveal>
             <BookingCTA
-              title="Before your next move, talk to us."
+              title={t("ctaTitle")}
               description=""
               large
               buttonText={tNav("briefUs")}

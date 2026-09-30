@@ -101,16 +101,19 @@ export function ValuesScroll({ label, values }: ValuesScrollProps) {
         })}
       </div>
       <style>{`
-        .values-grid { display: flex; width: 100%; gap: 80px; align-items: stretch; }
-        .values-label { flex: 0 0 33%; max-width: 33%; padding-top: 9svh; }
+        .values-grid { display: flex; width: 100%; gap: 64px; align-items: stretch; }
+        .values-label { flex: 0 0 33%; max-width: 33%; padding-top: 1.75rem; }
         .values-label-sticky { position: sticky; top: ${READ_LINE * 100}svh; }
         .values-list { flex: 1 1 0%; min-width: 0; display: flex; flex-direction: column; }
-        .values-item { display: flex; align-items: flex-end; flex-wrap: wrap; column-gap: 16px; row-gap: 4px; padding: 9svh 0; }
+        
+        /* Changed padding from 9svh 0 to 1.75rem 0 for realistic line height spacing */
+        .values-item { display: flex; align-items: flex-end; flex-wrap: wrap; column-gap: 16px; row-gap: 4px; padding: 1.75rem 0; }
+        
         @media (max-width: 768px) {
           .values-grid { flex-direction: column; gap: 0; }
           .values-label { flex: 1 1 100%; max-width: 100%; padding-top: 0; }
           .values-label-sticky { position: static; padding-top: 24px; }
-          .values-item { padding: 6svh 0; min-height: 5rem; align-content: flex-start; }
+          .values-item { padding: 1.25rem 0; min-height: auto; align-content: flex-start; }
         }
       `}</style>
     </div>

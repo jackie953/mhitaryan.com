@@ -18,6 +18,8 @@ interface ValuesScrollProps {
 // Scroll distance (in viewport heights) per value after the first. Kept short so
 // each value flips after a couple of wheel notches, not a long drag.
 const VH_PER_STEP = 0.32;
+// Where the content pins, as a fraction of viewport height from the top.
+const PIN_TOP = 0.28;
 
 // Inactive values: readable grey with only a hint of softness.
 const INACTIVE = { opacity: 0.3, filter: "blur(0.6px)" };
@@ -30,21 +32,26 @@ export function ValuesScroll({ label, values }: ValuesScrollProps) {
   const count = values.length;
   const [active, setActive] = useState(0);
 
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end end"],
-  });
+  const { scrollY } = useScroll();
 
   // Discrete steps (like the sticky-scroll-reveal pattern): the pinned range is
   // split into equal zones, one per value. Animating on change, not tying opacity
   // to scroll position, keeps it snappy and unambiguous — exactly one value is on.
-  const update = (p: number) => {
+  // Progress is measured from the wrapper's position: 0 when the content pins,
+  // 1 when it is released.
+  const update = () => {
+    const el = ref.current;
+    if (!el) return;
+    const vh = window.innerHeight;
+    const pinAt = vh * PIN_TOP;
+    const range = vh * VH_PER_STEP * (count - 1);
+    const p = (pinAt - el.getBoundingClientRect().top) / range;
     const next = Math.min(count - 1, Math.max(0, Math.floor(p * count)));
     setActive((prev) => (prev === next ? prev : next));
   };
-  useMotionValueEvent(scrollYProgress, "change", update);
+  useMotionValueEvent(scrollY, "change", update);
   useEffect(() => {
-    update(scrollYProgress.get());
+    update();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -72,19 +79,12 @@ export function ValuesScroll({ label, values }: ValuesScrollProps) {
   }
 
   return (
-    <div
-      ref={ref}
-      style={{ position: "relative", height: `${100 + (count - 1) * VH_PER_STEP * 100}svh` }}
-    >
-      <div
-        style={{
-          position: "sticky",
-          top: 0,
-          height: "100svh",
-          display: "flex",
-          alignItems: "center",
-        }}
-      >
+    // Wrapper = content height + a spacer that is the scroll runway. The content
+    // pins near the top of the viewport for exactly that runway, so there is no
+    // full-screen empty box above or below it. (A spacer, not padding: sticky
+    // only travels inside its parent's content box.)
+    <div ref={ref} style={{ position: "relative" }}>
+      <div style={{ position: "sticky", top: `${PIN_TOP * 100}svh`, paddingTop: 48 }}>
         <div className="values-scroll-grid">
           <div className="values-scroll-label">
             <SectionLabel>{label}</SectionLabel>
@@ -120,6 +120,7 @@ export function ValuesScroll({ label, values }: ValuesScrollProps) {
           </div>
         </div>
       </div>
+      <div aria-hidden style={{ height: `${(count - 1) * VH_PER_STEP * 100}svh` }} />
       <ValuesStyles />
     </div>
   );

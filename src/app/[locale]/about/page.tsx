@@ -58,31 +58,31 @@ export default async function About() {
         }}
       />
 
-      {/* Inline style block for footer-matched animated link */}
+      {/* Footer link hover animation replicate */}
       <style>{`
-        .footer-style-link {
+        .linkedin-footer-link {
           position: relative;
           display: inline-block;
-          color: var(--neutral-on-background-weak);
+          color: var(--neutral-on-background-strong, #000);
           text-decoration: none;
           transition: color 200ms ease;
         }
-        .footer-style-link::after {
+        .linkedin-footer-link::after {
           content: "";
           position: absolute;
           left: 0;
           bottom: 0.1em;
           width: 100%;
           height: 1px;
-          background: var(--brand-on-background-strong);
+          background: var(--brand-on-background-strong, #000);
           transform: scaleX(0);
           transform-origin: left;
           transition: transform 200ms ease;
         }
-        .footer-style-link:hover {
-          color: var(--brand-on-background-strong);
+        .linkedin-footer-link:hover {
+          color: var(--brand-on-background-strong, #000);
         }
-        .footer-style-link:hover::after {
+        .linkedin-footer-link:hover::after {
           transform: scaleX(1);
         }
       `}</style>
@@ -90,20 +90,25 @@ export default async function About() {
       {/* 1. About us */}
       <AboutSection 
         showDivider={false} 
-        left={<Heading variant="display-strong-m">{isSv ? "Om oss" : "About us"}</Heading>}
+        left={
+          <Heading variant="display-strong-m" onBackground="neutral-strong">
+            {isSv ? "Om oss" : "About us"}
+          </Heading>
+        }
       >
-        <Column gap="m" className="pt-0 md:pt-3">
-          <Text variant="body-default-l">
+        {/* Added inline style padding-top to push text down to lower baseline of heading */}
+        <Column gap="m" style={{ paddingTop: "1.25rem" }}>
+          <Text variant="body-default-l" onBackground="neutral-strong">
             {isSv
               ? "Mhitaryan grundades 2018 utifrån en enkel övertygelse: en bra strategi börjar med en korrekt läsning av läget. Vad och vem kan hjälpa eller hindra er, och varför? Vad förändras, och vad är bara brus?"
               : "Mhitaryan was founded in 2018 on a simple conviction: good strategy starts with an accurate read of the room. What and who can help or block you, and why? What is shifting, and what is just noise?"}
           </Text>
-          <Text variant="body-default-l">
+          <Text variant="body-default-l" onBackground="neutral-strong">
             {isSv
               ? "Vi gräver tills vi förstår, sedan gör vi det begripligt. Det är den kombinationen vi bygger på: djupgående research och bred kommunikationserfarenhet. Först får vi det rätt. Sedan ser vi till att det slår igenom."
               : "We dig until we understand, and then make it clear. That is the combination we are built on: deep research and extensive communications experience. First we get it right. Then we make it land."}
           </Text>
-          <Text variant="body-default-l">
+          <Text variant="body-default-l" onBackground="neutral-strong">
             {isSv
               ? "Vi arbetar med internationella företag och idéburna organisationer i Sverige, Norden, EU, USA och Mellanöstern. Vår erfarenhet sträcker sig över näringslivet, det civila samhället och påverkansarbete, vilket gör att vi kan se en fråga ur flera olika perspektiv."
               : "We work with international companies and mission-driven organizations in Sweden and across the Nordics, the EU, the US, and the Middle East. Our experience spans the corporate world, civil society and advocacy, so we can see an issue from more than one side."}
@@ -120,9 +125,9 @@ export default async function About() {
       {/* 3. Founder */}
       <AboutSection 
         left={
-          <Text variant="heading-strong-s" onBackground="neutral-weak" className="uppercase tracking-wider">
+          <Heading variant="heading-strong-m" onBackground="neutral-strong">
             {isSv ? "Grundare" : "Founder"}
-          </Text>
+          </Heading>
         }
       >
         <Column gap="l">
@@ -137,15 +142,17 @@ export default async function About() {
               style={{ width: "112px", height: "112px" }}
             />
             <Column gap="xs">
-              <Heading variant="heading-strong-l">Jacqueline Mhitaryan</Heading>
+              <Heading variant="heading-strong-l" onBackground="neutral-strong">
+                Jacqueline Mhitaryan
+              </Heading>
               <Text variant="body-default-l" onBackground="neutral-weak">
                 {isSv ? "Grundare" : "Founder"}
               </Text>
             </Column>
           </div>
 
-          {/* Bio copy + LinkedIn link with custom footer-hover effect */}
-          <Text variant="body-default-l">
+          {/* Bio copy + LinkedIn link with custom footer-style hover effect */}
+          <Text variant="body-default-l" onBackground="neutral-strong">
             {isSv ? (
               <>
                 I snart sex år har Jacqueline arbetat med research, omvärldsbevakning och politisk och regulatorisk analys för internationella kunder, däribland Fortune 500-bolag, med APCO Worldwide. Hon har också arbetat med research, kommunikation och påverkansarbete för idéburna organisationer och tankesmedjor, grundat och lett gräsrotsorganisationer med tusentals medlemmar, och har en bakgrund inom affärsutveckling. Hon har bott och arbetat i flera länder, med kunder i Europa, USA och Mellanöstern.{" "}
@@ -153,7 +160,7 @@ export default async function About() {
                   href="https://www.linkedin.com/in/mhitaryan/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="footer-style-link"
+                  className="linkedin-footer-link"
                 >
                   LinkedIn
                 </a>
@@ -166,7 +173,7 @@ export default async function About() {
                   href="https://www.linkedin.com/in/mhitaryan/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="footer-style-link"
+                  className="linkedin-footer-link"
                 >
                   LinkedIn
                 </a>

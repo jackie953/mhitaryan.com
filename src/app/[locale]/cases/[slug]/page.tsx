@@ -11,7 +11,6 @@ import {
   Tag,
   Text,
   Row,
-  RevealFx,
 } from "@once-ui-system/core";
 import { baseURL, about, person, cases } from "@/resources";
 import { formatDate } from "@/utils/formatDate";
@@ -119,7 +118,7 @@ export default async function CaseDetail({
           Back to cases
         </Button>
         {about.calendar.display && (
-          <RevealFx paddingTop="8" delay={0.4}>
+          <Column paddingTop="8">
             <Column
               position="relative"
               overflow="hidden"
@@ -147,7 +146,7 @@ export default async function CaseDetail({
                 </Row>
               </Button>
             </Column>
-          </RevealFx>
+          </Column>
         )}
       </Column>
     </>

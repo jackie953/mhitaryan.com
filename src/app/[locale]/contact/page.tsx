@@ -1,4 +1,4 @@
-import { Column, Row, Heading, Text, Icon, Meta, Schema, RevealFx } from "@once-ui-system/core";
+import { Column, Row, Heading, Text, Icon, Meta, Schema } from "@once-ui-system/core";
 import { getTranslations, getLocale } from "next-intl/server";
 import { baseURL, contact, person, getContactEmail, getLocation } from "@/resources";
 import { ContactForm } from "@/components/ContactForm";
@@ -35,7 +35,7 @@ export default async function Contact() {
         }}
       />
 
-      <RevealFx translateY="4" delay={0} fillWidth horizontal="center">
+      <Column fillWidth horizontal="center">
         <Column
           maxWidth="m"
           fillWidth
@@ -72,7 +72,7 @@ export default async function Contact() {
             </Column>
           </Row>
         </Column>
-      </RevealFx>
+      </Column>
     </Column>
   );
 }

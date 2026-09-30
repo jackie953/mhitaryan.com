@@ -106,7 +106,7 @@ function createHeading(as: "h1" | "h2" | "h3" | "h4" | "h5" | "h6") {
 function createParagraph({ children }: TextProps) {
   return (
     <Text
-      style={{ lineHeight: "175%" }}
+      style={{ lineHeight: "150%" }}
       variant="body-default-m"
       onBackground="neutral-medium"
       marginTop="8"
@@ -156,7 +156,7 @@ function createList({ children }: { children: ReactNode }) {
 
 function createListItem({ children }: { children: ReactNode }) {
   return (
-    <ListItem marginTop="4" marginBottom="8" style={{ lineHeight: "175%" }}>
+    <ListItem marginTop="4" marginBottom="8" style={{ lineHeight: "150%" }}>
       {children}
     </ListItem>
   );

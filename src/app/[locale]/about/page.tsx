@@ -10,7 +10,7 @@ import Image from "next/image";
 import { getLocale } from "next-intl/server";
 import { baseURL, about, person, getContactEmail } from "@/resources";
 import { BookingCTA } from "@/components/BookingCTA";
-import { AboutSection, SectionLabel } from "@/components/about/AboutSection";
+import { AboutSection } from "@/components/about/AboutSection";
 import { ValuesScroll } from "@/components/about/ValuesScroll";
 
 export async function generateMetadata() {
@@ -58,9 +58,41 @@ export default async function About() {
         }}
       />
 
+      {/* Inline style block for footer-matched animated link */}
+      <style>{`
+        .footer-style-link {
+          position: relative;
+          display: inline-block;
+          color: var(--neutral-on-background-weak);
+          text-decoration: none;
+          transition: color 200ms ease;
+        }
+        .footer-style-link::after {
+          content: "";
+          position: absolute;
+          left: 0;
+          bottom: 0.1em;
+          width: 100%;
+          height: 1px;
+          background: var(--brand-on-background-strong);
+          transform: scaleX(0);
+          transform-origin: left;
+          transition: transform 200ms ease;
+        }
+        .footer-style-link:hover {
+          color: var(--brand-on-background-strong);
+        }
+        .footer-style-link:hover::after {
+          transform: scaleX(1);
+        }
+      `}</style>
+
       {/* 1. About us */}
-      <AboutSection showDivider={false} left={<Heading variant="display-strong-m">{isSv ? "Om oss" : "About us"}</Heading>}>
-        <Column gap="m">
+      <AboutSection 
+        showDivider={false} 
+        left={<Heading variant="display-strong-m">{isSv ? "Om oss" : "About us"}</Heading>}
+      >
+        <Column gap="m" className="pt-0 md:pt-3">
           <Text variant="body-default-l">
             {isSv
               ? "Mhitaryan grundades 2018 utifrån en enkel övertygelse: en bra strategi börjar med en korrekt läsning av läget. Vad och vem kan hjälpa eller hindra er, och varför? Vad förändras, och vad är bara brus?"
@@ -86,7 +118,13 @@ export default async function About() {
       </Column>
 
       {/* 3. Founder */}
-      <AboutSection left={<SectionLabel>{isSv ? "Grundare" : "Founder"}</SectionLabel>}>
+      <AboutSection 
+        left={
+          <Text variant="heading-strong-s" onBackground="neutral-weak" className="uppercase tracking-wider">
+            {isSv ? "Grundare" : "Founder"}
+          </Text>
+        }
+      >
         <Column gap="l">
           {/* Portrait + Name/Title Header */}
           <div className="flex items-center gap-6">
@@ -106,7 +144,7 @@ export default async function About() {
             </Column>
           </div>
 
-          {/* Bio copy + LinkedIn link */}
+          {/* Bio copy + LinkedIn link with custom footer-hover effect */}
           <Text variant="body-default-l">
             {isSv ? (
               <>
@@ -115,7 +153,7 @@ export default async function About() {
                   href="https://www.linkedin.com/in/mhitaryan/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:underline transition-opacity text-neutral-weak hover:opacity-100"
+                  className="footer-style-link"
                 >
                   LinkedIn
                 </a>
@@ -128,7 +166,7 @@ export default async function About() {
                   href="https://www.linkedin.com/in/mhitaryan/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:underline transition-opacity text-neutral-weak hover:opacity-100"
+                  className="footer-style-link"
                 >
                   LinkedIn
                 </a>

@@ -138,7 +138,7 @@ export function ValuesScroll({ label, values }: ValuesScrollProps) {
 
         /* Larger display heading */
         .values-heading { 
-          font-size: clamp(2rem, 3.5vw, 2.75rem); 
+          font-size: 1.625rem !important; 
           line-height: 1.1; 
           font-weight: 600; 
           letter-spacing: -0.02em; 

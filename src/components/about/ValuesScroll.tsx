@@ -15,54 +15,38 @@ interface ValuesScrollProps {
   values: ValueItem[];
 }
 
-const READ_LINE = 0.38;
-
 const INACTIVE = { opacity: 0.25, filter: "blur(0.5px)" };
 const ACTIVE = { opacity: 1, filter: "blur(0px)" };
 const EASE = [0.22, 1, 0.36, 1] as const;
 
 export function ValuesScroll({ label, values }: ValuesScrollProps) {
   const reduce = useReducedMotion();
-  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const containerRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
   const { scrollY } = useScroll();
   const tickingRef = useRef(false);
 
   const update = () => {
     tickingRef.current = false;
+    if (!containerRef.current || values.length === 0) return;
+
+    const rect = containerRef.current.getBoundingClientRect();
     const vh = window.innerHeight;
-    const line = vh * READ_LINE;
 
-    if (!itemRefs.current[0]) return;
+    // Trigger region: Starts when top hits 60% of viewport, ends when bottom hits 30%
+    const start = vh * 0.6;
+    const end = vh * 0.3;
+    const totalDistance = rect.height + (start - end);
 
-    const firstRect = itemRefs.current[0].getBoundingClientRect();
+    // Calculate normalized progress (0 to 1) through the section
+    const currentPos = start - rect.top;
+    const progress = Math.max(0, Math.min(1, currentPos / totalDistance));
 
-    // If section hasn't reached the viewport trigger area yet
-    if (firstRect.top > vh * 0.75) {
-      setActive(-1);
-      return;
-    }
+    // Map progress smoothly into array indices (0, 1, 2, 3...)
+    const rawIndex = Math.floor(progress * values.length);
+    const targetIndex = Math.min(values.length - 1, Math.max(0, rawIndex));
 
-    // Find the item closest to the reading line
-    let best = 0;
-    let bestDist = Infinity;
-
-    itemRefs.current.forEach((el, i) => {
-      if (!el) return;
-      const r = el.getBoundingClientRect();
-      const d = Math.abs(r.top + r.height / 2 - line);
-      if (d < bestDist) {
-        bestDist = d;
-        best = i;
-      }
-    });
-
-    // Ensure the 1st word stays highlighted until scrolled down to the 2nd
-    if (firstRect.top > line - 20) {
-      best = 0;
-    }
-
-    setActive(best);
+    setActive(targetIndex);
   };
 
   const requestUpdate = () => {
@@ -84,7 +68,7 @@ export function ValuesScroll({ label, values }: ValuesScrollProps) {
   const duration = reduce ? 0 : 0.35;
 
   return (
-    <div className="values-grid">
+    <div className="values-grid" ref={containerRef}>
       <div className="values-label">
         <div className="values-label-sticky">
           <SectionLabel>{label}</SectionLabel>
@@ -94,13 +78,7 @@ export function ValuesScroll({ label, values }: ValuesScrollProps) {
         {values.map((item, i) => {
           const on = i === active;
           return (
-            <div
-              key={item.name}
-              className="values-item"
-              ref={(el) => {
-                itemRefs.current[i] = el;
-              }}
-            >
+            <div key={item.name} className="values-item">
               <motion.div
                 initial={false}
                 animate={on ? ACTIVE : INACTIVE}
@@ -132,21 +110,19 @@ export function ValuesScroll({ label, values }: ValuesScrollProps) {
       <style>{`
         .values-grid { display: flex; width: 100%; gap: 48px; align-items: flex-start; }
         .values-label { flex: 0 0 33%; max-width: 33%; padding-top: 6px; }
-        .values-label-sticky { position: sticky; top: ${READ_LINE * 100}svh; }
+        .values-label-sticky { position: sticky; top: 38svh; }
         
-        .values-list { flex: 1 1 0%; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
+        .values-list { flex: 1 1 0%; min-width: 0; display: flex; flex-direction: column; gap: 12px; }
         
-        /* Items aligned horizontally side-by-side on the baseline */
         .values-item { 
           display: flex; 
           align-items: baseline; 
           flex-wrap: wrap; 
           column-gap: 24px; 
           row-gap: 4px; 
-          padding: 8px 0; 
+          padding: 6px 0; 
         }
 
-        /* Proportional heading style */
         .values-heading { 
           font-size: 1.625rem !important; 
           line-height: 1.2; 

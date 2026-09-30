@@ -26,17 +26,17 @@ export async function generateMetadata() {
 }
 
 const valuesEn = [
-  { name: "Curious", line: "We ask the next question." },
-  { name: "Engaged", line: "We care how it turns out." },
-  { name: "Candid", line: "We say what we see." },
-  { name: "Independent", line: "We answer to the evidence." },
+  { name: "Curious", line: "We ask the questions others skip." },
+  { name: "Independent", line: "We follow the evidence, not an agenda." },
+  { name: "Candid", line: "We say what we see, even when it's uncomfortable." },
+  { name: "Generous", line: "We share what we know, and how we know it." },
 ];
 
 const valuesSv = [
-  { name: "Nyfikna", line: "Vi ställer nästa fråga." },
-  { name: "Engagerade", line: "Vi bryr oss om utfallet." },
-  { name: "Uppriktiga", line: "Vi säger som det är." },
-  { name: "Oberoende", line: "Vi svarar inför underlaget." },
+  { name: "Nyfikna", line: "Vi ställer frågor andra hoppar över." },
+  { name: "Oberoende", line: "Vi följer bevisen, inte en agenda." },
+  { name: "Uppriktiga", line: "Vi säger vad vi ser, även när det är obekvämt." },
+  { name: "Generösa", line: "Vi delar med oss av det vi vet, och hur vi vet det." },
 ];
 
 export default async function About() {

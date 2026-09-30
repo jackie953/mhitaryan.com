@@ -1,49 +1,70 @@
-import type React from "react";
-import { Column, Line, Row, Text } from "@once-ui-system/core";
+import { ReactNode } from "react";
+import { Line } from "@once-ui-system/core";
 
 interface AboutSectionProps {
-  /** Left column content — a page title Heading for the first section, or a SectionLabel for the rest */
-  left: React.ReactNode;
-  children: React.ReactNode;
-  /** Thin full-width divider above the section; omit for the first section on the page */
+  left: ReactNode;
+  children: ReactNode;
   showDivider?: boolean;
 }
 
 export function AboutSection({ left, children, showDivider = true }: AboutSectionProps) {
   return (
-    <Column fillWidth gap="xl">
-      {showDivider && <Line background="neutral-alpha-weak" />}
-      <Row fillWidth gap="xl" s={{ direction: "column" }}>
-        <Column
-          style={{ flex: "0 0 33%", maxWidth: "33%" }}
-          s={{ style: { flex: "1 1 100%", maxWidth: "100%" } }}
-        >
-          {left}
-        </Column>
-        <Column
-          gap="m"
-          style={{ flex: "1 1 0%", minWidth: 0 }}
-          s={{ style: { flex: "1 1 100%" } }}
-        >
-          {children}
-        </Column>
-      </Row>
-    </Column>
+    <div className="about-section-container">
+      {showDivider && (
+        <div className="about-section-divider">
+          <Line background="neutral-alpha-weak" />
+        </div>
+      )}
+      <div className="about-section-grid">
+        <div className="about-section-left">{left}</div>
+        <div className="about-section-right">{children}</div>
+      </div>
+      <style>{`
+        .about-section-container {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+        }
+        .about-section-divider {
+          width: 100%;
+          margin-bottom: 32px;
+        }
+        .about-section-grid {
+          display: flex;
+          width: 100%;
+          gap: 48px;
+          align-items: flex-start;
+        }
+        .about-section-left {
+          flex: 0 0 33%;
+          max-width: 33%;
+        }
+        .about-section-right {
+          flex: 1 1 0%;
+          min-width: 0;
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+        }
+        @media (max-width: 768px) {
+          .about-section-grid {
+            flex-direction: column;
+            gap: 16px;
+          }
+          .about-section-left {
+            flex: 1 1 100%;
+            max-width: 100%;
+          }
+        }
+      `}</style>
+    </div>
   );
 }
 
-export function SectionLabel({ children }: { children: React.ReactNode }) {
+export function SectionLabel({ children }: { children: ReactNode }) {
   return (
-    <Text
-      style={{
-        textTransform: "uppercase",
-        letterSpacing: "0.1em",
-        fontSize: "0.8rem",
-        fontWeight: 600,
-        color: "var(--neutral-on-background-weak)",
-      }}
-    >
+    <span className="text-xs font-semibold tracking-wider uppercase text-neutral-weak">
       {children}
-    </Text>
+    </span>
   );
 }

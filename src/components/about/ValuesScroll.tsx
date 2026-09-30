@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { motion, useMotionValueEvent, useReducedMotion, useScroll } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { Heading, Text } from "@once-ui-system/core";
 import { SectionLabel } from "./AboutSection";
 
@@ -22,48 +22,67 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 export function ValuesScroll({ label, values }: ValuesScrollProps) {
   const reduce = useReducedMotion();
   const containerRef = useRef<HTMLDivElement>(null);
+  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [active, setActive] = useState(0);
-  const { scrollY } = useScroll();
-  const tickingRef = useRef(false);
-
-  const update = () => {
-    tickingRef.current = false;
-    if (!containerRef.current || values.length === 0) return;
-
-    const rect = containerRef.current.getBoundingClientRect();
-    const vh = window.innerHeight;
-
-    // Trigger region: Starts when top hits 60% of viewport, ends when bottom hits 30%
-    const start = vh * 0.6;
-    const end = vh * 0.3;
-    const totalDistance = rect.height + (start - end);
-
-    // Calculate normalized progress (0 to 1) through the section
-    const currentPos = start - rect.top;
-    const progress = Math.max(0, Math.min(1, currentPos / totalDistance));
-
-    // Map progress smoothly into array indices (0, 1, 2, 3...)
-    const rawIndex = Math.floor(progress * values.length);
-    const targetIndex = Math.min(values.length - 1, Math.max(0, rawIndex));
-
-    setActive(targetIndex);
-  };
-
-  const requestUpdate = () => {
-    if (!tickingRef.current) {
-      tickingRef.current = true;
-      requestAnimationFrame(update);
-    }
-  };
-
-  useMotionValueEvent(scrollY, "change", requestUpdate);
 
   useEffect(() => {
-    requestUpdate();
-    window.addEventListener("resize", requestUpdate);
-    return () => window.removeEventListener("resize", requestUpdate);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    let animationFrameId: number;
+
+    const handleScroll = () => {
+      if (!containerRef.current || itemRefs.current.length === 0) return;
+
+      const vh = window.innerHeight;
+      const containerRect = containerRef.current.getBoundingClientRect();
+      const readLine = vh * 0.38;
+
+      // 1. Before reaching reading line -> Always highlight item 0 ("Curious")
+      if (containerRect.top > readLine - 20) {
+        setActive(0);
+        return;
+      }
+
+      // 2. Past the bottom of the section -> Keep last item highlighted
+      if (containerRect.bottom < readLine) {
+        setActive(values.length - 1);
+        return;
+      }
+
+      // 3. Middle range -> Find exact item closest to the reading line
+      let closestIndex = 0;
+      let smallestDistance = Infinity;
+
+      itemRefs.current.forEach((el, index) => {
+        if (!el) return;
+        const rect = el.getBoundingClientRect();
+        const itemCenter = rect.top + rect.height / 2;
+        const distance = Math.abs(itemCenter - readLine);
+
+        if (distance < smallestDistance) {
+          smallestDistance = distance;
+          closestIndex = index;
+        }
+      });
+
+      setActive(closestIndex);
+    };
+
+    const onScroll = () => {
+      cancelAnimationFrame(animationFrameId);
+      animationFrameId = requestAnimationFrame(handleScroll);
+    };
+
+    // Run initial state setup
+    handleScroll();
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, [values.length]);
 
   const duration = reduce ? 0 : 0.35;
 
@@ -78,7 +97,13 @@ export function ValuesScroll({ label, values }: ValuesScrollProps) {
         {values.map((item, i) => {
           const on = i === active;
           return (
-            <div key={item.name} className="values-item">
+            <div
+              key={item.name}
+              className="values-item"
+              ref={(el) => {
+                itemRefs.current[i] = el;
+              }}
+            >
               <motion.div
                 initial={false}
                 animate={on ? ACTIVE : INACTIVE}
@@ -120,7 +145,7 @@ export function ValuesScroll({ label, values }: ValuesScrollProps) {
           flex-wrap: wrap; 
           column-gap: 24px; 
           row-gap: 4px; 
-          padding: 6px 0; 
+          padding: 8px 0; 
         }
 
         .values-heading { 

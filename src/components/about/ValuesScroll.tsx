@@ -26,8 +26,10 @@ export function ValuesScroll({ label, values }: ValuesScrollProps) {
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [active, setActive] = useState(0);
   const { scrollY } = useScroll();
+  const tickingRef = useRef(false);
 
   const update = () => {
+    tickingRef.current = false;
     const vh = window.innerHeight;
     const line = vh * READ_LINE;
 
@@ -63,11 +65,19 @@ export function ValuesScroll({ label, values }: ValuesScrollProps) {
     setActive(best);
   };
 
-  useMotionValueEvent(scrollY, "change", update);
+  const requestUpdate = () => {
+    if (!tickingRef.current) {
+      tickingRef.current = true;
+      requestAnimationFrame(update);
+    }
+  };
+
+  useMotionValueEvent(scrollY, "change", requestUpdate);
+
   useEffect(() => {
-    update();
-    window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
+    requestUpdate();
+    window.addEventListener("resize", requestUpdate);
+    return () => window.removeEventListener("resize", requestUpdate);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -136,25 +146,25 @@ export function ValuesScroll({ label, values }: ValuesScrollProps) {
           padding: 8px 0; 
         }
 
-        /* Larger display heading */
+        /* Proportional heading style */
         .values-heading { 
           font-size: 1.625rem !important; 
-          line-height: 1.1; 
+          line-height: 1.2; 
           font-weight: 600; 
-          letter-spacing: -0.02em; 
+          letter-spacing: -0.01em; 
         }
 
         .values-subline { 
           display: flex; 
           align-items: center; 
-          padding-bottom: 4px; 
+          padding-bottom: 2px; 
         }
         
         @media (max-width: 768px) {
           .values-grid { flex-direction: column; gap: 16px; }
           .values-label { flex: 1 1 100%; max-width: 100%; padding-top: 0; }
           .values-label-sticky { position: static; }
-          .values-heading { font-size: 2.25rem; }
+          .values-heading { font-size: 1.375rem !important; }
           .values-item { flex-direction: column; align-items: flex-start; column-gap: 0; }
         }
       `}</style>

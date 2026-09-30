@@ -15,11 +15,10 @@ interface ValuesScrollProps {
   values: ValueItem[];
 }
 
-// The "reading line": the value closest to this height (fraction of the viewport)
-// is the lit one. The page scrolls normally — nothing is pinned or hijacked.
 const READ_LINE = 0.38;
 
-const INACTIVE = { opacity: 0.3, filter: "blur(0.6px)" };
+// Increased contrast on inactive items to match the reference image
+const INACTIVE = { opacity: 0.2, filter: "blur(0.5px)" };
 const ACTIVE = { opacity: 1, filter: "blur(0px)" };
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -43,7 +42,6 @@ export function ValuesScroll({ label, values }: ValuesScrollProps) {
         best = i;
       }
     });
-    // Far from every value (section off-screen): nothing is lit.
     const next = bestDist < vh * 0.4 ? best : -1;
     setActive((prev) => (prev === next ? prev : next));
   };
@@ -82,38 +80,41 @@ export function ValuesScroll({ label, values }: ValuesScrollProps) {
                 transition={{ duration, ease: EASE }}
                 style={{ willChange: "opacity, filter" }}
               >
-                <Heading as="h3" variant="heading-strong-l">
+                <Heading as="h3" variant="heading-strong-l" className="values-heading">
                   {item.name}
                 </Heading>
               </motion.div>
-              <motion.div
-                initial={false}
-                animate={{ opacity: on ? 1 : 0, x: on ? 0 : -8 }}
-                transition={{ duration, ease: EASE }}
-                aria-hidden={!on}
-              >
-                <Text variant="body-default-m" onBackground="neutral-weak">
-                  {item.line}
-                </Text>
-              </motion.div>
+              {item.line && (
+                <motion.div
+                  initial={false}
+                  animate={{ opacity: on ? 1 : 0, height: on ? "auto" : 0 }}
+                  transition={{ duration, ease: EASE }}
+                  aria-hidden={!on}
+                  className="overflow-hidden"
+                >
+                  <Text variant="body-default-m" onBackground="neutral-weak" className="pt-1 pb-2">
+                    {item.line}
+                  </Text>
+                </motion.div>
+              )}
             </div>
           );
         })}
       </div>
       <style>{`
-        .values-grid { display: flex; width: 100%; gap: 64px; align-items: stretch; }
-        .values-label { flex: 0 0 33%; max-width: 33%; padding-top: 1.75rem; }
+        .values-grid { display: flex; width: 100%; gap: 48px; align-items: flex-start; }
+        .values-label { flex: 0 0 33%; max-width: 33%; }
         .values-label-sticky { position: sticky; top: ${READ_LINE * 100}svh; }
-        .values-list { flex: 1 1 0%; min-width: 0; display: flex; flex-direction: column; }
         
-        /* Changed padding from 9svh 0 to 1.75rem 0 for realistic line height spacing */
-        .values-item { display: flex; align-items: flex-end; flex-wrap: wrap; column-gap: 16px; row-gap: 4px; padding: 1.75rem 0; }
+        /* Stacked tightly like continuous block text */
+        .values-list { flex: 1 1 0%; min-width: 0; display: flex; flex-direction: column; gap: 0; }
+        .values-item { padding: 0; margin: 0; display: flex; flex-direction: column; }
+        .values-heading { line-height: 1.15; padding: 2px 0; }
         
         @media (max-width: 768px) {
-          .values-grid { flex-direction: column; gap: 0; }
-          .values-label { flex: 1 1 100%; max-width: 100%; padding-top: 0; }
-          .values-label-sticky { position: static; padding-top: 24px; }
-          .values-item { padding: 1.25rem 0; min-height: auto; align-content: flex-start; }
+          .values-grid { flex-direction: column; gap: 16px; }
+          .values-label { flex: 1 1 100%; max-width: 100%; }
+          .values-label-sticky { position: static; }
         }
       `}</style>
     </div>

@@ -4,13 +4,14 @@ import {
   Text,
   Meta,
   Schema,
-  Row,
+  Line,
   RevealFx,
 } from "@once-ui-system/core";
 import { getLocale } from "next-intl/server";
 import { baseURL, about, person, getContactEmail } from "@/resources";
 import { BookingCTA } from "@/components/BookingCTA";
 import { AboutSection, SectionLabel } from "@/components/about/AboutSection";
+import { ValuesScroll } from "@/components/about/ValuesScroll";
 import { Testimonial1 } from "@/components/testimonial-1";
 import { testimonials } from "@/components/testimonial-1-data";
 
@@ -24,10 +25,24 @@ export async function generateMetadata() {
   });
 }
 
-const principles = ["Principle one", "Principle two", "Principle three", "Principle four"];
+const valuesEn = [
+  { name: "Curious", line: "We ask the next question." },
+  { name: "Engaged", line: "We care how it turns out." },
+  { name: "Candid", line: "We say what we see." },
+  { name: "Independent", line: "We answer to the evidence." },
+];
+
+const valuesSv = [
+  { name: "Nyfikna", line: "Vi ställer nästa fråga." },
+  { name: "Engagerade", line: "Vi bryr oss om utfallet." },
+  { name: "Uppriktiga", line: "Vi säger som det är." },
+  { name: "Oberoende", line: "Vi svarar inför underlaget." },
+];
 
 export default async function About() {
   const locale = await getLocale();
+  const isSv = locale === "sv";
+  const values = isSv ? valuesSv : valuesEn;
   return (
     <Column fillWidth gap="xl" className="page-about">
       <Schema
@@ -53,29 +68,11 @@ export default async function About() {
         </AboutSection>
       </RevealFx>
 
-      {/* 2. Our principles */}
-      <RevealFx translateY="4" delay={0.1} fillWidth>
-        <AboutSection left={<SectionLabel>Our principles</SectionLabel>}>
-          <Column gap="s">
-            {principles.slice(0, -1).map((principle) => (
-              <Text
-                key={principle}
-                style={{ fontSize: "2rem", fontWeight: 600, lineHeight: 1.2, color: "rgba(17, 5, 29, 0.25)" }}
-              >
-                {principle}
-              </Text>
-            ))}
-            <Row gap="16" vertical="end" wrap>
-              <Text style={{ fontSize: "2rem", fontWeight: 600, lineHeight: 1.2, color: "#11051D" }}>
-                {principles[principles.length - 1]}
-              </Text>
-              <Text variant="body-default-m" onBackground="neutral-weak">
-                Short line.
-              </Text>
-            </Row>
-          </Column>
-        </AboutSection>
-      </RevealFx>
+      {/* 2. Our values — pinned, scroll-driven reveal (no RevealFx wrapper, so sticky stays clean) */}
+      <Column fillWidth>
+        <Line background="neutral-alpha-weak" />
+        <ValuesScroll label={isSv ? "Våra värderingar" : "Our values"} values={values} />
+      </Column>
 
       {/* 3. Our approach */}
       {about.approach.display && (

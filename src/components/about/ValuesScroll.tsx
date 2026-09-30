@@ -15,130 +15,104 @@ interface ValuesScrollProps {
   values: ValueItem[];
 }
 
-// Scroll distance (in viewport heights) per value after the first. Kept short so
-// each value flips after a couple of wheel notches, not a long drag.
-const VH_PER_STEP = 0.32;
-// Where the content pins, as a fraction of viewport height from the top.
-const PIN_TOP = 0.28;
+// The "reading line": the value closest to this height (fraction of the viewport)
+// is the lit one. The page scrolls normally — nothing is pinned or hijacked.
+const READ_LINE = 0.38;
 
-// Inactive values: readable grey with only a hint of softness.
 const INACTIVE = { opacity: 0.3, filter: "blur(0.6px)" };
 const ACTIVE = { opacity: 1, filter: "blur(0px)" };
 const EASE = [0.22, 1, 0.36, 1] as const;
 
 export function ValuesScroll({ label, values }: ValuesScrollProps) {
-  const ref = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotion();
-  const count = values.length;
-  const [active, setActive] = useState(0);
-
+  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [active, setActive] = useState(-1);
   const { scrollY } = useScroll();
 
-  // Discrete steps (like the sticky-scroll-reveal pattern): the pinned range is
-  // split into equal zones, one per value. Animating on change, not tying opacity
-  // to scroll position, keeps it snappy and unambiguous — exactly one value is on.
-  // Progress is measured from the wrapper's position: 0 when the content pins,
-  // 1 when it is released.
   const update = () => {
-    const el = ref.current;
-    if (!el) return;
     const vh = window.innerHeight;
-    const pinAt = vh * PIN_TOP;
-    const range = vh * VH_PER_STEP * (count - 1);
-    const p = (pinAt - el.getBoundingClientRect().top) / range;
-    const next = Math.min(count - 1, Math.max(0, Math.floor(p * count)));
+    const line = vh * READ_LINE + 12;
+    let best = -1;
+    let bestDist = Infinity;
+    itemRefs.current.forEach((el, i) => {
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      const d = Math.abs(r.top + r.height / 2 - line);
+      if (d < bestDist) {
+        bestDist = d;
+        best = i;
+      }
+    });
+    // Far from every value (section off-screen): nothing is lit.
+    const next = bestDist < vh * 0.4 ? best : -1;
     setActive((prev) => (prev === next ? prev : next));
   };
+
   useMotionValueEvent(scrollY, "change", update);
   useEffect(() => {
     update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (reduce) {
-    return (
-      <div className="values-scroll-grid" style={{ padding: "var(--static-space-40, 40px) 0" }}>
-        <div className="values-scroll-label">
+  const duration = reduce ? 0 : 0.35;
+
+  return (
+    <div className="values-grid">
+      <div className="values-label">
+        <div className="values-label-sticky">
           <SectionLabel>{label}</SectionLabel>
         </div>
-        <div className="values-scroll-list">
-          {values.map((item) => (
-            <div key={item.name} className="values-scroll-row">
-              <Heading as="h3" variant="heading-strong-l">
-                {item.name}
-              </Heading>
-              <Text variant="body-default-m" onBackground="neutral-weak">
-                {item.line}
-              </Text>
+      </div>
+      <div className="values-list">
+        {values.map((item, i) => {
+          const on = i === active;
+          return (
+            <div
+              key={item.name}
+              className="values-item"
+              ref={(el) => {
+                itemRefs.current[i] = el;
+              }}
+            >
+              <motion.div
+                initial={false}
+                animate={on ? ACTIVE : INACTIVE}
+                transition={{ duration, ease: EASE }}
+                style={{ willChange: "opacity, filter" }}
+              >
+                <Heading as="h3" variant="heading-strong-l">
+                  {item.name}
+                </Heading>
+              </motion.div>
+              <motion.div
+                initial={false}
+                animate={{ opacity: on ? 1 : 0, x: on ? 0 : -8 }}
+                transition={{ duration, ease: EASE }}
+                aria-hidden={!on}
+              >
+                <Text variant="body-default-m" onBackground="neutral-weak">
+                  {item.line}
+                </Text>
+              </motion.div>
             </div>
-          ))}
-        </div>
-        <ValuesStyles />
+          );
+        })}
       </div>
-    );
-  }
-
-  return (
-    // Wrapper = content height + a spacer that is the scroll runway. The content
-    // pins near the top of the viewport for exactly that runway, so there is no
-    // full-screen empty box above or below it. (A spacer, not padding: sticky
-    // only travels inside its parent's content box.)
-    <div ref={ref} style={{ position: "relative" }}>
-      <div style={{ position: "sticky", top: `${PIN_TOP * 100}svh`, paddingTop: 48 }}>
-        <div className="values-scroll-grid">
-          <div className="values-scroll-label">
-            <SectionLabel>{label}</SectionLabel>
-          </div>
-          <div className="values-scroll-list">
-            {values.map((item, i) => {
-              const on = i === active;
-              return (
-                <div key={item.name} className="values-scroll-row">
-                  <motion.div
-                    initial={false}
-                    animate={on ? ACTIVE : INACTIVE}
-                    transition={{ duration: 0.35, ease: EASE }}
-                    style={{ willChange: "opacity, filter" }}
-                  >
-                    <Heading as="h3" variant="heading-strong-l">
-                      {item.name}
-                    </Heading>
-                  </motion.div>
-                  <motion.div
-                    initial={false}
-                    animate={{ opacity: on ? 1 : 0, x: on ? 0 : -8 }}
-                    transition={{ duration: 0.35, ease: EASE }}
-                    aria-hidden={!on}
-                  >
-                    <Text variant="body-default-m" onBackground="neutral-weak">
-                      {item.line}
-                    </Text>
-                  </motion.div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </div>
-      <div aria-hidden style={{ height: `${(count - 1) * VH_PER_STEP * 100}svh` }} />
-      <ValuesStyles />
+      <style>{`
+        .values-grid { display: flex; width: 100%; gap: 80px; align-items: stretch; }
+        .values-label { flex: 0 0 33%; max-width: 33%; padding-top: 9svh; }
+        .values-label-sticky { position: sticky; top: ${READ_LINE * 100}svh; }
+        .values-list { flex: 1 1 0%; min-width: 0; display: flex; flex-direction: column; }
+        .values-item { display: flex; align-items: flex-end; flex-wrap: wrap; column-gap: 16px; row-gap: 4px; padding: 9svh 0; }
+        @media (max-width: 768px) {
+          .values-grid { flex-direction: column; gap: 0; }
+          .values-label { flex: 1 1 100%; max-width: 100%; padding-top: 0; }
+          .values-label-sticky { position: static; padding-top: 24px; }
+          .values-item { padding: 6svh 0; min-height: 5rem; align-content: flex-start; }
+        }
+      `}</style>
     </div>
-  );
-}
-
-function ValuesStyles() {
-  return (
-    <style>{`
-      .values-scroll-grid { display: flex; width: 100%; gap: 80px; align-items: flex-start; }
-      .values-scroll-label { flex: 0 0 33%; max-width: 33%; }
-      .values-scroll-list { flex: 1 1 0%; min-width: 0; display: flex; flex-direction: column; gap: 20px; }
-      .values-scroll-row { display: flex; align-items: flex-end; flex-wrap: wrap; column-gap: 16px; row-gap: 4px; }
-      @media (max-width: 768px) {
-        .values-scroll-grid { flex-direction: column; gap: 28px; }
-        .values-scroll-label { flex: 1 1 100%; max-width: 100%; }
-        .values-scroll-list { gap: 12px; }
-        .values-scroll-row { min-height: 5rem; align-content: flex-start; }
-      }
-    `}</style>
   );
 }

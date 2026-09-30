@@ -32,7 +32,6 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({ structure, about }) =
     <Column
       left="0"
       style={{ top: "50%", transform: "translateY(-50%)", whiteSpace: "nowrap" }}
-      className="toc-fade-in"
       position="fixed"
       paddingLeft="24"
       gap="32"

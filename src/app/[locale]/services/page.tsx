@@ -3,14 +3,12 @@ import {
   Heading,
   Text,
   Schema,
-  RevealFx,
 } from "@once-ui-system/core";
 import { Meta } from "@once-ui-system/core";
 import { getLocale } from "next-intl/server";
 import { baseURL, getContactEmail } from "@/resources";
 import { AnchoredAccordion } from "@/components/services/AnchoredAccordion";
 import { BookingCTA } from "@/components/BookingCTA";
-import { ScrollReveal } from "@/components/ScrollReveal";
 
 export async function generateMetadata() {
   const title = "Services | Mhitaryan Consulting";
@@ -37,23 +35,23 @@ export default async function Services() {
       />
 
       {/* Page Header */}
-      <RevealFx translateY="4" delay={0} fillWidth>
+      <Column fillWidth>
         <Heading variant="display-strong-m">
           Our services
         </Heading>
-      </RevealFx>
+      </Column>
 
       {/* Intro Section */}
-      <RevealFx translateY="4" delay={0.1} fillWidth>
+      <Column fillWidth>
         <Column maxWidth="m" textVariant="body-default-l" fillWidth gap="m">
           <Text variant="body-default-l">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit.
           </Text>
         </Column>
-      </RevealFx>
+      </Column>
 
       {/* Research & Intelligence */}
-      <RevealFx translateY="4" delay={0.15} fillWidth>
+      <Column fillWidth>
       <Column maxWidth="m" fillWidth>
         <AnchoredAccordion id="research-intelligence" title="Research & Intelligence">
           <Column fillWidth gap="s">
@@ -85,10 +83,10 @@ export default async function Services() {
           </Column>
         </AnchoredAccordion>
       </Column>
-      </RevealFx>
+      </Column>
 
       {/* Strategic Communications */}
-      <RevealFx translateY="4" delay={0.2} fillWidth>
+      <Column fillWidth>
       <Column maxWidth="m" fillWidth>
         <AnchoredAccordion id="strategic-communications" title="Strategic Communications">
           <Column fillWidth gap="s">
@@ -120,16 +118,16 @@ export default async function Services() {
           </Column>
         </AnchoredAccordion>
       </Column>
-      </RevealFx>
+      </Column>
 
-      <ScrollReveal>
+      <>
         <BookingCTA
           title="Before your next move, talk to us."
           description=""
           buttonText="Get in touch"
           buttonHrefEncoded={Buffer.from(`mailto:${getContactEmail(locale)}`).toString("base64")}
         />
-      </ScrollReveal>
+      </>
     </Column>
   );
 }

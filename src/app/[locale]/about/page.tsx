@@ -5,14 +5,11 @@ import {
   Meta,
   Schema,
   Row,
-  RevealFx,
 } from "@once-ui-system/core";
 import { getLocale } from "next-intl/server";
 import { baseURL, about, person, getContactEmail } from "@/resources";
 import { BookingCTA } from "@/components/BookingCTA";
 import { AboutSection, SectionLabel } from "@/components/about/AboutSection";
-import { Testimonial1 } from "@/components/testimonial-1";
-import { testimonials } from "@/components/testimonial-1-data";
 
 export async function generateMetadata() {
   return Meta.generate({
@@ -45,16 +42,16 @@ export default async function About() {
       />
 
       {/* 1. About us */}
-      <RevealFx translateY="4" delay={0} fillWidth>
+      <Column fillWidth>
         <AboutSection showDivider={false} left={<Heading variant="display-strong-m">About us</Heading>}>
           <Text variant="body-default-l">
             Mhitaryan Consulting is a Stockholm-based strategic research and communications practice. We help clients understand and navigate complex environments across the Nordics, the EU and the US. Founded in 2018, we work with international companies and mission-driven organizations.
           </Text>
         </AboutSection>
-      </RevealFx>
+      </Column>
 
       {/* 2. Our principles */}
-      <RevealFx translateY="4" delay={0.1} fillWidth>
+      <Column fillWidth>
         <AboutSection left={<SectionLabel>Our principles</SectionLabel>}>
           <Column gap="s">
             {principles.slice(0, -1).map((principle) => (
@@ -75,11 +72,11 @@ export default async function About() {
             </Row>
           </Column>
         </AboutSection>
-      </RevealFx>
+      </Column>
 
       {/* 3. Our approach */}
       {about.approach.display && (
-        <RevealFx translateY="4" delay={0.15} fillWidth>
+        <Column fillWidth>
           <AboutSection left={<SectionLabel>Our approach</SectionLabel>}>
             <Column textVariant="body-default-l" gap="m">
               {about.approach.description}
@@ -93,11 +90,11 @@ export default async function About() {
               </Text>
             </Column>
           </AboutSection>
-        </RevealFx>
+        </Column>
       )}
 
       {/* 4. Founder */}
-      <RevealFx translateY="4" delay={0.2} fillWidth>
+      <Column fillWidth>
         <AboutSection left={<SectionLabel>Founder</SectionLabel>}>
           <Column gap="s">
             <Heading variant="heading-strong-l">{person.name}</Heading>
@@ -121,24 +118,17 @@ export default async function About() {
             CV available upon request.
           </Text>
         </AboutSection>
-      </RevealFx>
+      </Column>
 
-      {/* 5. Kind words */}
-      <RevealFx translateY="4" delay={0.25} fillWidth>
-        <AboutSection left={<SectionLabel>Kind words</SectionLabel>}>
-          <Testimonial1 testimonials={testimonials} />
-        </AboutSection>
-      </RevealFx>
-
-      {/* 6. CTA */}
-      <RevealFx translateY="4" delay={0.3} fillWidth>
+      {/* 5. CTA */}
+      <Column fillWidth>
         <BookingCTA
           title="Before your next move, talk to us."
           description=""
           buttonText="Get in touch"
           buttonHrefEncoded={Buffer.from(`mailto:${getContactEmail(locale)}`).toString("base64")}
         />
-      </RevealFx>
+      </Column>
     </Column>
   );
 }

@@ -10,7 +10,7 @@ import Image from "next/image";
 import { getLocale } from "next-intl/server";
 import { baseURL, about, person, getContactEmail } from "@/resources";
 import { BookingCTA } from "@/components/BookingCTA";
-import { AboutSection } from "@/components/about/AboutSection";
+import { AboutSection, SectionLabel } from "@/components/about/AboutSection";
 import { ValuesScroll } from "@/components/about/ValuesScroll";
 
 export async function generateMetadata() {
@@ -43,7 +43,7 @@ export default async function About() {
   const values = isSv ? valuesSv : valuesEn;
 
   return (
-    <Column fillWidth gap="xl" className="page-about">
+    <Column fillWidth gap="l" className="page-about">
       <Schema
         as="webPage"
         baseURL={baseURL}
@@ -58,7 +58,7 @@ export default async function About() {
         }}
       />
 
-      {/* Footer link hover animation replicate */}
+      {/* Replicates exact footer hover underline effect */}
       <style>{`
         .linkedin-footer-link {
           position: relative;
@@ -96,8 +96,7 @@ export default async function About() {
           </Heading>
         }
       >
-        {/* Added inline style padding-top to push text down to lower baseline of heading */}
-        <Column gap="m" style={{ paddingTop: "1.25rem" }}>
+        <Column gap="m" className="pt-2 md:pt-4 max-w-2xl">
           <Text variant="body-default-l" onBackground="neutral-strong">
             {isSv
               ? "Mhitaryan grundades 2018 utifrån en enkel övertygelse: en bra strategi börjar med en korrekt läsning av läget. Vad och vem kan hjälpa eller hindra er, och varför? Vad förändras, och vad är bara brus?"
@@ -116,22 +115,24 @@ export default async function About() {
         </Column>
       </AboutSection>
 
-      {/* 2. Our values */}
-      <Column fillWidth>
+      {/* 2. Our values (Line pulled up closer to top text via tight vertical margin) */}
+      <Column fillWidth className="mt-4 mb-2">
         <Line background="neutral-alpha-weak" />
-        <ValuesScroll label={isSv ? "Våra värderingar" : "Our values"} values={values} />
+        <div className="pt-6">
+          <ValuesScroll label={isSv ? "VÅRA VÄRDERINGAR" : "OUR VALUES"} values={values} />
+        </div>
       </Column>
 
       {/* 3. Founder */}
       <AboutSection 
         left={
-          <Heading variant="heading-strong-m" onBackground="neutral-strong">
-            {isSv ? "Grundare" : "Founder"}
-          </Heading>
+          <SectionLabel>
+            {isSv ? "GRUNDARE" : "FOUNDER"}
+          </SectionLabel>
         }
       >
-        <Column gap="l">
-          {/* Portrait + Name/Title Header */}
+        <Column gap="l" className="max-w-2xl">
+          {/* Portrait + Name Header */}
           <div className="flex items-center gap-6">
             <Image
               src="/images/avatar.jpg"
@@ -141,17 +142,12 @@ export default async function About() {
               className="rounded-full object-cover shrink-0"
               style={{ width: "112px", height: "112px" }}
             />
-            <Column gap="xs">
-              <Heading variant="heading-strong-l" onBackground="neutral-strong">
-                Jacqueline Mhitaryan
-              </Heading>
-              <Text variant="body-default-l" onBackground="neutral-weak">
-                {isSv ? "Grundare" : "Founder"}
-              </Text>
-            </Column>
+            <Heading variant="heading-strong-l" onBackground="neutral-strong">
+              Jacqueline Mhitaryan
+            </Heading>
           </div>
 
-          {/* Bio copy + LinkedIn link with custom footer-style hover effect */}
+          {/* Bio copy + LinkedIn link */}
           <Text variant="body-default-l" onBackground="neutral-strong">
             {isSv ? (
               <>

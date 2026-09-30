@@ -4,12 +4,14 @@ import {
   Text,
   Meta,
   Schema,
-  Row,
+  Line,
 } from "@once-ui-system/core";
+import Image from "next/image";
 import { getLocale } from "next-intl/server";
 import { baseURL, about, person, getContactEmail } from "@/resources";
 import { BookingCTA } from "@/components/BookingCTA";
 import { AboutSection, SectionLabel } from "@/components/about/AboutSection";
+import { ValuesScroll } from "@/components/about/ValuesScroll";
 
 export async function generateMetadata() {
   return Meta.generate({
@@ -21,10 +23,25 @@ export async function generateMetadata() {
   });
 }
 
-const principles = ["Principle one", "Principle two", "Principle three", "Principle four"];
+const valuesEn = [
+  { name: "Curious", line: "We ask the questions others skip." },
+  { name: "Independent", line: "We follow the evidence, not an agenda." },
+  { name: "Candid", line: "We say what we see, even when it's uncomfortable." },
+  { name: "Generous", line: "We share what we know, and how we know it." },
+];
+
+const valuesSv = [
+  { name: "Nyfikna", line: "Vi ställer frågor andra hoppar över." },
+  { name: "Oberoende", line: "Vi följer bevisen, inte en agenda." },
+  { name: "Uppriktiga", line: "Vi säger vad vi ser, även när det är obekvämt." },
+  { name: "Generösa", line: "Vi delar med oss av det vi vet, och hur vi vet det." },
+];
 
 export default async function About() {
   const locale = await getLocale();
+  const isSv = locale === "sv";
+  const values = isSv ? valuesSv : valuesEn;
+
   return (
     <Column fillWidth gap="xl" className="page-about">
       <Schema
@@ -42,93 +59,93 @@ export default async function About() {
       />
 
       {/* 1. About us */}
-      <Column fillWidth>
-        <AboutSection showDivider={false} left={<Heading variant="display-strong-m">About us</Heading>}>
+      <AboutSection showDivider={false} left={<Heading variant="display-strong-m">{isSv ? "Om oss" : "About us"}</Heading>}>
+        <Column gap="m">
           <Text variant="body-default-l">
-            Mhitaryan Consulting is a Stockholm-based strategic research and communications practice. We help clients understand and navigate complex environments across the Nordics, the EU and the US. Founded in 2018, we work with international companies and mission-driven organizations.
+            {isSv
+              ? "Mhitaryan grundades 2018 utifrån en enkel övertygelse: en bra strategi börjar med en korrekt läsning av läget. Vad och vem kan hjälpa eller hindra er, och varför? Vad förändras, och vad är bara brus?"
+              : "Mhitaryan was founded in 2018 on a simple conviction: good strategy starts with an accurate read of the room. What and who can help or block you, and why? What is shifting, and what is just noise?"}
           </Text>
-        </AboutSection>
-      </Column>
-
-      {/* 2. Our principles */}
-      <Column fillWidth>
-        <AboutSection left={<SectionLabel>Our principles</SectionLabel>}>
-          <Column gap="s">
-            {principles.slice(0, -1).map((principle) => (
-              <Text
-                key={principle}
-                style={{ fontSize: "2rem", fontWeight: 600, lineHeight: 1.2, color: "rgba(17, 5, 29, 0.25)" }}
-              >
-                {principle}
-              </Text>
-            ))}
-            <Row gap="16" vertical="end" wrap>
-              <Text style={{ fontSize: "2rem", fontWeight: 600, lineHeight: 1.2, color: "#11051D" }}>
-                {principles[principles.length - 1]}
-              </Text>
-              <Text variant="body-default-m" onBackground="neutral-weak">
-                Short line.
-              </Text>
-            </Row>
-          </Column>
-        </AboutSection>
-      </Column>
-
-      {/* 3. Our approach */}
-      {about.approach.display && (
-        <Column fillWidth>
-          <AboutSection left={<SectionLabel>Our approach</SectionLabel>}>
-            <Column textVariant="body-default-l" gap="m">
-              {about.approach.description}
-            </Column>
-            <Column gap="m">
-              <Heading as="h2" variant="heading-strong-l">
-                How We Work
-              </Heading>
-              <Text variant="body-default-l">
-                Research and communications rarely work in isolation. Most engagements involve both – understanding the landscape and then doing something with that understanding. We take on both one-off projects and ongoing retainers, for new and existing clients.
-              </Text>
-            </Column>
-          </AboutSection>
+          <Text variant="body-default-l">
+            {isSv
+              ? "Vi gräver tills vi förstår, sedan gör vi det begripligt. Det är den kombinationen vi bygger på: djupgående research och bred kommunikationserfarenhet. Först får vi det rätt. Sedan ser vi till att det slår igenom."
+              : "We dig until we understand, and then make it clear. That is the combination we are built on: deep research and extensive communications experience. First we get it right. Then we make it land."}
+          </Text>
+          <Text variant="body-default-l">
+            {isSv
+              ? "Vi arbetar med internationella företag och idéburna organisationer i Sverige, Norden, EU, USA och Mellanöstern. Vår erfarenhet sträcker sig över näringslivet, det civila samhället och påverkansarbete, vilket gör att vi kan se en fråga ur flera olika perspektiv."
+              : "We work with international companies and mission-driven organizations in Sweden and across the Nordics, the EU, the US, and the Middle East. Our experience spans the corporate world, civil society and advocacy, so we can see an issue from more than one side."}
+          </Text>
         </Column>
-      )}
+      </AboutSection>
 
-      {/* 4. Founder */}
+      {/* 2. Our values */}
       <Column fillWidth>
-        <AboutSection left={<SectionLabel>Founder</SectionLabel>}>
-          <Column gap="s">
-            <Heading variant="heading-strong-l">{person.name}</Heading>
-            <Text variant="body-default-l" onBackground="neutral-weak">
-              Founder
-            </Text>
-            <Text variant="body-default-l" onBackground="neutral-weak">
-              Clear thinking. Direct communication.
-            </Text>
-          </Column>
-          {about.aboutSection.display && (
-            <Column textVariant="body-default-l" gap="m">
-              {about.aboutSection.description}
+        <Line background="neutral-alpha-weak" />
+        <ValuesScroll label={isSv ? "Våra värderingar" : "Our values"} values={values} />
+      </Column>
+
+      {/* 3. Founder */}
+      <AboutSection left={<SectionLabel>{isSv ? "Grundare" : "Founder"}</SectionLabel>}>
+        <Column gap="l">
+          {/* Portrait + Name/Title Header */}
+          <div className="flex items-center gap-6">
+            <Image
+              src="/images/avatar.jpg"
+              alt="Jacqueline Mhitaryan"
+              width={112}
+              height={112}
+              className="rounded-full object-cover shrink-0"
+              style={{ width: "112px", height: "112px" }}
+            />
+            <Column gap="xs">
+              <Heading variant="heading-strong-l">Jacqueline Mhitaryan</Heading>
+              <Text variant="body-default-l" onBackground="neutral-weak">
+                {isSv ? "Grundare" : "Founder"}
+              </Text>
             </Column>
-          )}
-          <Text
-            variant="body-default-l"
-            onBackground="neutral-weak"
-            style={{ fontStyle: 'italic' }}
-          >
-            CV available upon request.
-          </Text>
-        </AboutSection>
-      </Column>
+          </div>
 
-      {/* 5. CTA */}
-      <Column fillWidth>
-        <BookingCTA
-          title="Before your next move, talk to us."
-          description=""
-          buttonText="Get in touch"
-          buttonHrefEncoded={Buffer.from(`mailto:${getContactEmail(locale)}`).toString("base64")}
-        />
-      </Column>
+          {/* Bio copy + LinkedIn link */}
+          <Text variant="body-default-l">
+            {isSv ? (
+              <>
+                I snart sex år har Jacqueline arbetat med research, omvärldsbevakning och politisk och regulatorisk analys för internationella kunder, däribland Fortune 500-bolag, med APCO Worldwide. Hon har också arbetat med research, kommunikation och påverkansarbete för idéburna organisationer och tankesmedjor, grundat och lett gräsrotsorganisationer med tusentals medlemmar, och har en bakgrund inom affärsutveckling. Hon har bott och arbetat i flera länder, med kunder i Europa, USA och Mellanöstern.{" "}
+                <a
+                  href="https://www.linkedin.com/in/mhitaryan/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:underline transition-opacity text-neutral-weak hover:opacity-100"
+                >
+                  LinkedIn
+                </a>
+                .
+              </>
+            ) : (
+              <>
+                For almost six years, Jacqueline has worked on research, monitoring and political and regulatory analysis for international clients, including Fortune 500 companies, with APCO Worldwide. She has also worked in research, communications and advocacy for NGOs and think tanks, founded and led grassroots organizations with thousands of members, and has a background in business development. She has lived and worked in several countries, with clients across Europe, the US and the Middle East.{" "}
+                <a
+                  href="https://www.linkedin.com/in/mhitaryan/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:underline transition-opacity text-neutral-weak hover:opacity-100"
+                >
+                  LinkedIn
+                </a>
+                .
+              </>
+            )}
+          </Text>
+        </Column>
+      </AboutSection>
+
+      {/* 4. CTA */}
+      <BookingCTA
+        title={isSv ? "Prata med oss inför ert nästa drag." : "Before your next move, talk to us."}
+        description=""
+        buttonText={isSv ? "Ta kontakt" : "Get in touch"}
+        buttonHrefEncoded={Buffer.from(`mailto:${getContactEmail(locale)}`).toString("base64")}
+      />
     </Column>
   );
 }

@@ -5,10 +5,10 @@ export default function NotFound() {
     <Column
       as="section"
       fillWidth
-      alignHorizontal="center"
-      alignVertical="center"
+      horizontal="center"
+      vertical="center"
       gap="m"
-      className="py-32"
+      style={{ minHeight: "60vh" }}
     >
       <Text variant="display-strong-xl" onBackground="neutral-strong">
         404

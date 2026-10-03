@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Button, Heading, Text, Column, Mask } from "@once-ui-system/core";
 import styles from "./BookingCTA.module.scss";
-import type { opacity, SpacingToken } from "@once-ui-system/core";
+import type { Opacity, SpacingToken } from "@once-ui-system/core";
 
 interface BookingCTAConfig {
   display: boolean;

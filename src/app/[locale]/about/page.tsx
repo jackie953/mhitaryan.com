@@ -8,8 +8,7 @@ import {
 } from "@once-ui-system/core";
 import Image from "next/image";
 import { getLocale } from "next-intl/server";
-import { baseURL, about, person, getContactEmail } from "@/resources";
-import { BookingCTA } from "@/components/BookingCTA";
+import { baseURL, about, person } from "@/resources";
 import { AboutSection, SectionLabel } from "@/components/about/AboutSection";
 import { ValuesScroll } from "@/components/about/ValuesScroll";
 
@@ -58,7 +57,7 @@ export default async function About() {
         }}
       />
 
-      {/* Replicates exact footer hover underline effect */}
+      {/* Underline hover effect for LinkedIn link */}
       <style>{`
         .linkedin-footer-link {
           position: relative;
@@ -96,18 +95,18 @@ export default async function About() {
           </Heading>
         }
       >
-        <Column gap="m" className="pt-2 md:pt-4 max-w-2xl">
-          <Text variant="body-default-l" onBackground="neutral-strong">
+        <Column gap="s" className="pt-2 md:pt-4 max-w-xl">
+          <Text variant="body-default-m" onBackground="neutral-strong">
             {isSv
               ? "Mhitaryan grundades 2018 utifrån en enkel övertygelse: en bra strategi börjar med en korrekt läsning av läget. Vad och vem kan hjälpa eller hindra er, och varför? Vad förändras, och vad är bara brus?"
               : "Mhitaryan was founded in 2018 on a simple conviction: good strategy starts with an accurate read of the room. What and who can help or block you, and why? What is shifting, and what is just noise?"}
           </Text>
-          <Text variant="body-default-l" onBackground="neutral-strong">
+          <Text variant="body-default-m" onBackground="neutral-strong">
             {isSv
               ? "Vi gräver tills vi förstår, sedan gör vi det begripligt. Det är den kombinationen vi bygger på: djupgående research och bred kommunikationserfarenhet. Först får vi det rätt. Sedan ser vi till att det slår igenom."
               : "We dig until we understand, and then make it clear. That is the combination we are built on: deep research and extensive communications experience. First we get it right. Then we make it land."}
           </Text>
-          <Text variant="body-default-l" onBackground="neutral-strong">
+          <Text variant="body-default-m" onBackground="neutral-strong">
             {isSv
               ? "Vi arbetar med internationella företag och idéburna organisationer i Sverige, Norden, EU, USA och Mellanöstern. Vår erfarenhet sträcker sig över näringslivet, det civila samhället och påverkansarbete, vilket gör att vi kan se en fråga ur flera olika perspektiv."
               : "We work with international companies and mission-driven organizations in Sweden and across the Nordics, the EU, the US, and the Middle East. Our experience spans the corporate world, civil society and advocacy, so we can see an issue from more than one side."}
@@ -115,8 +114,8 @@ export default async function About() {
         </Column>
       </AboutSection>
 
-      {/* 2. Our values (Line pulled up closer to top text via tight vertical margin) */}
-      <Column fillWidth className="mt-4 mb-2">
+      {/* 2. Our values */}
+      <Column fillWidth className="mt-2 mb-2">
         <Line background="neutral-alpha-weak" />
         <div className="pt-6">
           <ValuesScroll label={isSv ? "VÅRA VÄRDERINGAR" : "OUR VALUES"} values={values} />
@@ -131,24 +130,24 @@ export default async function About() {
           </SectionLabel>
         }
       >
-        <Column gap="l" className="max-w-2xl">
+        <Column gap="m" className="max-w-xl">
           {/* Portrait + Name Header */}
           <div className="flex items-center gap-6">
             <Image
               src="/images/avatar.jpg"
               alt="Jacqueline Mhitaryan"
-              width={112}
-              height={112}
+              width={100}
+              height={100}
               className="rounded-full object-cover shrink-0"
-              style={{ width: "112px", height: "112px" }}
+              style={{ width: "100px", height: "100px" }}
             />
             <Heading variant="heading-strong-l" onBackground="neutral-strong">
               Jacqueline Mhitaryan
             </Heading>
           </div>
 
-          {/* Bio copy + LinkedIn link */}
-          <Text variant="body-default-l" onBackground="neutral-strong">
+          {/* Bio copy */}
+          <Text variant="body-default-m" onBackground="neutral-strong">
             {isSv ? (
               <>
                 I snart sex år har Jacqueline arbetat med research, omvärldsbevakning och politisk och regulatorisk analys för internationella kunder, däribland Fortune 500-bolag, med APCO Worldwide. Hon har också arbetat med research, kommunikation och påverkansarbete för idéburna organisationer och tankesmedjor, grundat och lett gräsrotsorganisationer med tusentals medlemmar, och har en bakgrund inom affärsutveckling. Hon har bott och arbetat i flera länder, med kunder i Europa, USA och Mellanöstern.{" "}
@@ -179,14 +178,6 @@ export default async function About() {
           </Text>
         </Column>
       </AboutSection>
-
-      {/* 4. CTA */}
-      <BookingCTA
-        title={isSv ? "Prata med oss inför ert nästa drag." : "Before your next move, talk to us."}
-        description=""
-        buttonText={isSv ? "Ta kontakt" : "Get in touch"}
-        buttonHrefEncoded={Buffer.from(`mailto:${getContactEmail(locale)}`).toString("base64")}
-      />
     </Column>
   );
 }

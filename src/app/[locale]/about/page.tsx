@@ -42,7 +42,7 @@ export default async function About() {
   const values = isSv ? valuesSv : valuesEn;
 
   return (
-    <Column fillWidth gap="l" className="page-about">
+    <Column fillWidth gap="l" className="page-about" style={{ paddingTop: "4rem" }}>
       <Schema
         as="webPage"
         baseURL={baseURL}
@@ -117,8 +117,8 @@ export default async function About() {
       {/* 2. Our values */}
       <Column fillWidth className="mt-2 mb-2">
         <Line background="neutral-alpha-weak" />
-        <div className="pt-6">
-          <ValuesScroll label={isSv ? "VÅRA VÄRDERINGAR" : "OUR VALUES"} values={values} />
+        <div className="pt-6 text-lg md:text-xl font-bold tracking-wider normal-case">
+          <ValuesScroll label={isSv ? "Våra värderingar" : "Our values"} values={values} />
         </div>
       </Column>
 

@@ -63,7 +63,7 @@ export function AboutSection({ left, children, showDivider = true }: AboutSectio
 
 export function SectionLabel({ children }: { children: ReactNode }) {
   return (
-    <span className="text-xs font-semibold tracking-wider uppercase text-neutral-weak">
+    <span className="text-lg md:text-xl font-bold tracking-wider uppercase text-gray-900">
       {children}
     </span>
   );

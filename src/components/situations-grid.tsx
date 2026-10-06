@@ -37,39 +37,39 @@ interface SituationItem {
 
 const situations: SituationItem[] = [
   {
-    id: "nordics-entry",
-    title: "Entering Sweden or the Nordics",
-    description: "Sweden and the Nordics are consensus-driven and highly structured. We map decision-makers across public and private sectors, analyze regulatory conditions, and identify key stakeholders.",
+    id: "market-entry",
+    title: "Entering Sweden",
+    description: "Sweden is small and consensus-driven, and local dynamics run alongside EU rules. Whether you're establishing a presence, launching a project or adapting a brand, the first question is which issues and stakeholders matter.",
     tag: "MARKET ENTRY"
   },
   {
     id: "cross-border",
-    title: "Operating Cross-Border or Expanding Abroad",
-    description: "Different markets operate by different rules and networks. We deliver comparative political and regulatory landscape analysis across the EU, US, and regional markets to help you expand smoothly.",
+    title: "Operating cross-border",
+    description: "The rules, norms and networks rarely travel with you. Whether moving further into the EU or entering the US, the task is working out what matters in the new market and what doesn't.",
     tag: "EXPANSION"
   },
   {
     id: "regulatory-shift",
-    title: "A Regulatory Shift is Approaching",
-    description: "Rules are changing, and you need to assess the operational impact early. We track policy processes from proposal to enforcement, identifying key decision windows and translating legislative shifts.",
+    title: "Regulatory uncertainty",
+    description: "Laws, regulations, draft proposals, political signals. We sort what is binding today from what is still on its way, and tell you what it means for your operations.",
     tag: "REGULATORY"
   },
   {
-    id: "political-shift",
-    title: "The Political Landscape is Shifting",
-    description: "Public sentiment and political narratives move fast. We monitor debates across politics, media, and civil society to separate temporary noise from real policy momentum.",
-    tag: "POLITICAL"
+    id: "opinion",
+    title: "Shifting narratives",
+    description: "Narratives and sentiments move fast, and so can the perception of your organization or sector. The work is telling temporary noise from lasting risk, and deciding whether to speak or stay quiet.",
+    tag: "OPINION"
   },
   {
     id: "geopolitical-risk",
-    title: "Geopolitical & Market Risk is Elevating",
-    description: "Trade dynamics, sanctions, energy policy, and security considerations are altering your operational environment. We provide ongoing monitoring and risk analysis to keep leadership updated.",
-    tag: "RISK & INTELLIGENCE"
+    title: "Changing risk picture",
+    description: "An election, a sanctions regime, a trade fight, a security shift. What is real, and what does it mean for your operations, partners and reputation?",
+    tag: "RISK"
   },
   {
     id: "advocacy-position",
-    title: "Advancing a Policy Position",
-    description: "Moving an issue requires knowing where and when a battle is winnable. Drawing on extensive policy experience, we map power structures, shape core narratives, and build advocacy strategies.",
+    title: "Advancing a position",
+    description: "Progress depends on where power sits and when a window opens. It starts with understanding the landscape before committing to a position or a campaign.",
     tag: "ADVOCACY"
   },
 ];
@@ -94,7 +94,7 @@ export function SituationsGrid({ className }: SituationsGridProps) {
               {/* Row 1: Upper right tag in its own dedicated row */}
               <div className="flex justify-end w-full mb-3">
                 {item.tag && (
-                  <span className="text-[10px] md:text-[11px] font-semibold tracking-wider uppercase text-muted-foreground/60 select-none">
+                  <span className="text-[10px] md:text-[11px] font-semibold tracking-wider uppercase text-muted-foreground/80 select-none">
                     {item.tag}
                   </span>
                 )}
@@ -106,7 +106,7 @@ export function SituationsGrid({ className }: SituationsGridProps) {
               </h3>
 
               {/* Row 3: Description */}
-              <p className="mt-3 text-sm leading-relaxed text-muted-foreground/90">
+              <p className="mt-3 text-sm leading-relaxed text-black/80 dark:text-white/80 transition-colors group-hover:text-[#5A286F]/90">
                 {item.description}
               </p>
             </div>

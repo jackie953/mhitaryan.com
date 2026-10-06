@@ -42,54 +42,58 @@ export default async function Services() {
     {
       id: "research-intelligence",
       number: "01",
-      title: isSv ? "Research & Omvärldsanalys" : "Research & Intelligence",
+      title: isSv ? "Research & omvärldsanalys" : "Research & intelligence",
       description: isSv
         ? "Förstå landskapet innan ni agerar. Vi kartlägger maktdynamiker, följer narrativ och identifierar mönster över sektorer, intressenter och geografier – med särskild kompetens inom EU, Sverige, Spanien och internationella miljöer som USA."
-        : "Making sense of a landscape before you move through it. We map power dynamics, track narratives, and identify patterns across sectors, stakeholders, and geographies – drawing on deep familiarity with EU, Swedish, and Spanish policy contexts, as well as international environments including the US.",
+        : "Making sense of a landscape before you move through it. We work out who holds power, what binds you and where the debate is heading, drawing on deep familiarity with Swedish,  Spanish, and EU policy contexts, and international environments including the US.",
       bullets: isSv
         ? [
-            "Research och open-source intelligence (OSINT), inklusive sociala medier och webb-intelligens",
-            "Kartläggning av intressenter och nätverk – vem som fattar besluten och var inflytandet finns",
-            "Policy- och regulatorisk analys – lagstiftningsprocesser och strategiska konsekvenser",
-            "Marknads- och konkurrentanalys",
-            "Löpande omvärlds-, medie- och policymonitorering",
+            "Översiktsrapporter: hur en marknad, en sektor eller en fråga formas politiskt och socialt",
+            "Kartläggning av intressenter och nätverk: vem som fattar besluten och var inflytandet finns",
+            "Analys av politik, policy och regelverk: förändringar i lagstiftning, politik och strategiska konsekvenser",
+            "Bedömning av politiska risker: val, sanktioner, förändringar inom handel och säkerhet, och vad dessa innebär för verksamheten, samarbetspartnerna och anseendet",
+            "Analys av den allmänna opinionen och diskursen: vad som sägs och vilka signaler som står kvar",
+            "Löpande omvärldsbevakning: media, policy och sociala kanaler för att följa utvecklingen i realtid",
           ]
         : [
-            "Research and open-source intelligence (OSINT), including social media and web intelligence",
-            "Stakeholder and network mapping – who matters, who influences whom, where leverage exists",
-            "Policy and regulatory analysis – legislative developments, policy shifts, and strategic implications",
-            "Market and competitive intelligence",
-            "Policy, media, and social monitoring",
+            "Landscape reports and country briefs: how a market, sector or issue is shaped politically and socially",
+            "Stakeholder and power mapping: who matters, who influences whom, where leverage sits",
+            "Policy and regulatory analysis: legislative developments, policy shifts, and strategic implications",
+            "Political risk assessments: elections, sanctions, trade and security shifts, and what they mean for operations, partners and reputation",
+            "Public opinion and narrative analysis: what is being said, and which signals will last",
+            "Ongoing monitoring and intelligence: media, policy, and social channels to track developments in real time",
           ],
       footerNote: isSv
-        ? "Levereras som fristående rapporter, lägesbilder eller löpande monitorering."
-        : "Delivered as standalone reports, landscape snapshots, or ongoing retained monitoring.",
+        ? "Levereras som fristående rapporter eller som löpande uppdrag."
+        : "Delivered as standalone reports or ongoing retainers.",
     },
     {
       id: "strategic-communications",
       number: "02",
-      title: isSv ? "Strategisk Kommunikation" : "Strategic Communications",
+      title: isSv ? "Strategisk kommunikation" : "Strategic communications",
       description: isSv
-        ? "Byggt på starkt skrivande, mångkulturell förståelse och kunskap om vad som övertygar. Vi arbetar på engelska, svenska och spanska för att utveckla budskap som är precisa, ändamålsenliga och anpassade till kontexten."
-        : "Built on strong writing, cross-cultural fluency, and an understanding of what persuades. We work in English, Swedish, and Spanish – developing content and strategy that is precise, purposeful, and adapted to context.",
+        ? "Baserat på analysen, interkulturell kompetens och god förståelse för vad som övertygar. Vi arbetar på svenska, engelska och spanska och anpassar strategi och innehåll efter sammanhang."
+        : "Built on the analysis, cross-cultural fluency, and an understanding of what persuades. We work in English, Swedish and Spanish, and adapt strategy and content to context.",
       bullets: isSv
         ? [
-            "Kommunikation för påverkansarbete och public affairs",
-            "Positionering och budskapsstrategi",
-            "Dialog och engagemang med nyckelaktörer",
-            "Innehållsutveckling – thought leadership, artiklar, rapporter och formella remissvar",
-            "Kris- och förtroendekommunikation",
+            "Positionerings- och budskapsstrategi",
+            "Strategi för olika frågor och kampanjer: vilka som går att vinna, vilka koalitioner som ska bildas, när man ska agera",
+            "Strategi för intressentengagemang: vem man ska vända sig till, i vilken ordning och med vilket budskap",
+            "Positionsdokument, remissvar, policyförslag och tankeledarskap",
+            "Kriskommunikation och hantering av komplexa frågor",
+            "Exekutiva briefingar och talepunkter",
           ]
         : [
-            "Advocacy and public affairs communications",
             "Positioning and messaging strategy",
-            "Stakeholder engagement and outreach",
-            "Content development – thought leadership, articles, white papers, and formal policy submissions",
-            "Crisis and reputational communications",
+            "Issue and campaign strategy: where an issue is winnable, which coalitions to build, when to move",
+            "Stakeholder engagement strategy: who to approach, in what order, with what message",
+            "Position papers, policy submissions and thought leadership",
+            "Crisis communications and issue management",
+            "Executive briefings and talking points"
           ],
       footerNote: isSv
-        ? "Levereras som fristående projekt eller löpande rådgivning."
-        : "Delivered as standalone projects or ongoing advisory retainers.",
+        ? "Levereras som fristående projekt, en strategi ert team driver eller löpande rådgivning, där vi bygger upp tillsammans där det passar."
+        : "Delivered as a one-off project, a strategy your team runs, or an ongoing advisory retainer, with us building alongside you where that fits.",
     },
   ];
 
@@ -112,17 +116,17 @@ export default async function Services() {
           </Heading>
         }
       >
-        <Column gap="s" className="pt-2 md:pt-4 max-w-xl">
+        <Column fillWidth gap="m" className="pt-2 md:-ml-8 lg:-ml-12">
           <Text variant="body-default-l" onBackground="neutral-strong">
             {isSv
               ? "Vi levererar tydlig politisk intelligens, strategisk research och kvalificerad rådgivning för ledare som verkar i komplexa och reglerade miljöer i Sverige, EU och internationellt."
-              : "We deliver clear political intelligence, strategic research, and high-stakes advocacy guidance for leaders operating in complex, highly regulated environments across Sweden, the EU, and international markets."}
+              : "Intelligence on politics, regulation and public opinion in Sweden, the EU and the US, and the strategic communications that follow. Take the analysis and run with it, or keep us on to build the plan, as a one-off project or an ongoing retainer."}
           </Text>
         </Column>
       </AboutSection>
 
       {/* Divider */}
-      <Column fillWidth className="my-2">
+      <Column fillWidth className="my-13">
         <Line background="neutral-alpha-weak" />
       </Column>
 
@@ -131,17 +135,17 @@ export default async function Services() {
         showDivider={false}
         left={
           <SectionLabel>
-            {isSv ? "SITUATIONER VI LÖSER" : "SITUATIONS WE SOLVE"}
+            {isSv ? "VAD VI LÖSER" : "WHAT WE SOLVE"}
           </SectionLabel>
         }
       >
-        <Column fillWidth gap="s" className="pt-2">
+        <Column fillWidth gap="s" className="pt-2 md:-ml-8 lg:-ml-12">
           <SituationsGrid />
         </Column>
       </AboutSection>
 
       {/* Divider */}
-      <Column fillWidth className="my-2">
+      <Column fillWidth className="my-13">
         <Line background="neutral-alpha-weak" />
       </Column>
 
@@ -150,18 +154,18 @@ export default async function Services() {
         showDivider={false}
         left={
           <SectionLabel>
-            {isSv ? "KAPACITETER" : "CAPABILITIES"}
+            {isSv ? "VAD VI ERBJUDER" : "WHAT WE DELIVER"}
           </SectionLabel>
         }
       >
-        <Column fillWidth gap="m" className="pt-2">
+        <Column fillWidth gap="m" className="pt-2 md:-ml-8 lg:-ml-12">
           {capabilitiesItems.map((item, index) => (
             <Accordion
               key={item.id}
               title={
-                <Text variant="heading-default-l" onBackground="neutral-strong" className="font-semibold text-xl md:text-2xl">
+                <Heading variant="heading-strong-l" onBackground="neutral-strong" className="font-bold text-lg md:text-xl">
                   {item.title}
-                </Text>
+                </Heading>
               }
               open={index === 0}
             >
@@ -196,43 +200,8 @@ export default async function Services() {
         <Line background="neutral-alpha-weak" />
       </Column>
 
-      {/* 4. How We Engage */}
-      <AboutSection
-        showDivider={false}
-        left={
-          <SectionLabel>
-            {isSv ? "HUR VI ARBETAR" : "HOW WE ENGAGE"}
-          </SectionLabel>
-        }
-      >
-        <Column gap="m" className="pt-2 max-w-xl">
-          <Text variant="body-default-m" onBackground="neutral-strong">
-            {isSv ? (
-              <>
-                Vi arbetar antingen på <strong>projektbasis</strong> (tidsbestämda djupdykningar, riskbedömningar, omvärldsanalyser) eller via <strong>löpande månatliga samarbeten</strong> för kontinuerlig bevakning, strategisk rådgivning och intressentanalys.
-              </>
-            ) : (
-              <>
-                We work either on a <strong>project basis</strong> (time-bound deep dives, risk assessments, landscape reports) or via <strong>ongoing monthly retainers</strong> for continuous monitoring, strategic advisory, and stakeholder intelligence.
-              </>
-            )}
-          </Text>
-
-          <Text variant="body-default-s" onBackground="neutral-medium" className="italic">
-            {isSv
-              ? "Notera: Vi fokuserar på strategisk intelligens, politisk analys och målriktad kommunikation. Vi fungerar inte som en volymexekverande PR- eller lobbybyrå."
-              : "Note: We focus on high-level strategic intelligence, policy judgment, and targeted advocacy drafting. We do not operate as a volume execution PR agency or lobby firm."}
-          </Text>
-        </Column>
-      </AboutSection>
-
-      {/* Divider */}
-      <Column fillWidth className="mt-4 mb-2">
-        <Line background="neutral-alpha-weak" />
-      </Column>
-
       {/* 5. Booking CTA */}
-      <Column fillWidth className="py-4">
+      <Column fillWidth className="py-2">
         <BookingCTA
           title={isSv ? "Tala med oss innan ert nästa drag." : "Before your next move, talk to us."}
           description={

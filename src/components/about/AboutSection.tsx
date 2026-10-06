@@ -36,7 +36,7 @@ export function AboutSection({ left, children, showDivider = true }: AboutSectio
           align-items: flex-start;
         }
         .about-section-left {
-          flex: 0 0 33%;
+          flex: 0 0 25%;
           max-width: 33%;
         }
         .about-section-right {

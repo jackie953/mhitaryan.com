@@ -51,7 +51,7 @@ const situations: SituationItem[] = [
   {
     id: "regulatory-shift",
     title: "Regulatory uncertainty",
-    description: "Laws, regulations, draft proposals, political signals. We sort what is binding today from what is still on its way, and tell you what it means for your operations.",
+    description: "Laws, regulations, draft proposals, political signals. We sort what is binding today from what is still on its way, and tell you what it means for your operations and your bottom line.",
     tag: "REGULATORY"
   },
   {

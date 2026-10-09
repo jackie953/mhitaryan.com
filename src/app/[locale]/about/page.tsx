@@ -163,7 +163,7 @@ export default async function About() {
               </>
             ) : (
               <>
-                For almost six years, Jacqueline has worked on research, monitoring and political and regulatory analysis for international clients, including Fortune 500 companies, with APCO Worldwide. She has also worked in research, communications and advocacy for NGOs and think tanks, founded and led grassroots organizations with thousands of members, and has a background in business development. She has lived and worked in several countries, with clients across Europe, the US and the Middle East.{" "}
+                For almost six years, Jacqueline has worked on research, monitoring and political and regulatory analysis for international clients, including Fortune 500 companies, with APCO Worldwide. She has also worked in research, communications and advocacy for NGOs and think tanks, founded and led grassroots organizations with thousands of members, and has a background in business development at different companies including Uber and Trygg-Hansa. She has lived and worked in several countries, with clients across Europe, the US and the Middle East.{" "}
                 <a
                   href="https://www.linkedin.com/in/mhitaryan/"
                   target="_blank"

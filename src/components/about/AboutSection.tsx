@@ -36,7 +36,7 @@ export function AboutSection({ left, children, showDivider = true }: AboutSectio
           align-items: flex-start;
         }
         .about-section-left {
-          flex: 0 0 33%;
+          flex: 0 0 25%;
           max-width: 33%;
         }
         .about-section-right {
@@ -63,7 +63,7 @@ export function AboutSection({ left, children, showDivider = true }: AboutSectio
 
 export function SectionLabel({ children }: { children: ReactNode }) {
   return (
-    <span className="text-xs font-semibold tracking-wider uppercase text-neutral-weak">
+    <span className="text-lg md:text-xl font-bold tracking-wider uppercase text-gray-900">
       {children}
     </span>
   );

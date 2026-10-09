@@ -42,7 +42,7 @@ export default async function About() {
   const values = isSv ? valuesSv : valuesEn;
 
   return (
-    <Column fillWidth gap="l" className="page-about">
+    <Column fillWidth gap="l" className="page-about" style={{ paddingTop: "4rem" }}>
       <Schema
         as="webPage"
         baseURL={baseURL}
@@ -117,8 +117,8 @@ export default async function About() {
       {/* 2. Our values */}
       <Column fillWidth className="mt-2 mb-2">
         <Line background="neutral-alpha-weak" />
-        <div className="pt-6">
-          <ValuesScroll label={isSv ? "VÅRA VÄRDERINGAR" : "OUR VALUES"} values={values} />
+        <div className="pt-6 text-lg md:text-xl font-bold tracking-wider normal-case">
+          <ValuesScroll label={isSv ? "Våra värderingar" : "Our values"} values={values} />
         </div>
       </Column>
 
@@ -163,7 +163,7 @@ export default async function About() {
               </>
             ) : (
               <>
-                For almost six years, Jacqueline has worked on research, monitoring and political and regulatory analysis for international clients, including Fortune 500 companies, with APCO Worldwide. She has also worked in research, communications and advocacy for NGOs and think tanks, founded and led grassroots organizations with thousands of members, and has a background in business development. She has lived and worked in several countries, with clients across Europe, the US and the Middle East.{" "}
+                For almost six years, Jacqueline has worked on research, monitoring and political and regulatory analysis for international clients, including Fortune 500 companies, with APCO Worldwide. She has also worked in research, communications and advocacy for NGOs and think tanks, founded and led grassroots organizations with thousands of members, and has a background in business development at different companies including Uber and Trygg-Hansa. She has lived and worked in several countries, with clients across Europe, the US and the Middle East.{" "}
                 <a
                   href="https://www.linkedin.com/in/mhitaryan/"
                   target="_blank"

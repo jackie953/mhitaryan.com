@@ -3,6 +3,9 @@ import createMiddleware from "next-intl/middleware";
 export default createMiddleware({
   locales: ["en", "sv"],
   defaultLocale: "en",
+  // Swedish is paused and /sv redirects to /en. Without this, a Swedish browser
+  // (or a stale NEXT_LOCALE cookie) would be sent to /sv and bounce in a loop.
+  localeDetection: false,
 });
 
 export const config = {

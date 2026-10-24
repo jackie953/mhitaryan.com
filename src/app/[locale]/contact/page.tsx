@@ -20,7 +20,7 @@ export default async function Contact() {
   const location = getLocation(locale);
 
   return (
-    <Column fillWidth horizontal="center" paddingTop="40" className="page-contact">
+    <Column fillWidth horizontal="center" paddingTop="20" className="page-contact">
       <Schema
         as="webPage"
         baseURL={baseURL}

@@ -9,7 +9,7 @@ interface PageHeaderProps {
 
 export function PageHeader({ title, children }: PageHeaderProps) {
   return (
-    <div style={{ paddingTop: "56px", width: "100%" }}>
+    <div style={{ paddingTop: "36px", width: "100%" }}>
       <AboutSection
         showDivider={false}
         left={

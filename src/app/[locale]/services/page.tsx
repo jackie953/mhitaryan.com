@@ -131,7 +131,7 @@ export default async function Services() {
           </SectionLabel>
         }
       >
-        <Column fillWidth gap="s" className="pt-2 md:-ml-8 lg:-ml-12">
+        <Column fillWidth gap="s" className="pt-2">
           <SituationsGrid />
         </Column>
       </AboutSection>

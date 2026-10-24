@@ -2,85 +2,115 @@
 
 import React, { useCallback, useEffect, useState } from "react";
 import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
-import { cn } from "@/lib/utils";
 
-export interface MagicCardProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface MagicCardProps {
+  children?: React.ReactNode;
+  className?: string;
+  style?: React.CSSProperties;
+  radius?: number;
   gradientSize?: number;
+  /** Faint spotlight inside the card */
   gradientColor?: string;
-  /** Spotlight opacity, from 0 to 1. */
   gradientOpacity?: number;
+  /** Border highlight colours, from cursor centre outwards */
+  gradientFrom?: string;
+  gradientTo?: string;
+  /** Resting border colour */
+  borderColor?: string;
+  /** Fill inside the border. Must match the page background */
+  background?: string;
 }
 
 export function MagicCard({
   children,
   className,
-  gradientSize = 150,
-  gradientColor = "#5A286F25",
-  gradientOpacity = 1,
-  onMouseMove,
-  onMouseLeave,
-  ...props
+  style,
+  radius = 16,
+  gradientSize = 220,
+  gradientColor = "#D9D9D955",
+  gradientOpacity = 0.6,
+  gradientFrom,
+  gradientTo,
+  borderColor = "var(--neutral-alpha-medium, rgba(0,0,0,0.12))",
+  background = "var(--page-background, #faf8fc)",
 }: MagicCardProps) {
-  const [isPointerInside, setIsPointerInside] = useState(false);
+  // Dark mode follows the site's own data-theme attribute, not next-themes.
+  const [isDark, setIsDark] = useState(false);
+  useEffect(() => {
+    const root = document.documentElement;
+    const read = () => setIsDark(root.getAttribute("data-theme") === "dark");
+    read();
+    const observer = new MutationObserver(read);
+    observer.observe(root, { attributes: true, attributeFilter: ["data-theme"] });
+    return () => observer.disconnect();
+  }, []);
+
+  const from = gradientFrom ?? (isDark ? "#A77BBF" : "#5A286F");
+  const to = gradientTo ?? (isDark ? "#D9C2E6" : "#A77BBF");
+
   const mouseX = useMotionValue(-gradientSize);
   const mouseY = useMotionValue(-gradientSize);
 
-  const handleMouseMove = useCallback(
-    (event: React.MouseEvent<HTMLDivElement>) => {
-      const { left, top } = event.currentTarget.getBoundingClientRect();
-      mouseX.set(event.clientX - left);
-      mouseY.set(event.clientY - top);
-      setIsPointerInside(true);
-      onMouseMove?.(event);
-    },
-    [mouseX, mouseY, onMouseMove]
-  );
-
-  const handleMouseLeave = useCallback(
-    (event: React.MouseEvent<HTMLDivElement>) => {
-      setIsPointerInside(false);
-      mouseX.set(-gradientSize);
-      mouseY.set(-gradientSize);
-      onMouseLeave?.(event);
-    },
-    [mouseX, mouseY, gradientSize, onMouseLeave]
-  );
-
-  useEffect(() => {
+  const reset = useCallback(() => {
     mouseX.set(-gradientSize);
     mouseY.set(-gradientSize);
   }, [mouseX, mouseY, gradientSize]);
 
-  const background = useMotionTemplate`
-    radial-gradient(
-      ${gradientSize}px circle at ${mouseX}px ${mouseY}px,
-      ${gradientColor},
-      transparent 90%
-    )
-  `;
+  const onPointerMove = useCallback(
+    (e: React.PointerEvent<HTMLDivElement>) => {
+      const rect = e.currentTarget.getBoundingClientRect();
+      mouseX.set(e.clientX - rect.left);
+      mouseY.set(e.clientY - rect.top);
+    },
+    [mouseX, mouseY]
+  );
+
+  useEffect(() => {
+    reset();
+  }, [reset]);
+
+  const borderBg = useMotionTemplate`radial-gradient(${gradientSize}px circle at ${mouseX}px ${mouseY}px, ${from}, ${to}, ${borderColor} 100%)`;
+  const spotlight = useMotionTemplate`radial-gradient(${gradientSize}px circle at ${mouseX}px ${mouseY}px, ${gradientColor}, transparent 100%)`;
 
   return (
-    <div
-      {...props}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      className={cn(
-        "relative flex flex-col overflow-hidden rounded-2xl border border-border/80 bg-card/80 p-6 backdrop-blur-sm transition-shadow duration-300 hover:shadow-lg",
-        className
-      )}
+    <motion.div
+      className={className}
+      onPointerMove={onPointerMove}
+      onPointerLeave={reset}
+      style={{
+        position: "relative",
+        height: "100%",
+        borderRadius: radius,
+        background: borderBg,
+        ...style,
+      }}
     >
-      <div className="relative z-10 flex h-full flex-col justify-between">
-        {children}
-      </div>
-
-      <motion.div
-        aria-hidden="true"
-        className="pointer-events-none absolute -inset-px rounded-2xl"
+      {/* Inner fill: leaves a 1px ring where the gradient shows as the border */}
+      <div
         style={{
+          position: "absolute",
+          inset: 1,
+          borderRadius: radius - 1,
           background,
-          opacity: isPointerInside ? gradientOpacity : 0,
+          zIndex: 1,
         }}
       />
-    </div>
+      {/* Faint spotlight */}
+      <motion.div
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          inset: 1,
+          borderRadius: radius - 1,
+          background: spotlight,
+          opacity: gradientOpacity,
+          pointerEvents: "none",
+          zIndex: 2,
+        }}
+      />
+      <div style={{ position: "relative", zIndex: 3, height: "100%" }}>
+        {children}
+      </div>
+    </motion.div>
   );
 }

@@ -107,8 +107,8 @@ const MobileThemeRow: React.FC = () => {
     = 10px) and stands 36px tall, matching the icon buttons and CTA. The
     lavender hover pill paints on this same box, so it hugs the text. */
 const navPillButtonStyle: React.CSSProperties = {
-  paddingLeft: 6,
-  paddingRight: 6,
+  paddingLeft: 14,
+  paddingRight: 14,
   height: 36,
   minHeight: 36,
 };
@@ -277,8 +277,8 @@ export const Header = () => {
                   height: 32,
                   minHeight: 32,
                   borderRadius: 999,
-                  paddingLeft: 4,
-                  paddingRight: 4,
+                  paddingLeft: 10,
+                  paddingRight: 10,
                   background: "var(--header-color)",
                   border: "none",
                   boxShadow: "none",

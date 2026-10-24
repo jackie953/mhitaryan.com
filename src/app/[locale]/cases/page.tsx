@@ -1,5 +1,6 @@
-import { Column, Heading, Meta, Schema } from "@once-ui-system/core";
+import { Column, Heading, Meta, Schema, Text } from "@once-ui-system/core";
 import { baseURL, about, person, cases } from "@/resources";
+import { CaseBento } from "./CaseBento";
 
 export async function generateMetadata() {
   return Meta.generate({
@@ -27,9 +28,13 @@ export default function CasesPage() {
           image: `${baseURL}${person.avatar}`,
         }}
       />
-      <Heading variant="display-strong-m">
-        Cases
-      </Heading>
+      <div className="flex flex-wrap items-end gap-x-10 gap-y-4">
+        <Heading variant="display-strong-m">Cases</Heading>
+        <Text variant="body-default-m" style={{ flex: "1 1 28rem" }}>
+          Research and communications, for companies and mission-driven organisations. Clients are anonymised.
+        </Text>
+      </div>
+      <CaseBento />
     </Column>
   );
 }

@@ -137,7 +137,7 @@ export default async function About() {
           </SectionLabel>
         }
       >
-        <Column gap="m" className="max-w-[640px]">
+        <Column gap="m">
           {/* Portrait + Name Header */}
           <div className="flex items-center gap-6">
             <Image
@@ -171,12 +171,12 @@ export default async function About() {
           </div>
 
           {/* Bio copy */}
-          <Text variant="body-default-m" onBackground="neutral-strong">
+          <Text variant="body-default-m" onBackground="neutral-strong" className="page-intro">
             {isSv
               ? "Jacqueline leder byråns research- och rådgivningsarbete. I snart sex år har hon levererat politisk analys och policyanalys för internationella kunder, däribland Fortune 500-bolag, i samarbete med APCO Worldwide och andra."
               : "Jacqueline leads the firm’s research and advisory work. For almost six years she has delivered political and policy analysis for international clients, including Fortune 500 companies, working with APCO Worldwide and others."}
           </Text>
-          <Text variant="body-default-m" onBackground="neutral-strong">
+          <Text variant="body-default-m" onBackground="neutral-strong" className="page-intro">
             {isSv
               ? "Sedan 2018 har hon också arbetat med research, kommunikation och påverkansarbete för tankesmedjor och idéburna organisationer. Hon har grundat och lett civilsamhällesorganisationer, den största med tusentals medlemmar, och har en bakgrund inom försäljning och affärsutveckling. Hon har bott och arbetat i flera länder och arbetar på svenska, engelska och spanska."
               : "Since 2018 she has also worked in research, communications and advocacy for think tanks and NGOs. She has founded and led civil society organizations, the largest with thousands of members, and has a background in sales and business development. She has lived and worked in several countries and works in Swedish, English and Spanish."}

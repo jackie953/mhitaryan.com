@@ -311,9 +311,9 @@ export function CaseBento() {
                   {item.body}
                 </p>
 
-                <span className="mt-auto flex items-center gap-[6px] pt-[24px] text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground/80 transition-all duration-200 group-hover:translate-x-[3px] group-hover:text-black/80 group-focus-visible:translate-x-[3px] group-focus-visible:text-black/80 dark:group-hover:text-white/80 dark:group-focus-visible:text-white/80 md:text-[11px]">
+                <span className="mt-[16px] flex items-center justify-end gap-[6px] text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground/80 transition-all duration-200 group-hover:text-black/80 group-focus-visible:text-black/80 dark:group-hover:text-white/80 dark:group-focus-visible:text-white/80 md:text-[11px]">
                   Read case
-                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-[2px] group-focus-visible:translate-x-[2px]">
                     <path d="M2 6h8M6.5 2.5L10 6l-3.5 3.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </span>

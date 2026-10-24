@@ -108,8 +108,8 @@ export default async function About() {
           </Text>
           <Text variant="body-default-m" onBackground="neutral-strong">
             {isSv
-              ? "Vi arbetar med internationella företag och idéburna organisationer i Sverige, Norden, EU, USA och Mellanöstern. Vår erfarenhet sträcker sig över näringslivet, det civila samhället och påverkansarbete, vilket gör att vi kan se en fråga ur flera olika perspektiv."
-              : "We work with international companies and mission-driven organizations in Sweden and across the Nordics, the EU, the US, and the Middle East. Our experience spans the corporate world, civil society and advocacy, so we can see an issue from more than one side."}
+              ? "Vi arbetar med internationella företag och idéburna organisationer i Sverige, övriga Norden, EU, USA och andra delar av världen. Vårt politiska och policyinriktade arbete spänner över näringsliv, civilsamhälle och påverkansarbete, så vi vet hur en fråga ser ut från varje sida av bordet."
+              : "We work with international companies and mission-driven organisations in Sweden and across the Nordics, the EU, the US and beyond. Our political and policy work spans business, civil society and advocacy, so we know how an issue looks from each side of the table."}
           </Text>
         </Column>
       </AboutSection>
@@ -122,11 +122,11 @@ export default async function About() {
         </div>
       </Column>
 
-      {/* 3. Founder */}
-      <AboutSection 
+      {/* 3. People */}
+      <AboutSection
         left={
           <SectionLabel>
-            {isSv ? "GRUNDARE" : "FOUNDER"}
+            {isSv ? "MEDARBETARE" : "PEOPLE"}
           </SectionLabel>
         }
       >
@@ -134,23 +134,32 @@ export default async function About() {
           {/* Portrait + Name Header */}
           <div className="flex items-center gap-6">
             <Image
-              src="/images/avatar.jpg"
+              src="/images/avatar.png"
               alt="Jacqueline Mhitaryan"
               width={100}
               height={100}
               className="rounded-full object-cover shrink-0"
-              style={{ width: "100px", height: "100px" }}
+              style={{
+                width: "100px",
+                height: "100px",
+                background: "var(--brand-alpha-weak, rgba(124, 58, 237, 0.12))",
+              }}
             />
-            <Heading variant="heading-strong-l" onBackground="neutral-strong">
-              Jacqueline Mhitaryan
-            </Heading>
+            <Column gap="4">
+              <Heading variant="heading-strong-l" onBackground="neutral-strong">
+                Jacqueline Mhitaryan
+              </Heading>
+              <Text variant="body-default-m" onBackground="neutral-weak">
+                {isSv ? "Grundare & Principal" : "Founder & Principal"}
+              </Text>
+            </Column>
           </div>
 
           {/* Bio copy */}
           <Text variant="body-default-m" onBackground="neutral-strong">
             {isSv ? (
               <>
-                I snart sex år har Jacqueline arbetat med research, omvärldsbevakning och politisk och regulatorisk analys för internationella kunder, däribland Fortune 500-bolag, med APCO Worldwide. Hon har också arbetat med research, kommunikation och påverkansarbete för idéburna organisationer och tankesmedjor, grundat och lett gräsrotsorganisationer med tusentals medlemmar, och har en bakgrund inom affärsutveckling. Hon har bott och arbetat i flera länder, med kunder i Europa, USA och Mellanöstern.{" "}
+                Jacqueline leder byråns research- och rådgivningsarbete. I snart sex år har hon levererat politisk analys och policyanalys för internationella kunder, däribland Fortune 500-bolag, i samarbete med APCO Worldwide och andra. Sedan 2018 har hon också arbetat med research, kommunikation och påverkansarbete för tankesmedjor och idéburna organisationer. Hon har grundat och lett civilsamhällesorganisationer, den största med tusentals medlemmar, och har en bakgrund inom försäljning och affärsutveckling. Hon har bott och arbetat i flera länder och arbetar på svenska, engelska och spanska.{" "}
                 <a
                   href="https://www.linkedin.com/in/mhitaryan/"
                   target="_blank"
@@ -163,7 +172,7 @@ export default async function About() {
               </>
             ) : (
               <>
-                For almost six years, Jacqueline has worked on research, monitoring and political and regulatory analysis for international clients, including Fortune 500 companies, with APCO Worldwide. She has also worked in research, communications and advocacy for NGOs and think tanks, founded and led grassroots organizations with thousands of members, and has a background in business development at different companies including Uber and Trygg-Hansa. She has lived and worked in several countries, with clients across Europe, the US and the Middle East.{" "}
+                Jacqueline leads the firm&apos;s research and advisory work. For almost six years she has delivered political and policy analysis for international clients, including Fortune 500 companies, working with APCO Worldwide and others. Since 2018 she has also worked in research, communications and advocacy for think tanks and NGOs. She has founded and led civil society organisations, the largest with thousands of members, and has a background in sales and business development. She has lived and worked in several countries and works in Swedish, English and Spanish.{" "}
                 <a
                   href="https://www.linkedin.com/in/mhitaryan/"
                   target="_blank"

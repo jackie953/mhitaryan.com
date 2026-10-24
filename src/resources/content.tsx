@@ -6,8 +6,8 @@ const person: Person = {
   firstName: "Jacqueline",
   lastName: "Mhitaryan",
   name: "Jacqueline Mhitaryan",
-  role: "",
-  avatar: "/images/avatar.jpg", // 1:1 image, e.g. 800x800px
+  role: "Founder & Principal",
+  avatar: "/images/avatar.png", // 1:1 image, e.g. 800x800px
   email: "jackie@mhitaryan.com",
   location: "Europe/Stockholm", // Expecting the IANA time zone identifier, e.g., 'Europe/Vienna'
   languages: ["English", "Swedish", "Spanish"], // optional: Leave the array empty if you don't want to display languages

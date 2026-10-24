@@ -157,3 +157,15 @@ h1, h2, h3, h4, h5, h6 {
 :where(header, nav, button, [role="button"]) :where(p, li, h1, h2, h3, span) {
   text-wrap: wrap;
 }
+
+/* Page intro: on desktop the first line is centred on the page title
+   (48px title, 24px line height, so 12px from the top of the title). */
+.page-header-intro {
+  padding-top: 2px;
+}
+
+@media (min-width: 768px) {
+  .page-header-intro {
+    padding-top: 12px;
+  }
+}

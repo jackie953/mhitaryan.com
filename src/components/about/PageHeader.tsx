@@ -18,7 +18,7 @@ export function PageHeader({ title, children }: PageHeaderProps) {
           </Heading>
         }
       >
-        <Column gap="s" className="pt-2 md:pt-4 max-w-[1100px]">
+        <Column gap="s" className="page-header-intro max-w-[1100px]">
           {children}
         </Column>
       </AboutSection>

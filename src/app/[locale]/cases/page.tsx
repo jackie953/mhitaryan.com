@@ -31,7 +31,7 @@ export default function CasesPage() {
       <div className="flex flex-wrap items-end gap-x-10 gap-y-4">
         <Heading variant="display-strong-m">Cases</Heading>
         <Text variant="body-default-m" style={{ flex: "1 1 28rem" }}>
-          Research and communications, for companies and mission-driven organisations. Clients are anonymised.
+          Research and communications, for companies and mission-driven organizations.<br /> Our work is confidential, so every case here is anonymized. What we can show is the situation, how we read it, and what changed.
         </Text>
       </div>
       <CaseBento />

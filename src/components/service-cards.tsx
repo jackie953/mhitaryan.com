@@ -13,10 +13,10 @@ export interface ServiceCardItem {
 
 export function ServiceCards({ items }: { items: ServiceCardItem[] }) {
   return (
-    <div className="grid w-full grid-cols-1 gap-[36px] pt-2 md:grid-cols-2">
+    <div className="service-grid w-full pt-2">
       {items.map((item) => (
-        <MagicCard key={item.id}>
-          <div className="p-[32px] flex h-full flex-col">
+        <MagicCard key={item.id} className="service-card">
+          <div className="service-card-body p-[32px]">
             <div className="mb-[12px] flex w-full justify-end">
               <span className="text-[10px] md:text-[11px] font-semibold tracking-wider uppercase text-muted-foreground/80 select-none">
                 {item.tag}

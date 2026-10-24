@@ -170,3 +170,46 @@ h1, h2, h3, h4, h5, h6 {
     padding-top: 12px;
   }
 }
+
+/* "What we deliver" cards: on two columns each card is a subgrid of the
+   shared 5-row grid (tag, title, intro, bullets, note), so rows line up
+   across the cards. MagicCard wraps its children in one extra div, which has
+   to be a subgrid as well. Stacked (mobile) cards are plain flex columns. */
+.service-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 36px;
+}
+
+.service-card-body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+@media (min-width: 768px) {
+  .service-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(5, auto);
+    column-gap: 36px;
+    row-gap: 0;
+  }
+
+  .service-card {
+    display: grid;
+    grid-row: span 5;
+    grid-template-rows: subgrid;
+  }
+
+  .service-card > div:last-child {
+    display: grid;
+    grid-row: 1 / span 5;
+    grid-template-rows: subgrid;
+  }
+
+  .service-card-body {
+    display: grid;
+    grid-row: 1 / span 5;
+    grid-template-rows: subgrid;
+  }
+}

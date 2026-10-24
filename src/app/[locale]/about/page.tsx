@@ -87,17 +87,17 @@ export default async function About() {
 
       {/* 1. About us */}
       <PageHeader title={isSv ? "Om oss" : "About us"}>
-        <Text variant="body-default-m" onBackground="neutral-strong">
+        <Text variant="body-default-m" onBackground="neutral-strong" className="page-intro">
           {isSv
             ? "Mhitaryan grundades 2018 utifrån en enkel övertygelse: en bra strategi börjar med en korrekt läsning av läget. Vad och vem kan hjälpa eller hindra er, och varför? Vad förändras, och vad är bara brus?"
             : "Mhitaryan was founded in 2018 on a simple conviction: good strategy starts with an accurate read of the room. What and who can help or block you, and why? What is shifting, and what is just noise?"}
         </Text>
-        <Text variant="body-default-m" onBackground="neutral-strong">
+        <Text variant="body-default-m" onBackground="neutral-strong" className="page-intro">
           {isSv
             ? "Vi gräver tills vi förstår, sedan gör vi det begripligt. Det är den kombinationen vi bygger på: djupgående research och bred kommunikationserfarenhet. Först får vi det rätt. Sedan ser vi till att det slår igenom."
             : "We dig until we understand, and then make it clear. That is the combination we are built on: deep research and extensive communications experience. First we get it right. Then we make it land."}
         </Text>
-        <Text variant="body-default-m" onBackground="neutral-strong">
+        <Text variant="body-default-m" onBackground="neutral-strong" className="page-intro">
           {isSv
             ? "Vi arbetar med internationella företag och idéburna organisationer i Sverige, övriga Norden, EU, USA och andra delar av världen. Vårt politiska och policyinriktade arbete spänner över näringsliv, civilsamhälle och påverkansarbete, så vi vet hur en fråga ser ut från varje sida av bordet."
             : "We work with international companies and mission-driven organizations in Sweden and across the Nordics, the EU, the US and beyond. Our political and policy work spans business, civil society and advocacy, so we know how an issue looks from each side of the table."}

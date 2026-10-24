@@ -30,10 +30,10 @@ export default function CasesPage() {
         }}
       />
       <PageHeader title="Cases">
-        <Text variant="body-default-m" onBackground="neutral-strong">
+        <Text variant="body-default-m" onBackground="neutral-strong" className="page-intro">
           Research and communications, for companies and mission-driven organizations.
         </Text>
-        <Text variant="body-default-m" onBackground="neutral-strong">
+        <Text variant="body-default-m" onBackground="neutral-strong" className="page-intro">
           Our work is confidential, so every case here is anonymized. What we can show is the situation, how we read it, and what changed.
         </Text>
       </PageHeader>

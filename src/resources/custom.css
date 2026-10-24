@@ -137,3 +137,23 @@ body, p, span, div, h1, h2, h3, h4, h5, h6 {
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading), 'Inter Tight', sans-serif !important;
 }
+/* Text wrapping — avoid orphans and ragged headings.
+   Written with :where() so the rules have zero specificity and any
+   component-level text-wrap (e.g. the hero subline) still wins. */
+:where(p, li, .italic) {
+  text-wrap: pretty;
+}
+
+:where(h1, h2, h3) {
+  text-wrap: balance;
+}
+
+/* Page intros (About, Services, Cases): pretty, not balanced */
+.page-intro {
+  text-wrap: pretty;
+}
+
+/* Leave navigation, buttons and tags alone */
+:where(header, nav, button, [role="button"]) :where(p, li, h1, h2, h3, span) {
+  text-wrap: wrap;
+}

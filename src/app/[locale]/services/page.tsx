@@ -5,7 +5,6 @@ import {
   Meta,
   Schema,
   Line,
-  Accordion,
 } from "@once-ui-system/core";
 import { getLocale } from "next-intl/server";
 import { baseURL, getContactEmail } from "@/resources";
@@ -14,9 +13,8 @@ import { PageHeader } from "@/components/about/PageHeader";
 import { BookingCTA } from "@/components/BookingCTA";
 import { SituationsGrid } from "@/components/situations-grid";
 
-type AccordionItemData = {
+type ServiceItem = {
   id: string;
-  number: string;
   title: string;
   description: string;
   bullets?: string[];
@@ -39,14 +37,13 @@ export default async function Services() {
   const locale = await getLocale();
   const isSv = locale === "sv";
 
-  const capabilitiesItems: AccordionItemData[] = [
+  const capabilitiesItems: ServiceItem[] = [
     {
       id: "research-intelligence",
-      number: "01",
       title: isSv ? "Research & omvärldsanalys" : "Research & intelligence",
       description: isSv
         ? "Förstå landskapet innan ni agerar. Vi kartlägger maktdynamiker, följer narrativ och identifierar mönster över sektorer, intressenter och geografier – med särskild kompetens inom EU, Sverige, Spanien och internationella miljöer som USA."
-        : "Making sense of a landscape before you move through it. We work out who holds power, what binds you and where the debate is heading, drawing on deep familiarity with Swedish,  Spanish, and EU policy contexts, and international environments including the US.",
+        : "Making sense of a landscape before you move through it. We work out who holds power, what binds you and where the debate is heading, across Sweden, the EU, the US and beyond.",
       bullets: isSv
         ? [
             "Översiktsrapporter: hur en marknad, en sektor eller en fråga formas politiskt och socialt",
@@ -57,24 +54,22 @@ export default async function Services() {
             "Löpande omvärldsbevakning: media, policy och sociala kanaler för att följa utvecklingen i realtid",
           ]
         : [
-            "Landscape reports and country briefs: how a market, sector or issue is shaped politically and socially",
-            "Stakeholder and power mapping: who matters, who influences whom, where leverage sits",
-            "Policy and regulatory analysis: legislative developments, policy shifts, and strategic implications",
-            "Political risk assessments: elections, sanctions, trade and security shifts, and what they mean for operations, partners and reputation",
-            "Public opinion and narrative analysis: what is being said, and which signals will last",
-            "Ongoing monitoring and intelligence: media, policy, and social channels to track developments in real time",
+            "Landscape reports and country briefs",
+            "Stakeholder and power mapping: who matters, who influences whom",
+            "Policy and regulatory analysis: what’s changing and what it means",
+            "Political risk assessments: elections, sanctions, trade and security shifts",
+            "Public opinion and narrative analysis: what’s being said, and what will last",
           ],
       footerNote: isSv
         ? "Levereras som fristående rapporter eller som löpande uppdrag."
-        : "Delivered as standalone reports or ongoing retainers.",
+        : "Delivered as standalone reports or ongoing retainers with regular briefings.",
     },
     {
       id: "strategic-communications",
-      number: "02",
       title: isSv ? "Strategisk kommunikation" : "Strategic communications",
       description: isSv
         ? "Baserat på analysen, interkulturell kompetens och god förståelse för vad som övertygar. Vi arbetar på svenska, engelska och spanska och anpassar strategi och innehåll efter sammanhang."
-        : "Built on the analysis, cross-cultural fluency, and an understanding of what persuades. We work in English, Swedish and Spanish, and adapt strategy and content to context.",
+        : "Built on the analysis, cross-cultural fluency and an understanding of what persuades. We work in English, Swedish and Spanish.",
       bullets: isSv
         ? [
             "Positionerings- och budskapsstrategi",
@@ -87,14 +82,13 @@ export default async function Services() {
         : [
             "Positioning and messaging strategy",
             "Issue and campaign strategy: where an issue is winnable, which coalitions to build, when to move",
-            "Stakeholder engagement strategy: who to approach, in what order, with what message",
+            "Stakeholder engagement: who to approach, in what order, with what message",
             "Position papers, policy submissions and thought leadership",
-            "Crisis communications and issue management",
-            "Executive briefings and talking points"
+            "Executive briefings and talking points",
           ],
       footerNote: isSv
         ? "Levereras som fristående projekt, en strategi ert team driver eller löpande rådgivning, där vi bygger upp tillsammans där det passar."
-        : "Delivered as a one-off project, a strategy your team runs, or an ongoing advisory retainer, with us building alongside you where that fits.",
+        : "Delivered as a one-off project, a strategy your team runs, or an ongoing advisory retainer.",
     },
   ];
 
@@ -110,7 +104,7 @@ export default async function Services() {
 
       {/* 1. Page Header & Intro */}
       <PageHeader title={isSv ? "Erbjudande" : "Services"}>
-        <Text variant="body-default-m" onBackground="neutral-strong">
+        <Text variant="body-default-m" onBackground="neutral-strong" className="page-intro">
           {isSv
             ? "Vi levererar tydlig politisk intelligens, strategisk research och kvalificerad rådgivning för ledare som verkar i komplexa och reglerade miljöer i Sverige, EU och internationellt."
             : "Intelligence on politics, regulation and public opinion in Sweden, the EU and the US, and the strategic communications that follow. Take the analysis and run with it, or keep us on to build the plan, as a one-off project or an ongoing retainer."}
@@ -150,41 +144,34 @@ export default async function Services() {
           </SectionLabel>
         }
       >
-        <Column fillWidth gap="m" className="pt-2 md:-ml-8 lg:-ml-12">
-          {capabilitiesItems.map((item, index) => (
-            <Accordion
-              key={item.id}
-              title={
-                <Heading variant="heading-strong-l" onBackground="neutral-strong" className="font-bold text-lg md:text-xl">
-                  {item.title}
-                </Heading>
-              }
-              open={index === 0}
-            >
-              <Column gap="m" fillWidth className="pt-3 pb-6">
-                <Text variant="body-default-l" onBackground="neutral-strong" className="leading-relaxed">
-                  {item.description}
+        <div className="grid w-full grid-cols-1 gap-4 pt-2 md:grid-cols-2">
+          {capabilitiesItems.map((item) => (
+            <Column key={item.id} gap="m" fillWidth className="h-full">
+              <Heading variant="heading-strong-l" onBackground="neutral-strong" className="font-bold text-lg md:text-xl">
+                {item.title}
+              </Heading>
+              <Text variant="body-default-l" onBackground="neutral-strong" className="leading-relaxed">
+                {item.description}
+              </Text>
+
+              {item.bullets && item.bullets.length > 0 && (
+                <Column as="ul" gap="xs" className="list-disc pl-5">
+                  {item.bullets.map((bullet, idx) => (
+                    <Text as="li" key={idx} variant="body-default-m" onBackground="neutral-strong">
+                      {bullet}
+                    </Text>
+                  ))}
+                </Column>
+              )}
+
+              {item.footerNote && (
+                <Text variant="body-default-s" onBackground="neutral-weak" className="italic mt-auto pt-3 border-t border-neutral-alpha-weak">
+                  {item.footerNote}
                 </Text>
-
-                {item.bullets && item.bullets.length > 0 && (
-                  <Column as="ul" gap="xs" className="list-disc pl-5 mt-2">
-                    {item.bullets.map((bullet, idx) => (
-                      <Text as="li" key={idx} variant="body-default-m" onBackground="neutral-medium">
-                        {bullet}
-                      </Text>
-                    ))}
-                  </Column>
-                )}
-
-                {item.footerNote && (
-                  <Text variant="body-default-s" onBackground="neutral-weak" className="italic mt-3 pt-3 border-t border-neutral-alpha-weak">
-                    {item.footerNote}
-                  </Text>
-                )}
-              </Column>
-            </Accordion>
+              )}
+            </Column>
           ))}
-        </Column>
+        </div>
       </AboutSection>
 
       {/* Divider */}

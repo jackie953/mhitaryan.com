@@ -9,6 +9,8 @@ interface CaseItem {
   label: string;
   title: string;
   body: string;
+  /** One short line under the modal title. Empty shows a placeholder. */
+  client: string;
   /** Modal write-up. Empty string shows a clearly marked placeholder. */
   situation: string;
   reading: string;
@@ -21,6 +23,7 @@ const cases: CaseItem[] = [
     label: "Market entry",
     title: "Entering Spain under shifting consumer law",
     body: "An international vehicle maker, before rollout. Proposed consumer and automotive rules were moving. We set out what had to change in the compliance plan.",
+    client: "",
     situation: "",
     reading: "",
     delivered: "",
@@ -30,6 +33,7 @@ const cases: CaseItem[] = [
     label: "Expansion",
     title: "Who decides on cybersecurity in Sweden",
     body: "A global technology firm, without a clear picture of the public and defense-adjacent landscape. We mapped who holds authority and who shapes the decision, and the order in which to approach them.",
+    client: "",
     situation: "",
     reading: "",
     delivered: "",
@@ -39,6 +43,7 @@ const cases: CaseItem[] = [
     label: "Regulatory",
     title: "AI rules that do not line up",
     body: "A global technology firm, across markets where the rules were fragmenting. We compared governance in 16 countries and the European Union, and where the obligations diverged.",
+    client: "",
     situation: "",
     reading: "",
     delivered: "",
@@ -48,6 +53,7 @@ const cases: CaseItem[] = [
     label: "Communications",
     title: "What lands in Sweden",
     body: "A cosmetics company, preparing to enter. We set the communications for the entry: what to say, to whom, and what would read as local rather than imported. We also built the internal reference the team used to keep that line consistent.",
+    client: "",
     situation: "",
     reading: "",
     delivered: "",
@@ -57,6 +63,7 @@ const cases: CaseItem[] = [
     label: "Advocacy",
     title: "An issue, the actors, and a submission",
     body: "A mission-driven organization, ahead of the UN Human Rights Council. We mapped the actors around the issue and prepared the submission.",
+    client: "",
     situation: "",
     reading: "",
     delivered: "",
@@ -66,6 +73,7 @@ const cases: CaseItem[] = [
     label: "Risk",
     title: "Sanctions, trade, and a moving political map",
     body: "A US energy association. We turned shifts in sanctions, trade and geopolitics into what leadership needed to decide.",
+    client: "",
     situation: "",
     reading: "",
     delivered: "",
@@ -208,6 +216,10 @@ function CaseModal({
             >
               {item.title}
             </h2>
+
+            <p className="mt-[8px] text-[11px] font-semibold uppercase tracking-[0.2em] text-muted-foreground/80">
+              {item.client || "[Placeholder: client line]"}
+            </p>
 
             <div className="mt-[24px] flex flex-col gap-[20px]">
               {sections.map((s) => (

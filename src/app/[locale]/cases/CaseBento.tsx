@@ -296,9 +296,9 @@ export function CaseBento() {
                 }
               }}
               transition={reduceMotion ? { duration: 0 } : undefined}
-              className="group min-h-[300px] md:min-h-[380px] cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-[#5A286F]/60 focus-visible:ring-offset-2 rounded-2xl"
+              className="group cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-[#5A286F]/60 focus-visible:ring-offset-2 rounded-2xl"
             >
-              <div className="flex h-full min-h-[inherit] flex-col p-[32px]">
+              <div className="flex h-full flex-col p-[32px]">
                 <div className="flex w-full justify-end">
                   <span className={tagClass}>{item.label}</span>
                 </div>

@@ -19,7 +19,7 @@
   font-family: var(--font-heading);
   font-weight: 400;
   font-style: normal;
-  font-size: clamp(1.125rem, 1.6vw, 1.5rem);
+  font-size: calc(clamp(1.125rem, 1.6vw, 1.5rem) - 3pt);
   line-height: 1.45;
   max-width: 60ch;
   margin-top: 1.75rem;

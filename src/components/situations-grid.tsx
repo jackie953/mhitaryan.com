@@ -1,32 +1,5 @@
-"use client";
-
-import type { HTMLAttributes } from "react";
-import { useTheme } from "next-themes";
 import { cn } from "@/lib/utils";
-
-interface MagicCardProps extends HTMLAttributes<HTMLDivElement> {
-  gradientColor?: string;
-}
-
-export function MagicCard({ children, className, gradientColor, ...props }: MagicCardProps) {
-  return (
-    <div
-      {...props}
-      className={cn(
-        "relative overflow-hidden rounded-2xl border border-border/80 bg-card/80 backdrop-blur-sm transition-all duration-300 hover:border-[#5A286F]/60 hover:shadow-lg hover:shadow-[#5A286F]/5",
-        className
-      )}
-      style={{
-        backgroundImage: gradientColor
-          ? `radial-gradient(circle at top left, ${gradientColor}, transparent 55%)`
-          : undefined,
-        ...props.style,
-      }}
-    >
-      {children}
-    </div>
-  );
-}
+import { MagicCard } from "@/components/ui/magic-card";
 
 interface SituationItem {
   id: string;
@@ -79,36 +52,32 @@ interface SituationsGridProps {
 }
 
 export function SituationsGrid({ className }: SituationsGridProps) {
-  const { theme } = useTheme();
-
   return (
     <div className={cn("w-full py-4", className)}>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {situations.map((item) => (
-          <MagicCard
-            key={item.id}
-            gradientColor={theme === "dark" ? "#5A286F35" : "#5A286F15"}
-            className="group flex flex-col justify-between p-[21px] min-h-[220px] transition-transform duration-300 hover:-translate-y-1"
-          >
-            <div>
-              {/* Row 1: Upper right tag in its own dedicated row */}
-              <div className="flex justify-end w-full mb-3">
-                {item.tag && (
-                  <span className="text-[10px] md:text-[11px] font-semibold tracking-wider uppercase text-muted-foreground/80 select-none">
-                    {item.tag}
-                  </span>
-                )}
+          <MagicCard key={item.id} className="min-h-[220px]">
+            <div className="p-[32px] flex h-full flex-col justify-between">
+              <div>
+                {/* Row 1: Upper right tag in its own dedicated row */}
+                <div className="flex justify-end w-full mb-3">
+                  {item.tag && (
+                    <span className="text-[10px] md:text-[11px] font-semibold tracking-wider uppercase text-muted-foreground/80 select-none">
+                      {item.tag}
+                    </span>
+                  )}
+                </div>
+
+                {/* Row 2: Full-width Heading */}
+                <h3 className="text-lg md:text-xl font-semibold tracking-tight text-foreground">
+                  {item.title}
+                </h3>
+
+                {/* Row 3: Description */}
+                <p className="mt-3 text-sm leading-[1.5] text-black/80 dark:text-white/80">
+                  {item.description}
+                </p>
               </div>
-
-              {/* Row 2: Full-width Heading */}
-              <h3 className="text-lg md:text-xl font-semibold tracking-tight text-foreground transition-colors group-hover:text-[#5A286F]">
-                {item.title}
-              </h3>
-
-              {/* Row 3: Description */}
-              <p className="mt-3 text-sm leading-[1.5] text-black/80 dark:text-white/80 transition-colors group-hover:text-[#5A286F]/90">
-                {item.description}
-              </p>
             </div>
           </MagicCard>
         ))}

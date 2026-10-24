@@ -49,9 +49,8 @@ export function CaseBento() {
           <MagicCard
             key={item.title}
             className={`min-h-[220px] ${item.className}`}
-            gradientColor="#5A286F25"
           >
-            <div className="flex min-h-[220px] flex-col justify-between">
+            <div className="p-[32px] flex h-full flex-col justify-between">
               <div className="flex w-full justify-end">
                 <span className="select-none text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground/80 md:text-[11px]">
                   {item.label}

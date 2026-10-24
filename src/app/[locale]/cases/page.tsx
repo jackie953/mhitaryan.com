@@ -1,4 +1,4 @@
-import { Column, Meta, Schema, Text } from "@once-ui-system/core";
+import { Column, Line, Meta, Schema, Text } from "@once-ui-system/core";
 import { baseURL, about, person, cases } from "@/resources";
 import { PageHeader } from "@/components/about/PageHeader";
 import { CaseBento } from "./CaseBento";
@@ -15,7 +15,7 @@ export async function generateMetadata() {
 
 export default function CasesPage() {
   return (
-    <Column fillWidth gap="xl">
+    <Column fillWidth gap="l">
       <Schema
         as="webPage"
         baseURL={baseURL}
@@ -37,7 +37,11 @@ export default function CasesPage() {
           Our work is confidential, so every case here is anonymized. What we can show is the situation, how we read it, and what changed.
         </Text>
       </PageHeader>
-      <CaseBento />
+      {/* 28px plus CaseBento's 4px top padding gives the 32px between divider and content on About */}
+      <Column fillWidth style={{ gap: "28px" }}>
+        <Line background="neutral-alpha-weak" />
+        <CaseBento />
+      </Column>
     </Column>
   );
 }

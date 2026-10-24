@@ -4,13 +4,11 @@ import {
   Text,
   Meta,
   Schema,
-  Line,
 } from "@once-ui-system/core";
 import Image from "next/image";
 import { getLocale } from "next-intl/server";
 import { baseURL, about, person } from "@/resources";
 import { AboutSection, SectionLabel } from "@/components/about/AboutSection";
-import { ValuesScroll } from "@/components/about/ValuesScroll";
 
 export async function generateMetadata() {
   return Meta.generate({
@@ -95,7 +93,7 @@ export default async function About() {
           </Heading>
         }
       >
-        <Column gap="s" className="pt-2 md:pt-4 max-w-xl">
+        <Column gap="s" className="pt-2 md:pt-4 max-w-2xl">
           <Text variant="body-default-m" onBackground="neutral-strong">
             {isSv
               ? "Mhitaryan grundades 2018 utifrån en enkel övertygelse: en bra strategi börjar med en korrekt läsning av läget. Vad och vem kan hjälpa eller hindra er, och varför? Vad förändras, och vad är bara brus?"
@@ -114,23 +112,33 @@ export default async function About() {
         </Column>
       </AboutSection>
 
-      {/* 2. Our values */}
-      <Column fillWidth className="mt-2 mb-2">
-        <Line background="neutral-alpha-weak" />
-        <div className="pt-6 text-lg md:text-xl font-bold tracking-wider normal-case">
-          <ValuesScroll label={isSv ? "Våra värderingar" : "Our values"} values={values} />
-        </div>
-      </Column>
+      {/* 2. Values */}
+      <AboutSection
+        left={<SectionLabel>{isSv ? "Värderingar" : "Values"}</SectionLabel>}
+      >
+        <Column gap="m" className="max-w-2xl">
+          {values.map((item) => (
+            <Column key={item.name} gap="4">
+              <Text variant="heading-strong-m" onBackground="neutral-strong">
+                {item.name}
+              </Text>
+              <Text variant="body-default-m" onBackground="neutral-weak">
+                {item.line}
+              </Text>
+            </Column>
+          ))}
+        </Column>
+      </AboutSection>
 
       {/* 3. People */}
       <AboutSection
         left={
           <SectionLabel>
-            {isSv ? "MEDARBETARE" : "PEOPLE"}
+            {isSv ? "Ledning" : "Leadership"}
           </SectionLabel>
         }
       >
-        <Column gap="m" className="max-w-xl">
+        <Column gap="m" className="max-w-2xl">
           {/* Portrait + Name Header */}
           <div className="flex items-center gap-6">
             <Image

@@ -93,7 +93,7 @@ export default async function About() {
           </Heading>
         }
       >
-        <Column gap="s" className="pt-2 md:pt-4 max-w-2xl">
+        <Column gap="s" className="pt-2 md:pt-4 max-w-[640px]">
           <Text variant="body-default-m" onBackground="neutral-strong">
             {isSv
               ? "Mhitaryan grundades 2018 utifrån en enkel övertygelse: en bra strategi börjar med en korrekt läsning av läget. Vad och vem kan hjälpa eller hindra er, och varför? Vad förändras, och vad är bara brus?"
@@ -116,16 +116,23 @@ export default async function About() {
       <AboutSection
         left={<SectionLabel>{isSv ? "Värderingar" : "Values"}</SectionLabel>}
       >
-        <Column gap="m" className="max-w-2xl">
+        <Column gap="m" className="max-w-[640px]">
           {values.map((item) => (
-            <Column key={item.name} gap="4">
-              <Text variant="heading-strong-m" onBackground="neutral-strong">
+            <div
+              key={item.name}
+              className="flex flex-col gap-1 md:flex-row md:items-baseline md:gap-8"
+            >
+              <Text
+                variant="heading-strong-m"
+                onBackground="neutral-strong"
+                className="md:w-40 md:shrink-0"
+              >
                 {item.name}
               </Text>
               <Text variant="body-default-m" onBackground="neutral-weak">
                 {item.line}
               </Text>
-            </Column>
+            </div>
           ))}
         </Column>
       </AboutSection>
@@ -138,7 +145,7 @@ export default async function About() {
           </SectionLabel>
         }
       >
-        <Column gap="m" className="max-w-2xl">
+        <Column gap="m" className="max-w-[640px]">
           {/* Portrait + Name Header */}
           <div className="flex items-center gap-6">
             <Image
@@ -160,38 +167,27 @@ export default async function About() {
               <Text variant="body-default-m" onBackground="neutral-weak">
                 {isSv ? "Grundare & Principal" : "Founder & Principal"}
               </Text>
+              <a
+                href="https://www.linkedin.com/in/mhitaryan/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="linkedin-footer-link text-sm"
+              >
+                LinkedIn
+              </a>
             </Column>
           </div>
 
           {/* Bio copy */}
           <Text variant="body-default-m" onBackground="neutral-strong">
-            {isSv ? (
-              <>
-                Jacqueline leder byråns research- och rådgivningsarbete. I snart sex år har hon levererat politisk analys och policyanalys för internationella kunder, däribland Fortune 500-bolag, i samarbete med APCO Worldwide och andra. Sedan 2018 har hon också arbetat med research, kommunikation och påverkansarbete för tankesmedjor och idéburna organisationer. Hon har grundat och lett civilsamhällesorganisationer, den största med tusentals medlemmar, och har en bakgrund inom försäljning och affärsutveckling. Hon har bott och arbetat i flera länder och arbetar på svenska, engelska och spanska.{" "}
-                <a
-                  href="https://www.linkedin.com/in/mhitaryan/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="linkedin-footer-link"
-                >
-                  LinkedIn
-                </a>
-                .
-              </>
-            ) : (
-              <>
-                Jacqueline leads the firm&apos;s research and advisory work. For almost six years she has delivered political and policy analysis for international clients, including Fortune 500 companies, working with APCO Worldwide and others. Since 2018 she has also worked in research, communications and advocacy for think tanks and NGOs. She has founded and led civil society organisations, the largest with thousands of members, and has a background in sales and business development. She has lived and worked in several countries and works in Swedish, English and Spanish.{" "}
-                <a
-                  href="https://www.linkedin.com/in/mhitaryan/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="linkedin-footer-link"
-                >
-                  LinkedIn
-                </a>
-                .
-              </>
-            )}
+            {isSv
+              ? "Jacqueline leder byråns research- och rådgivningsarbete. I snart sex år har hon levererat politisk analys och policyanalys för internationella kunder, däribland Fortune 500-bolag, i samarbete med APCO Worldwide och andra."
+              : "Jacqueline leads the firm’s research and advisory work. For almost six years she has delivered political and policy analysis for international clients, including Fortune 500 companies, working with APCO Worldwide and others."}
+          </Text>
+          <Text variant="body-default-m" onBackground="neutral-strong">
+            {isSv
+              ? "Sedan 2018 har hon också arbetat med research, kommunikation och påverkansarbete för tankesmedjor och idéburna organisationer. Hon har grundat och lett civilsamhällesorganisationer, den största med tusentals medlemmar, och har en bakgrund inom försäljning och affärsutveckling. Hon har bott och arbetat i flera länder och arbetar på svenska, engelska och spanska."
+              : "Since 2018 she has also worked in research, communications and advocacy for think tanks and NGOs. She has founded and led civil society organisations, the largest with thousands of members, and has a background in sales and business development. She has lived and worked in several countries and works in Swedish, English and Spanish."}
           </Text>
         </Column>
       </AboutSection>

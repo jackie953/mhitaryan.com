@@ -12,7 +12,7 @@ const cases = [
   {
     label: "Expansion",
     title: "Who decides on cybersecurity in Sweden",
-    body: "A global technology firm, without a clear picture of the public and defence-adjacent landscape. We mapped who holds authority and who shapes the decision, and the order in which to approach them.",
+    body: "A global technology firm, without a clear picture of the public and defense-adjacent landscape. We mapped who holds authority and who shapes the decision, and the order in which to approach them.",
     className: "",
   },
   {
@@ -30,7 +30,7 @@ const cases = [
   {
     label: "Advocacy",
     title: "An issue, the actors, and a submission",
-    body: "A mission-driven organisation, ahead of the UN Human Rights Council. We mapped the actors around the issue and prepared the submission.",
+    body: "A mission-driven organization, ahead of the UN Human Rights Council. We mapped the actors around the issue and prepared the submission.",
     className: "",
   },
   {

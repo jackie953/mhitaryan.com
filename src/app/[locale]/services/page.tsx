@@ -10,6 +10,7 @@ import {
 import { getLocale } from "next-intl/server";
 import { baseURL, getContactEmail } from "@/resources";
 import { AboutSection, SectionLabel } from "@/components/about/AboutSection";
+import { PageHeader } from "@/components/about/PageHeader";
 import { BookingCTA } from "@/components/BookingCTA";
 import { SituationsGrid } from "@/components/situations-grid";
 
@@ -98,7 +99,7 @@ export default async function Services() {
   ];
 
   return (
-    <Column fillWidth gap="m" className="page-services" style={{ paddingTop: "4rem" }}>
+    <Column fillWidth gap="m" className="page-services">
       <Schema
         as="webPage"
         baseURL={baseURL}
@@ -108,22 +109,13 @@ export default async function Services() {
       />
 
       {/* 1. Page Header & Intro */}
-      <AboutSection
-        showDivider={false}
-        left={
-          <Heading variant="display-strong-m" onBackground="neutral-strong">
-            {isSv ? "Erbjudande" : "Services"}
-          </Heading>
-        }
-      >
-        <Column fillWidth gap="m" className="pt-2 md:-ml-8 lg:-ml-12">
-          <Text variant="body-default-l" onBackground="neutral-strong">
-            {isSv
-              ? "Vi levererar tydlig politisk intelligens, strategisk research och kvalificerad rådgivning för ledare som verkar i komplexa och reglerade miljöer i Sverige, EU och internationellt."
-              : "Intelligence on politics, regulation and public opinion in Sweden, the EU and the US, and the strategic communications that follow. Take the analysis and run with it, or keep us on to build the plan, as a one-off project or an ongoing retainer."}
-          </Text>
-        </Column>
-      </AboutSection>
+      <PageHeader title={isSv ? "Erbjudande" : "Services"}>
+        <Text variant="body-default-m" onBackground="neutral-strong">
+          {isSv
+            ? "Vi levererar tydlig politisk intelligens, strategisk research och kvalificerad rådgivning för ledare som verkar i komplexa och reglerade miljöer i Sverige, EU och internationellt."
+            : "Intelligence on politics, regulation and public opinion in Sweden, the EU and the US, and the strategic communications that follow. Take the analysis and run with it, or keep us on to build the plan, as a one-off project or an ongoing retainer."}
+        </Text>
+      </PageHeader>
 
       {/* Divider */}
       <Column fillWidth className="my-13">

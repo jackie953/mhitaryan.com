@@ -225,7 +225,7 @@ export const Header = () => {
                 transition={{ type: "spring", damping: 25, stiffness: 160 }}
                 style={{
                   color: "var(--header-color)",
-                  fontSize: "clamp(1.7rem, 2.9vw, 2.05rem)",
+                  fontSize: "clamp(1.1rem, 1.9vw, 1.33rem)",
                   fontWeight: 700,
                   letterSpacing: "0.04em",
                   fontFamily: "var(--font-heading)",

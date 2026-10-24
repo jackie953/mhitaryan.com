@@ -34,7 +34,7 @@ export default function CasesPage() {
           Research and communications, for companies and mission-driven organizations.
         </Text>
         <Text variant="body-default-m" onBackground="neutral-strong" className="page-intro">
-          Our work is confidential, so every case here is anonymized. What we can show is the situation, how we read it, and what changed.
+          Our work is confidential, so every case here is anonymized. What we can show is the situation, how we read it, and what we delivered.
         </Text>
       </PageHeader>
       {/* 28px plus CaseBento's 4px top padding gives the 32px between divider and content on About */}

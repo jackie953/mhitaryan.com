@@ -2,8 +2,11 @@
 
 import React, { useCallback, useEffect, useState } from "react";
 import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
+import type { HTMLMotionProps } from "framer-motion";
 
-export interface MagicCardProps {
+/** Extra props (layoutId, onClick, role, tabIndex, onKeyDown, aria-*) go to the outer element. */
+export interface MagicCardProps
+  extends Omit<HTMLMotionProps<"div">, "children" | "className" | "style"> {
   children?: React.ReactNode;
   className?: string;
   style?: React.CSSProperties;
@@ -33,6 +36,9 @@ export function MagicCard({
   gradientTo,
   borderColor = "var(--neutral-alpha-medium, rgba(0,0,0,0.12))",
   background = "var(--page-background, #faf8fc)",
+  onPointerMove: onPointerMoveProp,
+  onPointerLeave: onPointerLeaveProp,
+  ...rest
 }: MagicCardProps) {
   // Dark mode follows the site's own data-theme attribute, not next-themes.
   const [isDark, setIsDark] = useState(false);
@@ -58,11 +64,12 @@ export function MagicCard({
 
   const onPointerMove = useCallback(
     (e: React.PointerEvent<HTMLDivElement>) => {
+      onPointerMoveProp?.(e);
       const rect = e.currentTarget.getBoundingClientRect();
       mouseX.set(e.clientX - rect.left);
       mouseY.set(e.clientY - rect.top);
     },
-    [mouseX, mouseY]
+    [mouseX, mouseY, onPointerMoveProp]
   );
 
   useEffect(() => {
@@ -74,9 +81,13 @@ export function MagicCard({
 
   return (
     <motion.div
+      {...rest}
       className={className}
       onPointerMove={onPointerMove}
-      onPointerLeave={reset}
+      onPointerLeave={(e) => {
+        onPointerLeaveProp?.(e);
+        reset();
+      }}
       style={{
         position: "relative",
         height: "100%",

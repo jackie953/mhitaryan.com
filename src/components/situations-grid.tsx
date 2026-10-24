@@ -8,7 +8,7 @@ interface MagicCardProps extends HTMLAttributes<HTMLDivElement> {
   gradientColor?: string;
 }
 
-function MagicCard({ children, className, gradientColor, ...props }: MagicCardProps) {
+export function MagicCard({ children, className, gradientColor, ...props }: MagicCardProps) {
   return (
     <div
       {...props}

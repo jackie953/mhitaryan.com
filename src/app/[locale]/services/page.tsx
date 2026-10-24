@@ -1,6 +1,5 @@
 import {
   Column,
-  Heading,
   Text,
   Meta,
   Schema,
@@ -12,14 +11,7 @@ import { AboutSection, SectionLabel } from "@/components/about/AboutSection";
 import { PageHeader } from "@/components/about/PageHeader";
 import { BookingCTA } from "@/components/BookingCTA";
 import { SituationsGrid } from "@/components/situations-grid";
-
-type ServiceItem = {
-  id: string;
-  title: string;
-  description: string;
-  bullets?: string[];
-  footerNote?: string;
-};
+import { ServiceCards, type ServiceCardItem } from "@/components/service-cards";
 
 export async function generateMetadata() {
   const title = "Services | Mhitaryan";
@@ -37,9 +29,10 @@ export default async function Services() {
   const locale = await getLocale();
   const isSv = locale === "sv";
 
-  const capabilitiesItems: ServiceItem[] = [
+  const capabilitiesItems: ServiceCardItem[] = [
     {
       id: "research-intelligence",
+      tag: isSv ? "ANALYS" : "ANALYSIS",
       title: isSv ? "Research & omvärldsanalys" : "Research & intelligence",
       description: isSv
         ? "Förstå landskapet innan ni agerar. Vi kartlägger maktdynamiker, följer narrativ och identifierar mönster över sektorer, intressenter och geografier – med särskild kompetens inom EU, Sverige, Spanien och internationella miljöer som USA."
@@ -55,10 +48,10 @@ export default async function Services() {
           ]
         : [
             "Landscape reports and country briefs",
-            "Stakeholder and power mapping: who matters, who influences whom",
-            "Policy and regulatory analysis: what’s changing and what it means",
-            "Political risk assessments: elections, sanctions, trade and security shifts",
-            "Public opinion and narrative analysis: what’s being said, and what will last",
+            "Stakeholder and power mapping",
+            "Policy and regulatory analysis",
+            "Political risk assessments",
+            "Public opinion and narrative analysis",
           ],
       footerNote: isSv
         ? "Levereras som fristående rapporter eller som löpande uppdrag."
@@ -66,6 +59,7 @@ export default async function Services() {
     },
     {
       id: "strategic-communications",
+      tag: isSv ? "STRATEGI" : "STRATEGY",
       title: isSv ? "Strategisk kommunikation" : "Strategic communications",
       description: isSv
         ? "Baserat på analysen, interkulturell kompetens och god förståelse för vad som övertygar. Vi arbetar på svenska, engelska och spanska och anpassar strategi och innehåll efter sammanhang."
@@ -81,9 +75,9 @@ export default async function Services() {
           ]
         : [
             "Positioning and messaging strategy",
-            "Issue and campaign strategy: where an issue is winnable, which coalitions to build, when to move",
-            "Stakeholder engagement: who to approach, in what order, with what message",
-            "Position papers, policy submissions and thought leadership",
+            "Issue and campaign strategy",
+            "Stakeholder engagement strategy",
+            "Position papers and policy submissions",
             "Executive briefings and talking points",
           ],
       footerNote: isSv
@@ -144,34 +138,7 @@ export default async function Services() {
           </SectionLabel>
         }
       >
-        <div className="grid w-full grid-cols-1 gap-4 pt-2 md:grid-cols-2">
-          {capabilitiesItems.map((item) => (
-            <Column key={item.id} gap="m" fillWidth className="h-full">
-              <Heading variant="heading-strong-l" onBackground="neutral-strong" className="font-bold text-lg md:text-xl">
-                {item.title}
-              </Heading>
-              <Text variant="body-default-l" onBackground="neutral-strong" className="leading-relaxed">
-                {item.description}
-              </Text>
-
-              {item.bullets && item.bullets.length > 0 && (
-                <Column as="ul" gap="xs" className="list-disc pl-5">
-                  {item.bullets.map((bullet, idx) => (
-                    <Text as="li" key={idx} variant="body-default-m" onBackground="neutral-strong">
-                      {bullet}
-                    </Text>
-                  ))}
-                </Column>
-              )}
-
-              {item.footerNote && (
-                <Text variant="body-default-s" onBackground="neutral-weak" className="italic mt-auto pt-3 border-t border-neutral-alpha-weak">
-                  {item.footerNote}
-                </Text>
-              )}
-            </Column>
-          ))}
-        </div>
+        <ServiceCards items={capabilitiesItems} />
       </AboutSection>
 
       {/* Divider */}

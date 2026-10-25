@@ -9,6 +9,10 @@ import { Menu, X } from "lucide-react";
 import { Button, Line, Row, ToggleButton, useTheme } from "@once-ui-system/core";
 import { ThemeToggle } from "./ThemeToggle";
 import { LanguageToggle } from "./LanguageToggle";
+
+// The Swedish site is paused: /sv redirects to /en (see next.config.mjs), so the
+// switcher is hidden. Flip this back to true when Swedish returns.
+const SHOW_LANGUAGE_TOGGLE = false;
 import Text3DFlip from "@/registry/magicui/text-3d-flip";
 import styles from "./Header.module.scss";
 
@@ -225,7 +229,7 @@ export const Header = () => {
                 transition={{ type: "spring", damping: 25, stiffness: 160 }}
                 style={{
                   color: "var(--header-color)",
-                  fontSize: "clamp(1.7rem, 2.9vw, 2.05rem)",
+                  fontSize: "clamp(1.1rem, 1.9vw, 1.33rem)",
                   fontWeight: 700,
                   letterSpacing: "0.04em",
                   fontFamily: "var(--font-heading)",
@@ -265,7 +269,7 @@ export const Header = () => {
               <Line background="neutral-alpha-medium" vert maxHeight="20" style={{ marginLeft: 6, marginRight: 6 }} />
               <Row gap="4" vertical="center" className={styles.navToggles}>
                 {display.themeSwitcher && <ThemeToggle size="m" />}
-                <LanguageToggle />
+                {SHOW_LANGUAGE_TOGGLE && <LanguageToggle />}
               </Row>
               <Line background="neutral-alpha-medium" vert maxHeight="20" style={{ marginLeft: 4, marginRight: 10 }} />
               <Button
@@ -328,9 +332,11 @@ export const Header = () => {
                 </Link>
               )}
               {display.themeSwitcher && <MobileThemeRow />}
-              <div style={{ padding: "13px 20px", borderBottom: "1px solid var(--neutral-alpha-weak)", display: "flex", justifyContent: "flex-end" }}>
-                <LanguageToggle />
-              </div>
+              {SHOW_LANGUAGE_TOGGLE && (
+                <div style={{ padding: "13px 20px", borderBottom: "1px solid var(--neutral-alpha-weak)", display: "flex", justifyContent: "flex-end" }}>
+                  <LanguageToggle />
+                </div>
+              )}
               <div style={{ padding: "13px 20px" }}>
                 <Button
                   href={withLocale(contact.path)}

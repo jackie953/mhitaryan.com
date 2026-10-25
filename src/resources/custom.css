@@ -137,3 +137,79 @@ body, p, span, div, h1, h2, h3, h4, h5, h6 {
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading), 'Inter Tight', sans-serif !important;
 }
+/* Text wrapping — avoid orphans and ragged headings.
+   Written with :where() so the rules have zero specificity and any
+   component-level text-wrap (e.g. the hero subline) still wins. */
+:where(p, li, .italic) {
+  text-wrap: pretty;
+}
+
+:where(h1, h2, h3) {
+  text-wrap: balance;
+}
+
+/* Running text (page intros, About bio): one shared measure, pretty not balanced */
+.page-intro {
+  max-width: 90ch;
+  text-wrap: pretty;
+}
+
+/* Leave navigation, buttons and tags alone */
+:where(header, nav, button, [role="button"]) :where(p, li, h1, h2, h3, span) {
+  text-wrap: wrap;
+}
+
+/* Page intro: on desktop the first line is centred on the page title
+   (48px title, 24px line height, so 12px from the top of the title). */
+.page-header-intro {
+  padding-top: 2px;
+}
+
+@media (min-width: 768px) {
+  .page-header-intro {
+    padding-top: 12px;
+  }
+}
+
+/* "What we deliver" cards: on two columns each card is a subgrid of the
+   shared 5-row grid (tag, title, intro, bullets, note), so rows line up
+   across the cards. MagicCard wraps its children in one extra div, which has
+   to be a subgrid as well. Stacked (mobile) cards are plain flex columns. */
+.service-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 36px;
+}
+
+.service-card-body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+@media (min-width: 768px) {
+  .service-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(5, auto);
+    column-gap: 36px;
+    row-gap: 0;
+  }
+
+  .service-card {
+    display: grid;
+    grid-row: span 5;
+    grid-template-rows: subgrid;
+  }
+
+  .service-card > div:last-child {
+    display: grid;
+    grid-row: 1 / span 5;
+    grid-template-rows: subgrid;
+  }
+
+  .service-card-body {
+    display: grid;
+    grid-row: 1 / span 5;
+    grid-template-rows: subgrid;
+  }
+}

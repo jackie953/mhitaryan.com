@@ -4,13 +4,12 @@ import {
   Text,
   Meta,
   Schema,
-  Line,
 } from "@once-ui-system/core";
 import Image from "next/image";
 import { getLocale } from "next-intl/server";
 import { baseURL, about, person } from "@/resources";
 import { AboutSection, SectionLabel } from "@/components/about/AboutSection";
-import { ValuesScroll } from "@/components/about/ValuesScroll";
+import { PageHeader } from "@/components/about/PageHeader";
 
 export async function generateMetadata() {
   return Meta.generate({
@@ -42,7 +41,7 @@ export default async function About() {
   const values = isSv ? valuesSv : valuesEn;
 
   return (
-    <Column fillWidth gap="l" className="page-about" style={{ paddingTop: "4rem" }}>
+    <Column fillWidth gap="l" className="page-about">
       <Schema
         as="webPage"
         baseURL={baseURL}
@@ -87,50 +86,58 @@ export default async function About() {
       `}</style>
 
       {/* 1. About us */}
-      <AboutSection 
-        showDivider={false} 
-        left={
-          <Heading variant="display-strong-m" onBackground="neutral-strong">
-            {isSv ? "Om oss" : "About us"}
-          </Heading>
-        }
+      <PageHeader title={isSv ? "Om oss" : "About us"}>
+        <Text variant="body-default-m" onBackground="neutral-strong" className="page-intro">
+          {isSv
+            ? "Mhitaryan grundades 2018 utifrån en enkel övertygelse: en bra strategi börjar med en korrekt läsning av läget. Vad och vem kan hjälpa eller hindra er, och varför? Vad förändras, och vad är bara brus?"
+            : "Mhitaryan was founded in 2018 on a simple conviction: good strategy starts with an accurate read of the room. What and who can help or block you, and why? What is shifting, and what is just noise?"}
+        </Text>
+        <Text variant="body-default-m" onBackground="neutral-strong" className="page-intro">
+          {isSv
+            ? "Vi gräver tills vi förstår, sedan gör vi det begripligt. Det är den kombinationen vi bygger på: djupgående research och bred kommunikationserfarenhet. Först får vi det rätt. Sedan ser vi till att det slår igenom."
+            : "We dig until we understand, and then make it clear. That is the combination we are built on: deep research and extensive communications experience. First we get it right. Then we make it land."}
+        </Text>
+        <Text variant="body-default-m" onBackground="neutral-strong" className="page-intro">
+          {isSv
+            ? "Vi arbetar med internationella företag och idéburna organisationer i Sverige, övriga Norden, EU, USA och andra delar av världen. Vårt politiska och policyinriktade arbete spänner över näringsliv, civilsamhälle och påverkansarbete, så vi vet hur en fråga ser ut från varje sida av bordet."
+            : "We work with international companies and mission-driven organizations in Sweden and across the Nordics, the EU, the US and beyond. Our political and policy work spans business, civil society and advocacy, so we know how an issue looks from each side of the table."}
+        </Text>
+      </PageHeader>
+
+      {/* 2. Values */}
+      <AboutSection
+        left={<SectionLabel>{isSv ? "Värderingar" : "Values"}</SectionLabel>}
       >
-        <Column gap="s" className="pt-2 md:pt-4 max-w-xl">
-          <Text variant="body-default-m" onBackground="neutral-strong">
-            {isSv
-              ? "Mhitaryan grundades 2018 utifrån en enkel övertygelse: en bra strategi börjar med en korrekt läsning av läget. Vad och vem kan hjälpa eller hindra er, och varför? Vad förändras, och vad är bara brus?"
-              : "Mhitaryan was founded in 2018 on a simple conviction: good strategy starts with an accurate read of the room. What and who can help or block you, and why? What is shifting, and what is just noise?"}
-          </Text>
-          <Text variant="body-default-m" onBackground="neutral-strong">
-            {isSv
-              ? "Vi gräver tills vi förstår, sedan gör vi det begripligt. Det är den kombinationen vi bygger på: djupgående research och bred kommunikationserfarenhet. Först får vi det rätt. Sedan ser vi till att det slår igenom."
-              : "We dig until we understand, and then make it clear. That is the combination we are built on: deep research and extensive communications experience. First we get it right. Then we make it land."}
-          </Text>
-          <Text variant="body-default-m" onBackground="neutral-strong">
-            {isSv
-              ? "Vi arbetar med internationella företag och idéburna organisationer i Sverige, övriga Norden, EU, USA och andra delar av världen. Vårt politiska och policyinriktade arbete spänner över näringsliv, civilsamhälle och påverkansarbete, så vi vet hur en fråga ser ut från varje sida av bordet."
-              : "We work with international companies and mission-driven organisations in Sweden and across the Nordics, the EU, the US and beyond. Our political and policy work spans business, civil society and advocacy, so we know how an issue looks from each side of the table."}
-          </Text>
+        <Column gap="m" className="max-w-[640px]">
+          {values.map((item) => (
+            <div
+              key={item.name}
+              className="flex flex-col gap-1 md:flex-row md:items-baseline md:gap-8"
+            >
+              <Text
+                variant="heading-strong-m"
+                onBackground="neutral-strong"
+                className="md:w-40 md:shrink-0"
+              >
+                {item.name}
+              </Text>
+              <Text variant="body-default-m" onBackground="neutral-weak">
+                {item.line}
+              </Text>
+            </div>
+          ))}
         </Column>
       </AboutSection>
-
-      {/* 2. Our values */}
-      <Column fillWidth className="mt-2 mb-2">
-        <Line background="neutral-alpha-weak" />
-        <div className="pt-6 text-lg md:text-xl font-bold tracking-wider normal-case">
-          <ValuesScroll label={isSv ? "Våra värderingar" : "Our values"} values={values} />
-        </div>
-      </Column>
 
       {/* 3. People */}
       <AboutSection
         left={
           <SectionLabel>
-            {isSv ? "MEDARBETARE" : "PEOPLE"}
+            {isSv ? "Ledning" : "Leadership"}
           </SectionLabel>
         }
       >
-        <Column gap="m" className="max-w-xl">
+        <Column gap="m">
           {/* Portrait + Name Header */}
           <div className="flex items-center gap-6">
             <Image
@@ -152,38 +159,27 @@ export default async function About() {
               <Text variant="body-default-m" onBackground="neutral-weak">
                 {isSv ? "Grundare & Principal" : "Founder & Principal"}
               </Text>
+              <a
+                href="https://www.linkedin.com/in/mhitaryan/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="linkedin-footer-link text-sm"
+              >
+                LinkedIn
+              </a>
             </Column>
           </div>
 
           {/* Bio copy */}
-          <Text variant="body-default-m" onBackground="neutral-strong">
-            {isSv ? (
-              <>
-                Jacqueline leder byråns research- och rådgivningsarbete. I snart sex år har hon levererat politisk analys och policyanalys för internationella kunder, däribland Fortune 500-bolag, i samarbete med APCO Worldwide och andra. Sedan 2018 har hon också arbetat med research, kommunikation och påverkansarbete för tankesmedjor och idéburna organisationer. Hon har grundat och lett civilsamhällesorganisationer, den största med tusentals medlemmar, och har en bakgrund inom försäljning och affärsutveckling. Hon har bott och arbetat i flera länder och arbetar på svenska, engelska och spanska.{" "}
-                <a
-                  href="https://www.linkedin.com/in/mhitaryan/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="linkedin-footer-link"
-                >
-                  LinkedIn
-                </a>
-                .
-              </>
-            ) : (
-              <>
-                Jacqueline leads the firm&apos;s research and advisory work. For almost six years she has delivered political and policy analysis for international clients, including Fortune 500 companies, working with APCO Worldwide and others. Since 2018 she has also worked in research, communications and advocacy for think tanks and NGOs. She has founded and led civil society organisations, the largest with thousands of members, and has a background in sales and business development. She has lived and worked in several countries and works in Swedish, English and Spanish.{" "}
-                <a
-                  href="https://www.linkedin.com/in/mhitaryan/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="linkedin-footer-link"
-                >
-                  LinkedIn
-                </a>
-                .
-              </>
-            )}
+          <Text variant="body-default-m" onBackground="neutral-strong" className="page-intro">
+            {isSv
+              ? "Jacqueline leder byråns research- och rådgivningsarbete. I snart sex år har hon levererat politisk analys och policyanalys för internationella kunder, däribland Fortune 500-bolag, i samarbete med APCO Worldwide och andra."
+              : "Jacqueline leads the firm’s research and advisory work. For almost six years she has delivered political and policy analysis for international clients, including Fortune 500 companies, working with APCO Worldwide and others."}
+          </Text>
+          <Text variant="body-default-m" onBackground="neutral-strong" className="page-intro">
+            {isSv
+              ? "Sedan 2018 har hon också arbetat med research, kommunikation och påverkansarbete för tankesmedjor och idéburna organisationer. Hon har grundat och lett civilsamhällesorganisationer, den största med tusentals medlemmar, och har en bakgrund inom försäljning och affärsutveckling. Hon har bott och arbetat i flera länder och arbetar på svenska, engelska och spanska."
+              : "Since 2018 she has also worked in research, communications and advocacy for think tanks and NGOs. She has founded and led civil society organizations, the largest with thousands of members, and has a background in sales and business development. She has lived and worked in several countries and works in Swedish, English and Spanish."}
           </Text>
         </Column>
       </AboutSection>

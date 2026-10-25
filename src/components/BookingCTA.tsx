@@ -127,14 +127,13 @@ export const BookingCTA: React.FC<React.ComponentProps<typeof Column> & BookingC
       overflow="hidden"
       fillWidth
       paddingX="xl"
-      paddingY="80"
       radius="l"
       horizontal="center"
       vertical="center"
       align="center"
       background="surface"
-      className="max-sm:!pt-16 max-sm:!px-8 max-sm:!pb-16"
-      style={{ minHeight: "32rem" }}
+      className="max-sm:!pt-[64px] max-sm:!px-8 max-sm:!pb-[64px] max-sm:!min-h-0"
+      style={{ paddingTop: "120px", paddingBottom: "120px", minHeight: "384px" }}
       {...flex}
     >
       {/* Cursor-following spotlight — replays the glow wherever the pointer
@@ -142,11 +141,16 @@ export const BookingCTA: React.FC<React.ComponentProps<typeof Column> & BookingC
       <Mask
         cursor={bookingConfig.effects.mask.cursor}
         radius={50}
-        style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}
+        style={{
+          position: 'absolute', inset: 0, pointerEvents: 'none',
+          // Mask sets its radius in vh; pin it to px so it doesn't track the viewport.
+          '--mask-radius': '450px',
+        } as React.CSSProperties}
       >
         <div style={{
           position: 'absolute', inset: 0,
-          background: 'radial-gradient(ellipse at 50% 50%, var(--accent-background-strong, rgba(93,50,133,0.45)) 0%, transparent 70%)',
+          // Fixed px size (was an ellipse sized by the box's own dimensions).
+          background: 'radial-gradient(486px 253px at 50% 50%, var(--accent-background-strong, rgba(93,50,133,0.45)) 0%, transparent 100%)',
           opacity: bookingConfig.effects.gradient.opacity / 100,
         }} />
       </Mask>

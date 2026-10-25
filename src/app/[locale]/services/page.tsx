@@ -36,7 +36,7 @@ export default async function Services() {
       title: isSv ? "Research & omvärldsanalys" : "Research & intelligence",
       description: isSv
         ? "Förstå landskapet innan ni agerar. Vi kartlägger maktdynamiker, följer narrativ och identifierar mönster över sektorer, intressenter och geografier – med särskild kompetens inom EU, Sverige, Spanien och internationella miljöer som USA."
-        : "Making sense of a landscape before you move through it. We work out who holds power, what binds you and where the debate is heading, across Sweden, the EU, the US and beyond.",
+        : "Making sense of a landscape before you move through it. We work out who holds power, what binds you and where the debate is heading.",
       bullets: isSv
         ? [
             "Översiktsrapporter: hur en marknad, en sektor eller en fråga formas politiskt och socialt",
